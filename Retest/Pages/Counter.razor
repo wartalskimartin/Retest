@@ -1,0 +1,128 @@
+﻿@using System.Text.Json;
+@using Microsoft.JSInterop
+
+@page "/counter"
+
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Bilbox</h1>
+
+<div class="form-group my-3">
+    <label>
+        Dostupné bilboxy
+        <select class="form-control"   @onchange="OnBilboxSelectInputChanged">
+            <option value="">Vyber dostupný bilbox ...</option>
+            @foreach(string ab in avaibleBilboxes)
+            {
+                <option value="@ab">@ab</option>
+            }
+        </select>
+    </label>
+</div>
+
+<button class="btn btn-primary" @onclick="SetRetestMode">Set Retest Mode</button>
+<button class="btn btn-primary" @onclick="SetNormalMode">Set Normal Mode</button>
+
+@if (nokList.Count() != 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Bilbox</th>
+                <th>Datum</th>
+                <th>Svazek</th>
+                <th>Operace</th>
+                <th>Zakazka</th>
+                <th>Operator</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ProductionData pp in nokList)
+            {
+                <tr>
+                    <td>@pp.Loc</td>
+                    <td>@pp.DatetimeServer</td>
+                    <td>@pp.ProductNumber</td>
+                    <td>@pp.Operation</td>
+                    <td>@pp.OrderNumber</td>
+                    <td>@pp.OperatorNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private async Task OnBilboxSelectInputChanged(ChangeEventArgs args)//onselect="OnBilboxSelecteInputSelected"   @bind="SelectedBilbox"
+    {
+        string? selectedBilbox = args.Value.ToString();
+        System.Diagnostics.Debug.WriteLine(selectedBilbox);
+
+        if (!String.IsNullOrEmpty(selectedBilbox))
+        {
+            HttpResponseMessage response = await Http.GetAsync($"http://localhost:5047/api/Bilbox/GetActualShiftNOK?standLoc={selectedBilbox}");
+            string content = await response.Content.ReadAsStringAsync();
+            nokList = JsonSerializer.Deserialize<List<ProductionData>>(content, _jsonSerializerOptions);
+        }
+    }
+
+
+    public string SelectedBilbox { get; set; }
+    List<string> avaibleBilboxes = new List<string>();
+    List<ProductionData> nokList = new List<ProductionData>();
+
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAvaibleBilboxes();
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("sseInterop.connectSse", "http://localhost:5047/api/sse/notifyNumberOfDevicesChanged", DotNetObjectReference.Create(this));
+
+        await base.OnParametersSetAsync();
+    }
+
+    public async Task GetAvaibleBilboxes()
+    {
+        HttpResponseMessage response = await Http.GetAsync("http://localhost:5047/api/sse/getAvaibleBilboxes");
+        string content = await response.Content.ReadAsStringAsync();
+        avaibleBilboxes = JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+    }
+
+    private async Task SetRetestMode()
+    {
+        await Http.PostAsync($"http://localhost:5047/api/sse/retestMode/{SelectedBilbox}", null);
+    }
+
+    private async Task SetNormalMode()
+    {
+        await Http.PostAsync($"http://localhost:5047/api/sse/normalMode/{SelectedBilbox}", null);
+    }
+
+    [JSInvokable]
+    public async Task HandleEventReceived(string eventData)
+    {
+        int serverAvaibleBilboxes = int.Parse(eventData);
+        if (avaibleBilboxes.Count != serverAvaibleBilboxes)
+        {
+            await GetAvaibleBilboxes();
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable]
+    public void HandleError(object error)
+    {
+        // Handle SSE error
+        Console.WriteLine(error.ToString());
+    }
+}

@@ -1,0 +1,51 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using PushAPI.Services;
+using SharedLib.Models;
+
+namespace PushAPI.Controllers
+{
+    [Route("api/[controller]")]
+    public class BilboxController : Controller
+    {
+        public readonly BibloxService _bilboxService;
+
+        public BilboxController(BibloxService bilboxService)
+        {
+            _bilboxService = bilboxService;
+        }
+
+        [HttpGet("getActualShiftNOK")]
+        public async Task<IActionResult> GetActualShiftNOK(string standLoc)
+        {
+            DateTime startOfShift = GetActualShiftStartHour();
+
+            List<ProductionData> result = await _bilboxService.GetLatestShiftNOK(standLoc, startOfShift);
+            return Ok(result);
+        }
+
+        private DateTime GetActualShiftStartHour()
+        {
+            DateTime result;
+            int hourStartActualShift;
+
+            if(6 <= DateTime.Now.Hour && DateTime.Now.Hour < 14)
+            {
+                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+            }
+            else if(14 <= DateTime.Now.Hour && DateTime.Now.Hour < 22) 
+            {
+                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 0, 0);
+            }
+            else if (22 <= DateTime.Now.Hour && DateTime.Now.Hour <= 23)
+            {
+                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 22, 0, 0);
+            }
+            else //if (0 <= DateTime.Now.Hour && DateTime.Now.Hour < 6)
+            {
+                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 22, 0, 0);
+            }
+            Console.WriteLine(result.ToString("dd.MM.yyyy HH:mm:ss"));
+            return result;
+        }
+    }
+}

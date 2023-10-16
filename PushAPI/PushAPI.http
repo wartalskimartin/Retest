@@ -1,0 +1,9 @@
+﻿@PushAPI_HostAddress = http://localhost:5047
+
+POST {{PushAPI_HostAddress}}/weatherforecast?bilboxNum=string
+
+###
+
+POST {{PushAPI_HostAddress}}/weatherforecast?bilboxNum=string
+
+###
