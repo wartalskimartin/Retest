@@ -1,26 +1,46 @@
 ﻿@using System.Text.Json;
 @using Microsoft.JSInterop
+@using RetestWebAssembly.Services
 
 @page "/"
 
-@inject HttpClient Http
+@inject BilboxService BilboxService
 @inject IJSRuntime JSRuntime
 
 
 <h1>Bilbox</h1>
 
 
+
 <DxComboBox Data=@avaibleBilboxes
             TextChanged="OnBilboxSelectInputChanged"
             @bind-Value=SelectedBilbox
-            CssClass="w-25" />
+            CssClass="w-25 mb-3" />
 
+<label for="seOverview" class="demo-text cw-320 mb-1">
+    Počet NOK
+</label>
+<DxSpinEdit @bind-Value="@NumberOfNOK"
+            CssClass="cw-320" MinValue=1 MaxValue=@maxNOK
+            InputId="seOverview" />
 
 <button class="btn btn-primary" @onclick="SetRetestMode">Set Retest Mode</button>
 <button class="btn btn-primary" @onclick="SetNormalMode">Set Normal Mode</button>
 
-
-<DxGrid Data="@nokList" CssClass="mw-1100">
+<div class="grid-container">
+<DxGrid @ref=Grid Data="@nokList" CssClass="mw-1100 mt-3"
+        ValidationEnabled="false"
+        EditMode="GridEditMode.EditCell"
+        KeyboardNavigationEnabled="true"
+        CustomizeEditModel="Grid_CustomizeEditModel"
+        EditModelSaving="Grid_EditModelSaving"
+        CustomizeElement="Grid_CustomizeElement">
+    <ToolbarTemplate>
+        <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
+            <DxToolbarItem Text="Save" Click="Save_Click" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" BeginGroup="true" />
+            <DxToolbarItem Text="Cancel" Click="Cancel_Click" IconCssClass="grid-toolbar-cancel" Enabled="BatchItemsEnabled" />
+        </DxToolbar>
+    </ToolbarTemplate>
     <Columns>
         <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" />
         <DxGridDataColumn FieldName="Operation" Caption="Operace" />
@@ -28,13 +48,26 @@
         <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" />
         <DxGridDataColumn FieldName="ProductionDateTime" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss" />
         <DxGridDataColumn FieldName="Device" Caption="Device" />
-        <DxGridDataColumn FieldName="Loc" Caption="Loc" />
-        <DxGridDataColumn FieldName="BbxNum" Caption="BbxNum" />
+        <DxGridDataColumn FieldName="Loc" Caption="Loc">
+            <CellEditTemplate>
+                @{
+                    var productionData = (ProductionData)context.EditModel;
+                }
+                <DxComboBox Data="@(new List<string>(){"Kecala", "Mekala", "Po"})"
+                            NullText="Select Country..."
+                            FilteringMode="DataGridFilteringMode.Contains"
+                                @bind-Value=@productionData.Loc>
+                </DxComboBox>
+            </CellEditTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="BbxNum" Caption="BbxNum" DataRowEditorVisible=false />
     </Columns>
 </DxGrid>
-
+</div>
 
 @code {
+    int NumberOfNOK { get; set; }
+    int maxNOK = 2;
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)//onselect="OnBilboxSelecteInputSelected"   @bind="SelectedBilbox"
     {
@@ -42,18 +75,26 @@
 
         if (!String.IsNullOrEmpty(selectedBilbox))
         {
-            HttpResponseMessage response = await Http.GetAsync($"http://localhost:5047/api/Bilbox/GetActualShiftNOK?standLoc={selectedBilbox}");
-            string content = await response.Content.ReadAsStringAsync();
-            nokList = JsonSerializer.Deserialize<List<ProductionData>>(content, _jsonSerializerOptions);
+            nokList = await BilboxService.GetNokList(selectedBilbox);
+            if(nokList is not null)
+            {
+                if(nokList.Count > 0)
+                {
+                    maxNOK = nokList.Count;
+                }
+            }
         }
     }
 
-
-    public string SelectedBilbox { get; set; }
+    string SelectedBilbox { get; set; }
+    IGrid Grid { get; set; }
     List<string> avaibleBilboxes = new List<string>();
-    List<ProductionData> nokList = new List<ProductionData>();
+    IList<ProductionData>? nokList = new List<ProductionData>();
+    Dictionary<ProductionData, DataChange> UnsavedChanges { get; } = new();
+    bool BatchItemsEnabled => UnsavedChanges.Count > 0 || Grid.IsEditing();
 
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+    private readonly string ApiAddressTest = "http://localhost:5047/";
+    private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,37 +104,28 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        await JSRuntime.InvokeVoidAsync("sseInterop.connectSse", "http://localhost:5047/api/sse/notifyNumberOfDevicesChanged", DotNetObjectReference.Create(this));
+        await JSRuntime.InvokeVoidAsync("sseInterop.connectSse", $"{ApiAddress}api/sse/notifyNumberOfDevicesChanged", DotNetObjectReference.Create(this));
 
         await base.OnParametersSetAsync();
     }
 
     public async Task GetAvaibleBilboxes()
     {
-        HttpResponseMessage response = await Http.GetAsync("http://localhost:5047/api/sse/getAvaibleBilboxes");
-        string content = await response.Content.ReadAsStringAsync();
-        avaibleBilboxes = JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
     }
 
     private async Task SetRetestMode()
     {
-        //var json = JsonSerializer.Serialize(nokList);
-        //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-        var response = await Http.PostAsJsonAsync($"http://localhost:5047/api/sse/retestMode/{SelectedBilbox}", nokList);
-
-        if (response.IsSuccessStatusCode)
+        if (nokList is null)
         {
-            // Handle a successful response here
+            return;
         }
-        else
-        {
-            // Handle errors or failed response
-        }
+        await BilboxService.SetRetestMode(SelectedBilbox, nokList.Take(NumberOfNOK).ToList());
     }
 
     private async Task SetNormalMode()
     {
-        await Http.PostAsync($"http://localhost:5047/api/sse/normalMode/{SelectedBilbox}", null);
+        await BilboxService.SetNormalMode(SelectedBilbox);
     }
 
     [JSInvokable]
@@ -113,4 +145,73 @@
         // Handle SSE error
         Console.WriteLine(error.ToString());
     }
+
+    void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
+    {
+    }
+
+    void Grid_EditModelSaving(GridEditModelSavingEventArgs e)
+    {
+        var editablePD = (ProductionData)e.EditModel;
+        var productionData = (ProductionData)e.DataItem;
+        if (!e.IsNew)
+        {
+            var changedFields = DataUtils.ApplyModifiedFields(editablePD, productionData);
+            if (changedFields.Count > 0)
+            {
+                if (UnsavedChanges.TryGetValue(productionData, out var changes))
+                    changes.ChangedFields.UnionWith(changedFields);
+                else
+                    UnsavedChanges.Add(productionData, new(DataChangeType.Modification, changedFields));
+            }
+        }
+    }
+
+    void Grid_CustomizeElement(GridCustomizeElementEventArgs ea)
+    {
+        if (ea.ElementType == GridElementType.DataCell)
+        {
+            var productionData = (ProductionData)Grid.GetDataItem(ea.VisibleIndex);
+            var column = (IGridDataColumn)ea.Column;
+            bool isNew = productionData == null;
+            if (!isNew && UnsavedChanges.TryGetValue(productionData, out var changes))
+            {
+                if (changes.Type == DataChangeType.Addition || changes.ChangedFields.Contains(column.FieldName))
+                    ea.CssClass = "grid-modified-cell";
+            }
+        }
+    }
+
+    async Task Cancel_Click() => await ClearUnsavedChangesAsync();
+
+    async Task Save_Click()
+    {
+        foreach (var unsavedChange in UnsavedChanges)
+        {
+            var dataItem = unsavedChange.Key;
+            var changeType = unsavedChange.Value.Type;
+            var changedFields = unsavedChange.Value.ChangedFields;
+            if (changeType == DataChangeType.Modification)
+            {
+                await BilboxService.UpdateBilboxNokAsync(dataItem, DataUtils.GetFieldValues(dataItem, changedFields));
+            }
+            //break; //I think
+        }
+        await ClearUnsavedChangesAsync();
+    }
+
+    async Task ClearUnsavedChangesAsync()
+    {
+        UnsavedChanges.Clear();
+        await UpdateDataAsync();
+    }
+
+    async Task UpdateDataAsync()
+    {
+        var data = await BilboxService.GetNokList(SelectedBilbox);
+        nokList = new List<ProductionData>(data);
+    }
+
+    record DataChange(DataChangeType Type, HashSet<string> ChangedFields);
+    enum DataChangeType { Modification, Addition, Delete }
 }
