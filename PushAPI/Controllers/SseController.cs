@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SharedLib.DTO;
 using SharedLib.Models;
 using System.Collections.Concurrent;
 using System.Text;
@@ -101,7 +102,7 @@ namespace PushAPI.Controllers
         }
 
         [HttpPost("retestMode/{bilboxNum}")]
-        public IActionResult RetestMode(string bilboxNum, [FromBody] List<ProductionData> productionDatas)
+        public IActionResult RetestMode(string bilboxNum, [FromBody] List<ProductionDataDTO> productionDatas)
         {
             Console.WriteLine(bilboxNum + RETEST_STATE);
             ChangeDeviceState(bilboxNum, RETEST_STATE, productionDatas);
@@ -118,7 +119,7 @@ namespace PushAPI.Controllers
             return Ok();
         }
 
-        private void ChangeDeviceState(string bilboxNum, string stateToChange, List<ProductionData>? productionDatas = null)
+        private void ChangeDeviceState(string bilboxNum, string stateToChange, List<ProductionDataDTO>? productionDatas = null)
         {
             if (connectedDevices.TryGetValue(bilboxNum, out var deviceState))
             {
@@ -144,6 +145,6 @@ namespace PushAPI.Controllers
     {
         public string DeviceState { get; set; }
         public HttpResponse Response { get; set; }
-        public List<ProductionData>? ProductionDatasForRetest { get; set; }
+        public List<ProductionDataDTO>? ProductionDatasForRetest { get; set; }
     }
 }

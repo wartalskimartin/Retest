@@ -15,9 +15,92 @@ public partial class cockpitContext : DbContext
     }
 
     public virtual DbSet<ProductionData> ProductionData { get; set; }
+    public virtual DbSet<QualityCardBilbox> QualityCardBilboxes { get; set; }
+
+    public virtual DbSet<QualityDefectDescriptionBilbox> QualityDefectDescriptionBilboxes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<QualityCardBilbox>(entity =>
+        {
+            entity.HasKey(e => e.IdQualityCard);
+
+            entity.ToTable("qualityCardBilbox");
+
+            entity.Property(e => e.IdQualityCard).HasColumnName("idQualityCard");
+            entity.Property(e => e.DateTimeRecord)
+                .HasColumnType("datetime")
+                .HasColumnName("dateTimeRecord");
+            entity.Property(e => e.DatetimeServer)
+                .HasColumnType("datetime")
+                .HasColumnName("datetimeServer");
+            entity.Property(e => e.DefectCode)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("defectCode");
+            entity.Property(e => e.DefectDescription)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectDescription");
+            entity.Property(e => e.DefectRemark)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectRemark");
+            entity.Property(e => e.DefectType)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectType");
+            entity.Property(e => e.DeviceNumber)
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasColumnName("deviceNumber");
+            entity.Property(e => e.OperationNumber).HasColumnName("operationNumber");
+            entity.Property(e => e.OperatorNumber).HasColumnName("operatorNumber");
+            entity.Property(e => e.OrderNumber).HasColumnName("orderNumber");
+            entity.Property(e => e.ProductIndex)
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasColumnName("productIndex");
+            entity.Property(e => e.ProductNumber)
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasColumnName("productNumber");
+            entity.Property(e => e.TeamNumber)
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasColumnName("teamNumber");
+            entity.Property(e => e.VypichovackaNumber).HasColumnName("vypichovackaNumber");
+            entity.Property(e => e.WorkingPlaceNumber)
+                .HasMaxLength(45)
+                .IsUnicode(false)
+                .HasColumnName("workingPlaceNumber");
+        });
+
+        modelBuilder.Entity<QualityDefectDescriptionBilbox>(entity =>
+        {
+            entity.HasKey(e => e.IdQualityDefectDescription);
+
+            entity.ToTable("qualityDefectDescriptionBilbox");
+
+            entity.Property(e => e.IdQualityDefectDescription).HasColumnName("idQualityDefectDescription");
+            entity.Property(e => e.DefectCode)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("defectCode");
+            entity.Property(e => e.DefectDescription)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectDescription");
+            entity.Property(e => e.DefectRemark)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectRemark");
+            entity.Property(e => e.DefectType)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectType");
+        });
+
         modelBuilder.Entity<ProductionData>(entity =>
         {
             entity.ToTable("productionData");

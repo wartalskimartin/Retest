@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PushAPI.Services;
 using SharedLib.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PushAPI.Controllers
 {
@@ -14,15 +15,53 @@ namespace PushAPI.Controllers
             _bilboxService = bilboxService;
         }
 
+        [HttpPost("addRetestNok")]
+        public async Task<IActionResult> AddRetestNok(List<QualityCardBilbox> retestedNok)
+        {
+            await _bilboxService.AddQualityCardBilbox(retestedNok);
+            return Ok();
+        }
+
+        [HttpGet("getDefectCodes")]
+        public async Task<IActionResult> GetDefectCodes()
+        {
+            List<QualityDefectDescriptionBilbox> result = await _bilboxService.GetDefectCodes();
+            return Ok(result);
+        }
+
         [HttpGet("getActualShiftNOK")]
         public async Task<IActionResult> GetActualShiftNOK(string standLoc)
         {
             DateTime startOfShift = GetActualShiftStartHour();
 
-            List<ProductionData> result = await _bilboxService.GetLatestShiftNOK(standLoc, startOfShift);
+            List<ProductionData> pp = await _bilboxService.GetLatestShiftNOK(standLoc, startOfShift);
+            List<QualityCardBilbox> result = PopulateModel(pp);
+
             return Ok(result);
         }
+        
+        private List<QualityCardBilbox> PopulateModel(List<ProductionData> productionDatas)
+        {
+            List<QualityCardBilbox> result = new();
 
+            foreach (var productionData in productionDatas)
+            {
+                result.Add( new QualityCardBilbox { 
+                    ProductNumber = productionData.ProductNumber,
+                    OrderNumber = productionData.OrderNumber,
+                    OperationNumber = productionData.Operation,
+                    OperatorNumber = productionData.OperatorNumber,
+                    WorkingPlaceNumber = productionData.Loc,
+                    DeviceNumber = productionData.Device,
+                    TeamNumber = productionData.TeamNumber,
+                    BilboxNumber = productionData.BbxNum,
+                    NokDateTime = productionData.DatetimeServer
+                });
+            }
+
+            return result;
+        }
+        
         private DateTime GetActualShiftStartHour()
         {
             DateTime result;

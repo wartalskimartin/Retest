@@ -1,4 +1,5 @@
-﻿using SharedLib.Models;
+﻿using SharedLib.DTO;
+using SharedLib.Models;
 using System.Net.Http.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -8,8 +9,8 @@ namespace RetestWebAssembly.Services
     public class BilboxService
     {
         private readonly HttpClient HttpClient;
-        private readonly string ApiAddressTest = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+        private readonly string ApiAddress = "http://localhost:5047/";
+        private readonly string ApiAddressTest = "https://czvrsrvweb01.intranet.zkw.at:8965/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         public BilboxService(HttpClient httpClient)
@@ -17,7 +18,7 @@ namespace RetestWebAssembly.Services
             this.HttpClient = httpClient;
         }
 
-        public async Task SetRetestMode(string bilbox, List<ProductionData> nokList)
+        public async Task SetRetestMode(string bilbox, List<ProductionDataDTO> nokList)
         {
             //var json = JsonSerializer.Serialize(nokList);
             //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -42,23 +43,30 @@ namespace RetestWebAssembly.Services
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAvaibleBilboxes");
             string content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();//change to be same
         }
 
-        public async Task<List<ProductionData>> GetNokList(string bilbox)
+        public async Task<List<QualityCardBilbox>?> GetNokList(string bilbox)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/GetActualShiftNOK?standLoc={bilbox}");
             string content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<ProductionData>>(content, _jsonSerializerOptions);
+            return JsonSerializer.Deserialize<List<QualityCardBilbox>>(content, _jsonSerializerOptions);
         }
 
-        public async Task UpdateBilboxNokAsync(ProductionData dataItem, IDictionary<string, object> newValues)
+        public async Task UpdateBilboxNokAsync(QualityCardBilbox dataItem, IDictionary<string, object> newValues)
         {
             // Change your data here
         }
-        public async Task UpdateBilboxNokAsync(ProductionData dataItem, ProductionData newDataItem)
+        public async Task UpdateBilboxNokAsync(QualityCardBilbox dataItem, QualityCardBilbox newDataItem)
         {
             // Change your data here
+        }
+
+        public async Task<List<QualityDefectDescriptionBilbox>?> GetDefectCodes()
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getDefectCodes");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<QualityDefectDescriptionBilbox>>(content, _jsonSerializerOptions);
         }
     }
 }

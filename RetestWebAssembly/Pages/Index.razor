@@ -18,17 +18,16 @@
             CssClass="w-25 mb-3" />
 
 <label for="seOverview" class="demo-text cw-320 mb-1">
-    Počet NOK
+    Počet NOK k retestu: @UnsavedChanges.Count
 </label>
-<DxSpinEdit @bind-Value="@NumberOfNOK"
-            CssClass="cw-320" MinValue=1 MaxValue=@maxNOK
-            InputId="seOverview" />
-
+@*
 <button class="btn btn-primary" @onclick="SetRetestMode">Set Retest Mode</button>
+*@
 <button class="btn btn-primary" @onclick="SetNormalMode">Set Normal Mode</button>
 
 <div class="grid-container">
-<DxGrid @ref=Grid Data="@nokList" CssClass="mw-1100 mt-3"
+<DxGrid @ref=Grid Data="@nokList" CssClass="mt-3"
+        PageSize="100"
         ValidationEnabled="false"
         EditMode="GridEditMode.EditCell"
         KeyboardNavigationEnabled="true"
@@ -37,30 +36,74 @@
         CustomizeElement="Grid_CustomizeElement">
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
-            <DxToolbarItem Text="Save" Click="Save_Click" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" BeginGroup="true" />
-            <DxToolbarItem Text="Cancel" Click="Cancel_Click" IconCssClass="grid-toolbar-cancel" Enabled="BatchItemsEnabled" />
+            <DxToolbarItem Text="Retest" Click="Save_Click" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" />
+            <DxToolbarItem Text="Zrušit" Click="Cancel_Click" IconCssClass="grid-toolbar-cancel" Enabled="BatchItemsEnabled" BeginGroup="true" />
         </DxToolbar>
     </ToolbarTemplate>
     <Columns>
-        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" />
-        <DxGridDataColumn FieldName="Operation" Caption="Operace" />
-        <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" />
-        <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" />
-        <DxGridDataColumn FieldName="ProductionDateTime" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss" />
-        <DxGridDataColumn FieldName="Device" Caption="Device" />
-        <DxGridDataColumn FieldName="Loc" Caption="Loc">
+        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130" />
+        <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" DataRowEditorVisible=false Width="90" />
+        <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DataRowEditorVisible=false DisplayFormat="######" Width="100" />
+        <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" DataRowEditorVisible=false DisplayFormat="##" Width="100" />
+        <DxGridDataColumn FieldName="NokDateTime" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss"  DataRowEditorVisible=false Width="190" />
+        <DxGridDataColumn FieldName="DeviceNumber" Caption="Device" DataRowEditorVisible=false Width="130" />
+        <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Loc" DataRowEditorVisible=false Width="100" />
+        <DxGridDataColumn FieldName="BilboxNumber" Caption="BbxNum" DataRowEditorVisible=false Width="120" />
+        <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" >
             <CellEditTemplate>
                 @{
-                    var productionData = (ProductionData)context.EditModel;
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
                 }
-                <DxComboBox Data="@(new List<string>(){"Kecala", "Mekala", "Po"})"
-                            NullText="Select Country..."
+                <DxComboBox Data="@defects"
+                            NullText="Vyber vadu..."
+                            DropDownVisible="true"
                             FilteringMode="DataGridFilteringMode.Contains"
-                                @bind-Value=@productionData.Loc>
+                            TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                            ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                            SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
+                            @bind-Value=@qualityCardBilbox.DefectCode>
+                        <Columns>
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                                                Caption="Kod" />
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                                                Caption="Typ" />
+                        </Columns>
                 </DxComboBox>
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn FieldName="BbxNum" Caption="BbxNum" DataRowEditorVisible=false />
+        <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200">
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxComboBox Data="@defects"
+                            NullText="Vyber vadu..."
+                            DropDownVisible="true"
+                            FilteringMode="DataGridFilteringMode.Contains"
+                            TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                            ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                            SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
+                            @bind-Value=@qualityCardBilbox.DefectType>
+                        <Columns>
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                                                Caption="Kod" />
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                                                Caption="Typ" />
+                        </Columns>
+                </DxComboBox>
+            </CellEditTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200">
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxMemo CssClass="cw-480"
+                        Rows="5"
+                        NullText="Popis vady..."
+                        @bind-Text=@qualityCardBilbox.DefectDescription />
+            </CellEditTemplate>
+        </DxGridDataColumn>
     </Columns>
 </DxGrid>
 </div>
@@ -89,16 +132,21 @@
     string SelectedBilbox { get; set; }
     IGrid Grid { get; set; }
     List<string> avaibleBilboxes = new List<string>();
-    IList<ProductionData>? nokList = new List<ProductionData>();
-    Dictionary<ProductionData, DataChange> UnsavedChanges { get; } = new();
+    IList<QualityCardBilbox>? nokList = new List<QualityCardBilbox>();
+    Dictionary<QualityCardBilbox, DataChange> UnsavedChanges { get; } = new();
     bool BatchItemsEnabled => UnsavedChanges.Count > 0 || Grid.IsEditing();
 
-    private readonly string ApiAddressTest = "http://localhost:5047/";
-    private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+    List<QualityDefectDescriptionBilbox>? defects = new();
+    string CurrentDefectCode { get; set; }
+    string CurrentDefectType { get; set; }
+
+    private readonly string ApiAddress = "http://localhost:5047/";
+    private readonly string ApiAddressTest = "https://czvrsrvweb01.intranet.zkw.at:8965/";
 
     protected override async Task OnInitializedAsync()
     {
         await GetAvaibleBilboxes();
+        defects = await BilboxService.GetDefectCodes();
         await base.OnInitializedAsync();
     }
 
@@ -120,7 +168,24 @@
         {
             return;
         }
-        await BilboxService.SetRetestMode(SelectedBilbox, nokList.Take(NumberOfNOK).ToList());
+
+        //transfer to ProductionDTO object and send it for retest to bilbox
+        List<ProductionDataDTO> transferedNokList = new();
+
+        foreach (QualityCardBilbox qcb in nokList)
+        {
+            transferedNokList.Add( new ProductionDataDTO(){
+                ProductNumber = qcb.ProductNumber,
+                OrderNumber = qcb.OrderNumber,
+                Operation = qcb.OperationNumber,
+                OperatorNumber = qcb.OperatorNumber,
+                Loc = qcb.WorkingPlaceNumber,
+                Device = qcb.DeviceNumber,
+                TeamNumber = qcb.TeamNumber
+            });
+        }
+
+        await BilboxService.SetRetestMode(SelectedBilbox, transferedNokList);
     }
 
     private async Task SetNormalMode()
@@ -146,23 +211,29 @@
         Console.WriteLine(error.ToString());
     }
 
+    void SelectedDefectTypeItemChanged(QualityDefectDescriptionBilbox defect, ref QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.DefectCode = defect.DefectCode;
+        qualityCardBilbox.DefectType = defect.DefectDescription;
+    }
+
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
     {
     }
 
     void Grid_EditModelSaving(GridEditModelSavingEventArgs e)
     {
-        var editablePD = (ProductionData)e.EditModel;
-        var productionData = (ProductionData)e.DataItem;
+        var editablePD = (QualityCardBilbox)e.EditModel;
+        var qualityCardBilbox = (QualityCardBilbox)e.DataItem;
         if (!e.IsNew)
         {
-            var changedFields = DataUtils.ApplyModifiedFields(editablePD, productionData);
+            var changedFields = DataUtils.ApplyModifiedFields(editablePD, qualityCardBilbox);
             if (changedFields.Count > 0)
             {
-                if (UnsavedChanges.TryGetValue(productionData, out var changes))
+                if (UnsavedChanges.TryGetValue(qualityCardBilbox, out var changes))
                     changes.ChangedFields.UnionWith(changedFields);
                 else
-                    UnsavedChanges.Add(productionData, new(DataChangeType.Modification, changedFields));
+                    UnsavedChanges.Add(qualityCardBilbox, new(DataChangeType.Modification, changedFields));
             }
         }
     }
@@ -171,10 +242,10 @@
     {
         if (ea.ElementType == GridElementType.DataCell)
         {
-            var productionData = (ProductionData)Grid.GetDataItem(ea.VisibleIndex);
+            var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);
             var column = (IGridDataColumn)ea.Column;
-            bool isNew = productionData == null;
-            if (!isNew && UnsavedChanges.TryGetValue(productionData, out var changes))
+            bool isNew = qualityCardBilbox == null;
+            if (!isNew && UnsavedChanges.TryGetValue(qualityCardBilbox, out var changes))
             {
                 if (changes.Type == DataChangeType.Addition || changes.ChangedFields.Contains(column.FieldName))
                     ea.CssClass = "grid-modified-cell";
@@ -209,7 +280,7 @@
     async Task UpdateDataAsync()
     {
         var data = await BilboxService.GetNokList(SelectedBilbox);
-        nokList = new List<ProductionData>(data);
+        nokList = new List<QualityCardBilbox>(data);
     }
 
     record DataChange(DataChangeType Type, HashSet<string> ChangedFields);
