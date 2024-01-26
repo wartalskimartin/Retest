@@ -28,5 +28,10 @@ namespace PushAPI.Services
         {
             return await _dbcontext.QualityDefectDescriptionBilboxes.ToListAsync();
         }
+
+        public async Task<StandsList?> GetBilboxInformation(string bilboxLoc)
+        {
+            return await _dbcontext.StandsLists.FirstOrDefaultAsync(b => b.Stand == bilboxLoc);
+        }
     }
 }

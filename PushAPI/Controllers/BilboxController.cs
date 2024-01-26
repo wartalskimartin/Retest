@@ -14,6 +14,19 @@ namespace PushAPI.Controllers
         {
             _bilboxService = bilboxService;
         }
+        
+
+        [HttpGet("getBilboxInformation/{bilboxName}")]
+        public async Task<IActionResult> GetBilboxInformation(string bilboxName)
+        {
+            StandsList? result = await _bilboxService.GetBilboxInformation(bilboxName);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
 
         [HttpPost("addRetestNok")]
         public async Task<IActionResult> AddRetestNok(List<QualityCardBilbox> retestedNok)

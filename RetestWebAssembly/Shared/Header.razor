@@ -6,7 +6,7 @@
 </nav>
 
 @code {
-    [Parameter] public bool ToggleOn { get; set; } = false;
+    [Parameter] public bool ToggleOn { get; set; } = true;
     [Parameter] public EventCallback<bool> ToggleOnChanged { get; set; }
 
     async Task OnToggleClick() => await Toggle();

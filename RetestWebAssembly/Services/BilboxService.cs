@@ -68,5 +68,13 @@ namespace RetestWebAssembly.Services
             string content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<QualityDefectDescriptionBilbox>>(content, _jsonSerializerOptions);
         }
+
+        public async Task<StandsList?> GetBilboxDetail(string bilboxName)
+        {
+            string url = $"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}";
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<StandsList>(content, _jsonSerializerOptions);
+        }
     }
 }

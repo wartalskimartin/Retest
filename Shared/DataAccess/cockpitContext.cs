@@ -14,6 +14,7 @@ public partial class cockpitContext : DbContext
     {
     }
 
+    public virtual DbSet<StandsList> StandsLists { get; set; }
     public virtual DbSet<ProductionData> ProductionData { get; set; }
     public virtual DbSet<QualityCardBilbox> QualityCardBilboxes { get; set; }
 
@@ -21,6 +22,43 @@ public partial class cockpitContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<StandsList>(entity =>
+        {
+            entity.ToTable("standsList");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.DateTimeUpdate)
+                .HasColumnType("datetime")
+                .HasColumnName("dateTimeUpdate");
+            entity.Property(e => e.Hall).HasColumnName("hall");
+            entity.Property(e => e.OwnerStand)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("ownerStand");
+            entity.Property(e => e.Remarks)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("remarks");
+            entity.Property(e => e.Section)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("section");
+            entity.Property(e => e.Stand)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("stand");
+            entity.Property(e => e.StandLocation)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("standLocation");
+            entity.Property(e => e.StandRow)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("standRow");
+            entity.Property(e => e.StandStatus).HasColumnName("standStatus");
+        });
+
+
         modelBuilder.Entity<QualityCardBilbox>(entity =>
         {
             entity.HasKey(e => e.IdQualityCard);

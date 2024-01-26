@@ -20,12 +20,37 @@
 <label for="seOverview" class="demo-text cw-320 mb-1">
     Počet NOK k retestu: @UnsavedChanges.Count
 </label>
+
+@if(bilboxInformation is not null)
+{
+<div class="row">
+    <div class="col">
+        <h6>Úsek</h6>
+        <h6>@bilboxInformation.Section</h6>
+    </div>
+    <div class="col">
+        <h6>Hala</h6>
+        <h6>@bilboxInformation.Hall</h6>
+    </div>
+    <div class="col">
+        <h6>Řada</h6>
+        <h6>@bilboxInformation.StandRow</h6>
+    </div>
+</div>   
+}
+
 @*
 <button class="btn btn-primary" @onclick="SetRetestMode">Set Retest Mode</button>
 *@
 <button class="btn btn-primary" @onclick="SetNormalMode">Set Normal Mode</button>
 
 <div class="grid-container">
+    <div class="align-self-end pl-2 pb-2">
+        <DxButton Text="Upravit sloupce"
+                  RenderStyle="ButtonRenderStyle.Secondary"
+                  IconCssClass="btn-column-chooser"
+                  Click="ColumnChooserButton_Click" />
+    </div>
 <DxGrid @ref=Grid Data="@nokList" CssClass="mt-3"
         PageSize="100"
         ValidationEnabled="false"
@@ -33,7 +58,9 @@
         KeyboardNavigationEnabled="true"
         CustomizeEditModel="Grid_CustomizeEditModel"
         EditModelSaving="Grid_EditModelSaving"
-        CustomizeElement="Grid_CustomizeElement">
+        CustomizeElement="Grid_CustomizeElement"
+        LayoutAutoLoading="Grid_LayoutAutoLoading"
+        LayoutAutoSaving="Grid_LayoutAutoSaving">
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
             <DxToolbarItem Text="Retest" Click="Save_Click" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" />
@@ -109,12 +136,18 @@
 </div>
 
 @code {
+    const string LocalStorageKey = "Grid-LayoutPersistence-Data";
+    bool PreRendered { get; set; }
+
+
     int NumberOfNOK { get; set; }
     int maxNOK = 2;
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)//onselect="OnBilboxSelecteInputSelected"   @bind="SelectedBilbox"
     {
         System.Diagnostics.Debug.WriteLine(selectedBilbox);
+
+        bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
 
         if (!String.IsNullOrEmpty(selectedBilbox))
         {
@@ -130,6 +163,8 @@
     }
 
     string SelectedBilbox { get; set; }
+    StandsList? bilboxInformation { get; set; }
+
     IGrid Grid { get; set; }
     List<string> avaibleBilboxes = new List<string>();
     IList<QualityCardBilbox>? nokList = new List<QualityCardBilbox>();
@@ -157,6 +192,59 @@
         await base.OnParametersSetAsync();
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            PreRendered = true;
+            StateHasChanged();
+        }
+    }
+
+    void ColumnChooserButton_Click()
+    {
+        Grid.ShowColumnChooser();
+    }
+
+    #region GridLayoutStateSaving
+    async Task Grid_LayoutAutoLoading(GridPersistentLayoutEventArgs e)
+    {
+        e.Layout = await LoadLayoutFromLocalStorageAsync();
+    }
+    async Task Grid_LayoutAutoSaving(GridPersistentLayoutEventArgs e)
+    {
+        await SaveLayoutToLocalStorageAsync(e.Layout);
+    }
+    // Refer to https://docs.microsoft.com/en-us/aspnet/core/blazor/state-management
+    // to learn more about Blazor state management
+    // In Blazor Server apps, prefer ASP.NET Core Protected Browser Storage
+    async Task<GridPersistentLayout> LoadLayoutFromLocalStorageAsync()
+    {
+        try
+        {
+            var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", LocalStorageKey);
+            return JsonSerializer.Deserialize<GridPersistentLayout>(json);
+        }
+        catch
+        {
+            // Mute exceptions for the server prerender stage
+            return null;
+        }
+    }
+    async Task SaveLayoutToLocalStorageAsync(GridPersistentLayout layout)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(layout);
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", LocalStorageKey, json);
+        }
+        catch
+        {
+            // Mute exceptions for the server prerender stage
+        }
+    }
+    #endregion
+
     public async Task GetAvaibleBilboxes()
     {
         avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
@@ -165,6 +253,11 @@
     private async Task SetRetestMode()
     {
         if (nokList is null)
+        {
+            return;
+        }
+
+        if (nokList.Count == 0)
         {
             return;
         }
