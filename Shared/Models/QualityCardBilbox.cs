@@ -45,4 +45,7 @@ public partial class QualityCardBilbox
 
     [NotMapped]
     public DateTime? NokDateTime { get; set; }
+
+    [NotMapped]
+    public bool IsFromPreviousShift { get; set; }
 }

@@ -81,6 +81,7 @@
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
                 }
+                @if (!qualityCardBilbox.IsFromPreviousShift){
                 <DxComboBox Data="@defects"
                             NullText="Vyber vadu..."
                             DropDownVisible="true"
@@ -96,6 +97,7 @@
                                                 Caption="Typ" />
                         </Columns>
                 </DxComboBox>
+                }
             </CellEditTemplate>
         </DxGridDataColumn>
         <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200">
@@ -103,6 +105,7 @@
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
                 }
+                @if (!qualityCardBilbox.IsFromPreviousShift){
                 <DxComboBox Data="@defects"
                             NullText="Vyber vadu..."
                             DropDownVisible="true"
@@ -118,6 +121,7 @@
                                                 Caption="Typ" />
                         </Columns>
                 </DxComboBox>
+                }
             </CellEditTemplate>
         </DxGridDataColumn>
         <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200">
@@ -125,10 +129,12 @@
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
                 }
+                @if (!qualityCardBilbox.IsFromPreviousShift){
                 <DxMemo CssClass="cw-480"
                         Rows="5"
                         NullText="Popis vady..."
                         @bind-Text=@qualityCardBilbox.DefectDescription />
+                }
             </CellEditTemplate>
         </DxGridDataColumn>
     </Columns>
@@ -333,6 +339,21 @@
 
     void Grid_CustomizeElement(GridCustomizeElementEventArgs ea)
     {
+        
+
+        if (ea.ElementType == GridElementType.DataRow)
+        {
+            var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);
+            if(qualityCardBilbox is not null)
+            {
+                if (qualityCardBilbox.IsFromPreviousShift)
+                {
+                    ea.CssClass = "highlighted-item";
+                    //ea.
+                }
+            }
+        }
+
         if (ea.ElementType == GridElementType.DataCell)
         {
             var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);

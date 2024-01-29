@@ -68,6 +68,14 @@
     protected override void OnInitialized() {
         NavigationManager.LocationChanged += OnLocationChanged;
     }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        IsSidebarExpanded = false;
+    }
+
     async void OnLocationChanged(object? sender, LocationChangedEventArgs args) {
         if(IsMobileLayout) {
             IsSidebarExpanded = false;

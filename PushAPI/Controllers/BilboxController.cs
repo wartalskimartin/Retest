@@ -45,9 +45,9 @@ namespace PushAPI.Controllers
         [HttpGet("getActualShiftNOK")]
         public async Task<IActionResult> GetActualShiftNOK(string standLoc)
         {
-            DateTime startOfShift = GetActualShiftStartHour();
+            DateTime startOfPreviousShift = ProductionDataShiftRecognizer.GetPreviousShiftStartHour();
 
-            List<ProductionData> pp = await _bilboxService.GetLatestShiftNOK(standLoc, startOfShift);
+            List<ProductionData> pp = await _bilboxService.GetLatestNOKFrom(standLoc, startOfPreviousShift);
             List<QualityCardBilbox> result = PopulateModel(pp);
 
             return Ok(result);
@@ -56,6 +56,7 @@ namespace PushAPI.Controllers
         private List<QualityCardBilbox> PopulateModel(List<ProductionData> productionDatas)
         {
             List<QualityCardBilbox> result = new();
+            DateTime startOfActualShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
 
             foreach (var productionData in productionDatas)
             {
@@ -68,35 +69,11 @@ namespace PushAPI.Controllers
                     DeviceNumber = productionData.Device,
                     TeamNumber = productionData.TeamNumber,
                     BilboxNumber = productionData.BbxNum,
-                    NokDateTime = productionData.DatetimeServer
+                    NokDateTime = productionData.DatetimeServer,
+                    IsFromPreviousShift = startOfActualShift > productionData.DatetimeServer
                 });
             }
 
-            return result;
-        }
-        
-        private DateTime GetActualShiftStartHour()
-        {
-            DateTime result;
-            int hourStartActualShift;
-
-            if(6 <= DateTime.Now.Hour && DateTime.Now.Hour < 14)
-            {
-                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
-            }
-            else if(14 <= DateTime.Now.Hour && DateTime.Now.Hour < 22) 
-            {
-                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 14, 0, 0);
-            }
-            else if (22 <= DateTime.Now.Hour && DateTime.Now.Hour <= 23)
-            {
-                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 22, 0, 0);
-            }
-            else //if (0 <= DateTime.Now.Hour && DateTime.Now.Hour < 6)
-            {
-                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 22, 0, 0);
-            }
-            Console.WriteLine(result.ToString("dd.MM.yyyy HH:mm:ss"));
             return result;
         }
     }
