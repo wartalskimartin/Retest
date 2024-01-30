@@ -29,8 +29,9 @@ namespace PushAPI.Controllers
         }
 
         [HttpPost("addRetestNok")]
-        public async Task<IActionResult> AddRetestNok(List<QualityCardBilbox> retestedNok)
+        public async Task<IActionResult> AddRetestNok([FromBody] List<QualityCardBilbox> retestedNok)
         {
+            retestedNok.ForEach(q => q.DatetimeServer = DateTime.Now);
             await _bilboxService.AddQualityCardBilbox(retestedNok);
             return Ok();
         }

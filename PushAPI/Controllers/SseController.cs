@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PushAPI.Services;
 using SharedLib.DTO;
 using SharedLib.Models;
 using System.Collections.Concurrent;
@@ -102,10 +103,12 @@ namespace PushAPI.Controllers
         }
 
         [HttpPost("retestMode/{bilboxNum}")]
-        public IActionResult RetestMode(string bilboxNum, [FromBody] List<ProductionDataDTO> productionDatas)
+        public IActionResult RetestMode(string bilboxNum, [FromBody] List<QualityCardBilbox> productionDatas)
         {
+            List<ProductionDataDTO> productionDataDTOs = PopulateDTO(productionDatas);
+
             Console.WriteLine(bilboxNum + RETEST_STATE);
-            ChangeDeviceState(bilboxNum, RETEST_STATE, productionDatas);
+            ChangeDeviceState(bilboxNum, RETEST_STATE, productionDataDTOs);
 
             return Ok();
         }
@@ -138,6 +141,29 @@ namespace PushAPI.Controllers
                     deviceState.ProductionDatasForRetest = null;
                 }
             }
+        }
+
+        private List<ProductionDataDTO> PopulateDTO(List<QualityCardBilbox> productionDatas)
+        {
+            List<ProductionDataDTO> result = new();
+
+            foreach (var productionData in productionDatas)
+            {
+                result.Add(new ProductionDataDTO
+                {
+                    ProductNumber = productionData.ProductNumber,
+                    OrderNumber = productionData.OrderNumber,
+                    Operation = productionData.OperationNumber,
+                    OperatorNumber = productionData.OperatorNumber,
+                    Loc = productionData.WorkingPlaceNumber,
+                    Device = productionData.DeviceNumber,
+                    TeamNumber = productionData.TeamNumber,
+                    BbxNum = productionData.BilboxNumber,
+                    DatetimeServer = productionData.NokDateTime
+                });
+            }
+
+            return result;
         }
     }
 

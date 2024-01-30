@@ -256,7 +256,7 @@
         avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
     }
 
-    private async Task SetRetestMode()
+    private async Task SetRetestMode()//to delete
     {
         if (nokList is null)
         {
@@ -284,7 +284,7 @@
             });
         }
 
-        await BilboxService.SetRetestMode(SelectedBilbox, transferedNokList);
+        //await BilboxService.SetRetestMode(SelectedBilbox, transferedNokList);
     }
 
     private async Task SetNormalMode()
@@ -339,7 +339,7 @@
 
     void Grid_CustomizeElement(GridCustomizeElementEventArgs ea)
     {
-        
+
 
         if (ea.ElementType == GridElementType.DataRow)
         {
@@ -371,6 +371,18 @@
 
     async Task Save_Click()
     {
+        List<QualityCardBilbox> result = new();
+        foreach (var unsavedChange in UnsavedChanges)
+        {
+            QualityCardBilbox dataItem = unsavedChange.Key;
+            dataItem.WorkingPlaceNumber = "ST2.999";
+            dataItem.DateTimeRecord = DateTime.Now;
+            result.Add(dataItem);
+        }
+
+        await BilboxService.SetRetestMode(SelectedBilbox, result);
+
+        /*
         foreach (var unsavedChange in UnsavedChanges)
         {
             var dataItem = unsavedChange.Key;
@@ -382,6 +394,7 @@
             }
             //break; //I think
         }
+        */
         await ClearUnsavedChangesAsync();
     }
 

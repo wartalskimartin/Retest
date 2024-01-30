@@ -18,7 +18,7 @@ namespace RetestWebAssembly.Services
             this.HttpClient = httpClient;
         }
 
-        public async Task SetRetestMode(string bilbox, List<ProductionDataDTO> nokList)
+        public async Task SetRetestMode(string bilbox, List<QualityCardBilbox> nokList)
         {
             //var json = JsonSerializer.Serialize(nokList);
             //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -27,6 +27,7 @@ namespace RetestWebAssembly.Services
             if (response.IsSuccessStatusCode)
             {
                 // Handle a successful response here
+                await SaveQualityCardListAsync(nokList);
             }
             else
             {
@@ -48,14 +49,30 @@ namespace RetestWebAssembly.Services
 
         public async Task<List<QualityCardBilbox>?> GetNokList(string bilbox)
         {
-            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/GetActualShiftNOK?standLoc={bilbox}");
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getActualShiftNOK?standLoc={bilbox}");
             string content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<QualityCardBilbox>>(content, _jsonSerializerOptions);
+        }
+
+        public async Task SaveQualityCardListAsync(List<QualityCardBilbox> nokList)
+        {
+            // Change your data here
+            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/Bilbox/addRetestNok", nokList);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Handle a successful response here
+            }
+            else
+            {
+                // Handle errors or failed response
+            }
         }
 
         public async Task UpdateBilboxNokAsync(QualityCardBilbox dataItem, IDictionary<string, object> newValues)
         {
             // Change your data here
+
         }
         public async Task UpdateBilboxNokAsync(QualityCardBilbox dataItem, QualityCardBilbox newDataItem)
         {
