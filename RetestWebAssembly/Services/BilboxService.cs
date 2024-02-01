@@ -9,8 +9,8 @@ namespace RetestWebAssembly.Services
     public class BilboxService
     {
         private readonly HttpClient HttpClient;
-        private readonly string ApiAddress = "http://localhost:5047/";
-        private readonly string ApiAddressTest = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+        private readonly string ApiAddressTest = "http://localhost:5047/";
+        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         public BilboxService(HttpClient httpClient)

@@ -12,6 +12,8 @@
 <DxComboBox Data=@avaibleBilboxes
             TextChanged="OnBilboxSelectInputChanged"
             @bind-Value=SelectedBilbox
+            FilteringMode="DataGridFilteringMode.Contains"
+            NullText="Vyberte bilbox..."
             CssClass="w-25 mb-3" />
 
 @if(bilboxInformation is not null)
@@ -71,7 +73,7 @@
                 }
                 @if (!qualityCardBilbox.IsFromPreviousShift){
                 <DxComboBox Data="@defects"
-                            NullText="Vyber vadu..."
+                            NullText="Vyberte vadu..."
                             DropDownVisible="true"
                             FilteringMode="DataGridFilteringMode.Contains"
                             TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
@@ -95,7 +97,7 @@
                 }
                 @if (!qualityCardBilbox.IsFromPreviousShift){
                 <DxComboBox Data="@defects"
-                            NullText="Vyber vadu..."
+                            NullText="Vyberte vadu..."
                             DropDownVisible="true"
                             FilteringMode="DataGridFilteringMode.Contains"
                             TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
@@ -169,8 +171,8 @@
     string CurrentDefectCode { get; set; }
     string CurrentDefectType { get; set; }
 
-    private readonly string ApiAddress = "http://localhost:5047/";
-    private readonly string ApiAddressTest = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+    private readonly string ApiAddressTest = "http://localhost:5047/";
+    private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
 
     protected override async Task OnInitializedAsync()
     {
