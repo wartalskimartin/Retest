@@ -112,6 +112,7 @@ public partial class cockpitContext : DbContext
                 .HasMaxLength(45)
                 .IsUnicode(false)
                 .HasColumnName("workingPlaceNumber");
+            entity.Property(e => e.ProductionDataNokId).HasColumnName("productionDataNokId");
         });
 
         modelBuilder.Entity<QualityDefectDescriptionBilbox>(entity =>

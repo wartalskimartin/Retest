@@ -2,6 +2,7 @@
 {
     public class ProductionDataDTO
     {
+        public long Id { get; set; }
         public string ProductNumber { get; set; }
 
         public int? Operation { get; set; }

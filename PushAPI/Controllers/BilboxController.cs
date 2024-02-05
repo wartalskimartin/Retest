@@ -61,7 +61,7 @@ namespace PushAPI.Controllers
 
             foreach (var productionData in productionDatas)
             {
-                result.Add( new QualityCardBilbox { 
+                result.Add(new QualityCardBilbox {
                     ProductNumber = productionData.ProductNumber,
                     OrderNumber = productionData.OrderNumber,
                     OperationNumber = productionData.Operation,
@@ -71,7 +71,8 @@ namespace PushAPI.Controllers
                     TeamNumber = productionData.TeamNumber,
                     BilboxNumber = productionData.BbxNum,
                     NokDateTime = productionData.DatetimeServer,
-                    IsFromPreviousShift = startOfActualShift > productionData.DatetimeServer
+                    IsFromPreviousShift = startOfActualShift > productionData.DatetimeServer,
+                    ProductionDataNokId = productionData.Id
                 });
             }
 

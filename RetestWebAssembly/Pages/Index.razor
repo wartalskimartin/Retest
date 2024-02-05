@@ -51,7 +51,7 @@
         LayoutAutoSaving="Grid_LayoutAutoSaving">
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
-            <DxToolbarItem Text="Normal mode" Click="SetNormalMode" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" />
+            <DxToolbarItem Text="Normal mode" Click="SetNormalMode" IconCssClass="grid-toolbar-save" />
             <DxToolbarItem Text="Retest" Click="Save_Click" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" />
             <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" IconCssClass="grid-toolbar-cancel" Enabled="BatchItemsEnabled" />
             <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" IconCssClass="grid-toolbar-column-chooser" BeginGroup="true" />
@@ -264,6 +264,7 @@
         foreach (QualityCardBilbox qcb in nokList)
         {
             transferedNokList.Add( new ProductionDataDTO(){
+                Id = qcb.ProductionDataNokId,
                 ProductNumber = qcb.ProductNumber,
                 OrderNumber = qcb.OrderNumber,
                 Operation = qcb.OperationNumber,
@@ -365,7 +366,6 @@
         foreach (var unsavedChange in UnsavedChanges)
         {
             QualityCardBilbox dataItem = unsavedChange.Key;
-            dataItem.WorkingPlaceNumber = "ST2.999";
             dataItem.DateTimeRecord = DateTime.Now;
             result.Add(dataItem);
         }

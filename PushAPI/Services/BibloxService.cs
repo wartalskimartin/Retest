@@ -15,7 +15,7 @@ namespace PushAPI.Services
 
         public async Task<List<ProductionData>> GetLatestNOKFrom(string standLoc, DateTime? startShift)
         {
-            return await _dbcontext.ProductionData.Where(pd => pd.Loc == standLoc && pd.ProductionDateTime >= startShift && pd.Nok == 1).ToListAsync();
+            return await _dbcontext.ProductionData.Where(pd => pd.Loc == standLoc && pd.ProductionDateTime >= startShift && pd.Nok == 1 && !_dbcontext.QualityCardBilboxes.Any(qcb => qcb.ProductionDataNokId == pd.Id)).ToListAsync();
         }
 
         public async Task AddQualityCardBilbox(List<QualityCardBilbox> retestedNok)
