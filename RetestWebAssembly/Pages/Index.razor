@@ -65,7 +65,7 @@
         </DxToolbar>
     </ToolbarTemplate>
     <Columns>
-        <DxGridSelectionColumn Width="100px" />
+        <DxGridSelectionColumn Width="100px" ShowInColumnChooser=false />
         <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130"  />
         <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" DataRowEditorVisible=false Width="90" />
         <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DataRowEditorVisible=false DisplayFormat="######" Width="100" />
@@ -74,7 +74,7 @@
         <DxGridDataColumn FieldName="DeviceNumber" Caption="Device" DataRowEditorVisible=false Width="130" />
         <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Loc" DataRowEditorVisible=false Width="100" />
         <DxGridDataColumn FieldName="BilboxNumber" Caption="BbxNum" DataRowEditorVisible=false Width="120" />
-        <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" >
+        <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" ShowInColumnChooser=false >
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
@@ -98,7 +98,7 @@
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200">
+        <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200" ShowInColumnChooser=false >
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;

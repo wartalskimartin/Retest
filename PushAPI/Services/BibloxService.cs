@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using SharedLib.DataAccess;
 using SharedLib.Models;
+using System.Data;
 
 namespace PushAPI.Services
 {
@@ -32,6 +34,14 @@ namespace PushAPI.Services
         public async Task<StandsList?> GetBilboxInformation(string bilboxLoc)
         {
             return await _dbcontext.StandsLists.FirstOrDefaultAsync(b => b.Stand == bilboxLoc);
+        }
+
+        public async Task<int?> GetQualityCounter(string locationNumber)
+        {
+            var locationNumberParameter = new SqlParameter("@locationNumber", SqlDbType.VarChar) { Value = locationNumber };
+            List<QualityCounterResult> result = await _dbcontext.QualityCounterResult.FromSqlRaw($"EXEC [dbo].[getQualityCounterSP] @locationNumber", locationNumberParameter).ToListAsync();
+
+            return result.FirstOrDefault()?.QualityCounter1;
         }
     }
 }

@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SharedLib.Models;
 
@@ -26,4 +27,7 @@ public partial class StandsList
     public string Remarks { get; set; }
 
     public string StandLocation { get; set; }
+
+    [NotMapped]
+    public int? QualityCounter { get; set; }
 }

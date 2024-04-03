@@ -19,9 +19,49 @@ public partial class cockpitContext : DbContext
     public virtual DbSet<QualityCardBilbox> QualityCardBilboxes { get; set; }
 
     public virtual DbSet<QualityDefectDescriptionBilbox> QualityDefectDescriptionBilboxes { get; set; }
+    public virtual DbSet<QualityCounterResult> QualityCounterResult { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<QualityCounterResult>(entity =>
+        {
+            entity.ToTable("qualityCounter");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.BilboxNumber)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("bilboxNumber");
+            entity.Property(e => e.ControllerNumber).HasColumnName("controllerNumber");
+            entity.Property(e => e.DateTimeServer)
+                .HasColumnType("datetime")
+                .HasColumnName("dateTimeServer");
+            entity.Property(e => e.DeviceNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("deviceNumber");
+            entity.Property(e => e.IndexNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("indexNumber");
+            entity.Property(e => e.LocationNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("locationNumber");
+            entity.Property(e => e.OperationNumber).HasColumnName("operationNumber");
+            entity.Property(e => e.OperatorNumber).HasColumnName("operatorNumber");
+            entity.Property(e => e.OrderNumber).HasColumnName("orderNumber");
+            entity.Property(e => e.ProductNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("productNumber");
+            entity.Property(e => e.ProductionDateTime)
+                .HasColumnType("datetime")
+                .HasColumnName("productionDateTime");
+            entity.Property(e => e.QualityCounter1).HasColumnName("qualityCounter");
+            entity.Property(e => e.ShiftNumber).HasColumnName("shiftNumber");
+        });
+
         modelBuilder.Entity<StandsList>(entity =>
         {
             entity.ToTable("standsList");

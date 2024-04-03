@@ -14,7 +14,6 @@ namespace PushAPI.Controllers
         {
             _bilboxService = bilboxService;
         }
-        
 
         [HttpGet("getBilboxInformation/{bilboxName}")]
         public async Task<IActionResult> GetBilboxInformation(string bilboxName)
@@ -25,6 +24,9 @@ namespace PushAPI.Controllers
             {
                 return NotFound();
             }
+
+            result.QualityCounter = await _bilboxService.GetQualityCounter(bilboxName);
+
             return Ok(result);
         }
 
