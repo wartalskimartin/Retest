@@ -32,14 +32,19 @@
     </div>
 
     <label class="">
-        Počet NOK k retestu: @UnsavedChanges.Count
+            Počet NOK k retestu: @(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)
     </label>
 </div>
 }
 
+<DxPopup HeaderText="Chyba"
+         @bind-Visible="@PopupVisible"
+         BodyText="Vyplňte u všech kusů na retest Typ vady.">
+</DxPopup>
 
 <div class="grid-container">
 <DxGrid @ref=Grid Data="@nokList" CssClass="mt-3"
+        @bind-SelectedDataItems="SelectedNok"
         PageSize="100"
         ValidationEnabled="false"
         EditMode="GridEditMode.EditCell"
@@ -51,14 +56,17 @@
         LayoutAutoSaving="Grid_LayoutAutoSaving">
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
-            <DxToolbarItem Text="Normal mode" Click="SetNormalMode" IconCssClass="grid-toolbar-save" />
-            <DxToolbarItem Text="Retest" Click="Save_Click" IconCssClass="grid-toolbar-save" Enabled="BatchItemsEnabled" />
-            <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" IconCssClass="grid-toolbar-cancel" Enabled="BatchItemsEnabled" />
-            <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" IconCssClass="grid-toolbar-column-chooser" BeginGroup="true" />
+            <DxToolbarItem Text="Normal mode" Click="SetNormalMode" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
+            <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
+                    @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
+            </DxToolbarItem>
+            <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
+            <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" BeginGroup="true" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
         </DxToolbar>
     </ToolbarTemplate>
     <Columns>
-        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130" />
+        <DxGridSelectionColumn Width="100px" />
+        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130"  />
         <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" DataRowEditorVisible=false Width="90" />
         <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DataRowEditorVisible=false DisplayFormat="######" Width="100" />
         <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" DataRowEditorVisible=false DisplayFormat="##" Width="100" />
@@ -135,9 +143,10 @@
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
 
-
     int NumberOfNOK { get; set; }
     int maxNOK = 2;
+
+    bool PopupVisible { get; set; } = false;
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)//onselect="OnBilboxSelecteInputSelected"   @bind="SelectedBilbox"
     {
@@ -165,14 +174,17 @@
     List<string> avaibleBilboxes = new List<string>();
     IList<QualityCardBilbox>? nokList = new List<QualityCardBilbox>();
     Dictionary<QualityCardBilbox, DataChange> UnsavedChanges { get; } = new();
-    bool BatchItemsEnabled => UnsavedChanges.Count > 0 || Grid.IsEditing();
+    bool RetestEnabled => UnsavedChanges.Count > 0 || Grid.IsEditing();
+
+    IReadOnlyList<object> SelectedNok { get; set; }
 
     List<QualityDefectDescriptionBilbox>? defects = new();
     string CurrentDefectCode { get; set; }
     string CurrentDefectType { get; set; }
 
-    private readonly string ApiAddressTest = "http://localhost:5047/";
+    //private readonly string ApiAddressTest = "http://localhost:5047/";
     private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+    //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
 
     protected override async Task OnInitializedAsync()
     {
@@ -246,38 +258,6 @@
         avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
     }
 
-    private async Task SetRetestMode()//to delete
-    {
-        if (nokList is null)
-        {
-            return;
-        }
-
-        if (nokList.Count == 0)
-        {
-            return;
-        }
-
-        //transfer to ProductionDTO object and send it for retest to bilbox
-        List<ProductionDataDTO> transferedNokList = new();
-
-        foreach (QualityCardBilbox qcb in nokList)
-        {
-            transferedNokList.Add( new ProductionDataDTO(){
-                Id = qcb.ProductionDataNokId,
-                ProductNumber = qcb.ProductNumber,
-                OrderNumber = qcb.OrderNumber,
-                Operation = qcb.OperationNumber,
-                OperatorNumber = qcb.OperatorNumber,
-                Loc = qcb.WorkingPlaceNumber,
-                Device = qcb.DeviceNumber,
-                TeamNumber = qcb.TeamNumber
-            });
-        }
-
-        //await BilboxService.SetRetestMode(SelectedBilbox, transferedNokList);
-    }
-
     private async Task SetNormalMode()
     {
         await BilboxService.SetNormalMode(SelectedBilbox);
@@ -330,8 +310,11 @@
 
     void Grid_CustomizeElement(GridCustomizeElementEventArgs ea)
     {
-
-
+        /*
+        if(ea.ElementType == GridElementType.SelectionCell)
+        {
+            ea.
+        }*/
         if (ea.ElementType == GridElementType.DataRow)
         {
             var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);
@@ -339,8 +322,8 @@
             {
                 if (qualityCardBilbox.IsFromPreviousShift)
                 {
-                    ea.CssClass = "highlighted-item";
-                    //ea.
+                    ea.CssClass = "highlighted-item ";
+                    ea.CssClass += "non-selectable-row";
                 }
             }
         }
@@ -363,34 +346,39 @@
     async Task Save_Click()
     {
         List<QualityCardBilbox> result = new();
+        List<QualityCardBilbox> selectedNokL = new();
+
         foreach (var unsavedChange in UnsavedChanges)
         {
+            //transform to list
             QualityCardBilbox dataItem = unsavedChange.Key;
             dataItem.DateTimeRecord = DateTime.Now;
             result.Add(dataItem);
         }
 
-        await BilboxService.SetRetestMode(SelectedBilbox, result);
-
-        /*
-        foreach (var unsavedChange in UnsavedChanges)
+        //check if selected rows have filled defect
+        foreach (QualityCardBilbox selected in SelectedNok)
         {
-            var dataItem = unsavedChange.Key;
-            var changeType = unsavedChange.Value.Type;
-            var changedFields = unsavedChange.Value.ChangedFields;
-            if (changeType == DataChangeType.Modification)
+            if (result.Contains(selected))
             {
-                await BilboxService.UpdateBilboxNokAsync(dataItem, DataUtils.GetFieldValues(dataItem, changedFields));
+                selectedNokL.Add(selected);
             }
-            //break; //I think
+            else
+            {
+                PopupVisible = true;
+                return;
+            }
         }
-        */
+
+        await BilboxService.SetRetestMode(SelectedBilbox, result, selectedNokL);
+
         await ClearUnsavedChangesAsync();
     }
 
     async Task ClearUnsavedChangesAsync()
     {
         UnsavedChanges.Clear();
+        await Grid.DeselectAllAsync();
         await UpdateDataAsync();
     }
 

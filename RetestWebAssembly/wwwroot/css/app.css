@@ -108,3 +108,7 @@ html, body, #app {
     max-width: 480px;
     width: 100%;
 }
+
+.non-selectable-row .dxbl-grid-selection-cell {
+    pointer-events: none;
+}

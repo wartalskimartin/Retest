@@ -9,8 +9,9 @@ namespace RetestWebAssembly.Services
     public class BilboxService
     {
         private readonly HttpClient HttpClient;
-        private readonly string ApiAddressTest = "http://localhost:5047/";
+        //private readonly string ApiAddressTest = "http://localhost:5047/";
         private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+        //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         public BilboxService(HttpClient httpClient)
@@ -18,11 +19,11 @@ namespace RetestWebAssembly.Services
             this.HttpClient = httpClient;
         }
 
-        public async Task SetRetestMode(string bilbox, List<QualityCardBilbox> nokList)
+        public async Task SetRetestMode(string bilbox, List<QualityCardBilbox> nokList, List<QualityCardBilbox> selectedNok)
         {
             //var json = JsonSerializer.Serialize(nokList);
             //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}", nokList);
+            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}", selectedNok);
 
             if (response.IsSuccessStatusCode)
             {
@@ -91,6 +92,10 @@ namespace RetestWebAssembly.Services
             string url = $"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}";
             HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}");
             string content = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(content))
+            {
+                return null;
+            }
             return JsonSerializer.Deserialize<StandsList>(content, _jsonSerializerOptions);
         }
     }

@@ -99,3 +99,7 @@ html, body {
     max-width: 480px;
     width: 100%;
 }
+
+.non-selectable-row .dxbs-grid-selection-cell {
+    pointer-events: none;
+}
