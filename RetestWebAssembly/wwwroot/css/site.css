@@ -103,3 +103,7 @@ html, body {
 .non-selectable-row .dxbs-grid-selection-cell {
     pointer-events: none;
 }
+
+tr {
+    height: 60px;
+}

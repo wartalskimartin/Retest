@@ -32,7 +32,11 @@
     </div>
 
     <label class="">
-            Počet NOK k retestu: @(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)
+            NOK počítadlo kvality: @bilboxInformation.QualityCounter
+    </label>
+
+    <label class="">
+            Počet NOK vybraných k retestu: @(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)
     </label>
 </div>
 }
@@ -53,7 +57,7 @@
         EditModelSaving="Grid_EditModelSaving"
         CustomizeElement="Grid_CustomizeElement"
         LayoutAutoLoading="Grid_LayoutAutoLoading"
-        LayoutAutoSaving="Grid_LayoutAutoSaving">
+        LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large">
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
             <DxToolbarItem Text="Normal mode" Click="SetNormalMode" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
@@ -66,7 +70,7 @@
     </ToolbarTemplate>
     <Columns>
         <DxGridSelectionColumn Width="100px" ShowInColumnChooser=false />
-        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130"  />
+        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130" />
         <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" DataRowEditorVisible=false Width="90" />
         <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DataRowEditorVisible=false DisplayFormat="######" Width="100" />
         <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" DataRowEditorVisible=false DisplayFormat="##" Width="100" />
@@ -90,7 +94,7 @@
                             @bind-Value=@qualityCardBilbox.DefectCode>
                         <Columns>
                             <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                                Caption="Kod" />
+                                                Caption="Kod" Width="50" />
                             <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
                                                 Caption="Typ" />
                         </Columns>
@@ -122,7 +126,7 @@
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200">
+        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200"  ShowInColumnChooser=false >
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
@@ -313,7 +317,7 @@
         /*
         if(ea.ElementType == GridElementType.SelectionCell)
         {
-            ea.
+        ea.
         }*/
         if (ea.ElementType == GridElementType.DataRow)
         {
@@ -357,16 +361,29 @@
         }
 
         //check if selected rows have filled defect
-        foreach (QualityCardBilbox selected in SelectedNok)
+        if(SelectedNok is not null)
         {
-            if (result.Contains(selected))
+            foreach (QualityCardBilbox selected in SelectedNok)
             {
-                selectedNokL.Add(selected);
+                if (result.Contains(selected))
+                {
+                    selectedNokL.Add(selected);
+                }
+                else
+                {
+                    PopupVisible = true;
+                    return;
+                }
             }
-            else
+        }
+
+        //write also nok from previouse shift
+        foreach (QualityCardBilbox qc in nokList)
+        {
+            if (qc.IsFromPreviousShift)
             {
-                PopupVisible = true;
-                return;
+                qc.DefectType = "prev_shift";
+                result.Add(qc);
             }
         }
 

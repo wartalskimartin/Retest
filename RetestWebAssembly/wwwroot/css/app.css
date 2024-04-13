@@ -112,3 +112,7 @@ html, body, #app {
 .non-selectable-row .dxbl-grid-selection-cell {
     pointer-events: none;
 }
+
+tr{
+    height: 60px;
+}

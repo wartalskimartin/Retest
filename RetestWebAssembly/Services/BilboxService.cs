@@ -23,17 +23,16 @@ namespace RetestWebAssembly.Services
         {
             //var json = JsonSerializer.Serialize(nokList);
             //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}", selectedNok);
+            if(selectedNok is not null)
+            {
+                if (selectedNok.Count != 0)
+                {
+                    await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}", selectedNok);
+                }
+            }
 
-            if (response.IsSuccessStatusCode)
-            {
-                // Handle a successful response here
-                await SaveQualityCardListAsync(nokList);
-            }
-            else
-            {
-                // Handle errors or failed response
-            }
+            // save rows
+            await SaveQualityCardListAsync(nokList);
         }
 
         public async Task SetNormalMode(string bilbox)
