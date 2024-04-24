@@ -57,7 +57,7 @@
         EditModelSaving="Grid_EditModelSaving"
         CustomizeElement="Grid_CustomizeElement"
         LayoutAutoLoading="Grid_LayoutAutoLoading"
-        LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large">
+        LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large" AllowSort=false>
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
             <DxToolbarItem Text="Normal mode" Click="SetNormalMode" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
@@ -135,7 +135,7 @@
                 <DxMemo CssClass="cw-480"
                         Rows="5"
                         NullText="Popis vady..."
-                        @bind-Text=@qualityCardBilbox.DefectDescription />
+                                @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, ref qualityCardBilbox))" />
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
@@ -289,6 +289,48 @@
     {
         qualityCardBilbox.DefectCode = defect.DefectCode;
         qualityCardBilbox.DefectType = defect.DefectDescription;
+
+        //auto filling of rows below selected item with same defect
+        bool canFill = false;
+
+        for (int i = 0; i < nokList.Count; i++)
+        {
+            if(!canFill)
+            {
+                canFill = string.Equals(nokList[i].NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"), qualityCardBilbox.NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"));
+            }
+
+            if (canFill)
+            {
+                nokList[i].DefectCode = defect.DefectCode;
+                nokList[i].DefectType = defect.DefectDescription;
+            }
+        }
+    }
+
+    private void HandleMemoInputChange(ChangeEventArgs e, ref QualityCardBilbox qualityCardBilbox)
+    {
+        string text = e.Value.ToString();
+        // Do something with the updated value
+        Console.WriteLine(text);
+
+        //auto filling of rows below selected item with same defect
+        bool canFill = false;
+
+        for (int i = 0; i < nokList.Count; i++)
+        {
+            if (!canFill)
+            {
+                canFill = string.Equals(nokList[i].NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"), qualityCardBilbox.NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"));
+            }
+
+            if (canFill)
+            {
+                nokList[i].DefectDescription = text;
+            }
+        }
+
+        StateHasChanged();
     }
 
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
@@ -314,11 +356,6 @@
 
     void Grid_CustomizeElement(GridCustomizeElementEventArgs ea)
     {
-        /*
-        if(ea.ElementType == GridElementType.SelectionCell)
-        {
-        ea.
-        }*/
         if (ea.ElementType == GridElementType.DataRow)
         {
             var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);
