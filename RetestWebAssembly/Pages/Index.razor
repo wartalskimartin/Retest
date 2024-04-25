@@ -8,6 +8,13 @@
 @inject IJSRuntime JSRuntime
 
 
+<DxLoadingPanel @bind-Visible="loadVisible"
+                IsContentBlocked="true"
+                CloseOnClick="false"
+                CssClass="w-100"
+                Text="Načítání"
+                ApplyBackgroundShading="true">
+
 <h1>Bilbox</h1>
 <DxComboBox Data=@avaibleBilboxes
             TextChanged="OnBilboxSelectInputChanged"
@@ -65,6 +72,7 @@
                     @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
             </DxToolbarItem>
             <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
+                <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" BeginGroup="true" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
         </DxToolbar>
     </ToolbarTemplate>
@@ -142,6 +150,8 @@
     </Columns>
 </DxGrid>
 </div>
+</DxLoadingPanel>
+
 
 @code {
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
@@ -152,9 +162,9 @@
 
     bool PopupVisible { get; set; } = false;
 
-    private async Task OnBilboxSelectInputChanged(string selectedBilbox)//onselect="OnBilboxSelecteInputSelected"   @bind="SelectedBilbox"
+    private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
-        System.Diagnostics.Debug.WriteLine(selectedBilbox);
+        loadVisible = true;
 
         bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
 
@@ -169,7 +179,11 @@
                 }
             }
         }
+
+        loadVisible = false;
     }
+
+    bool loadVisible = false;
 
     string SelectedBilbox { get; set; }
     StandsList? bilboxInformation { get; set; }
