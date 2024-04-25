@@ -68,11 +68,11 @@
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
             <DxToolbarItem Text="Normal mode" Click="SetNormalMode" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
-            <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
+            <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
                     @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
             </DxToolbarItem>
             <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
-                <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
+            <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" BeginGroup="true" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
         </DxToolbar>
     </ToolbarTemplate>
@@ -411,6 +411,15 @@
             result.Add(dataItem);
         }
 
+        foreach (var nk in nokList)
+        {
+            //transform to list
+            QualityCardBilbox dataItem = nk;
+            dataItem.DateTimeRecord = DateTime.Now;
+            if(!string.IsNullOrEmpty(nk.DefectCode))
+                result.Add(dataItem);
+        }
+
         //check if selected rows have filled defect
         if(SelectedNok is not null)
         {
@@ -433,6 +442,7 @@
         {
             if (qc.IsFromPreviousShift)
             {
+                qc.DefectCode = "ps";
                 qc.DefectType = "prev_shift";
                 result.Add(qc);
             }
