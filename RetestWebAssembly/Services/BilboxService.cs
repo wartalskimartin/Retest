@@ -40,11 +40,25 @@ namespace RetestWebAssembly.Services
             await HttpClient.PostAsync($"{ApiAddress}api/sse/normalMode/{bilbox}", null);
         }
 
-        public async Task<List<string>> GetAvaibleBilboxes()
+        public async Task<List<string>> GetHalls()
         {
-            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAvaibleBilboxes");
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getHalls");
             string content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();//change to be same
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        }
+
+        public async Task<List<string>> GetRows(string hall)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getRows?hallNumber={hall}");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        }
+
+        public async Task<List<string>> GetAvaibleBilboxes(string hall, string row)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAvaibleBilboxes?hallNumber={hall}&row={row}");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
         }
 
         public async Task<List<QualityCardBilbox>?> GetNokList(string bilbox)

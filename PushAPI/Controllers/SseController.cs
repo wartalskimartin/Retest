@@ -63,9 +63,9 @@ namespace PushAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("getAvaibleBilboxes")]
-        public async List<string> GetAvailableBilboxes(int hall, string row)
+        public async Task<List<string>> GetAvailableBilboxes(int hallNumber, string row)
         {
-            List<string> stands = await _bilboxService.GetStands(hall, row);
+            List<string> stands = await _bilboxService.GetStands(hallNumber, row);
             List<string> result = new List<string>();
 
             foreach (var st in stands) 

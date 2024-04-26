@@ -15,7 +15,23 @@
                 Text="Načítání"
                 ApplyBackgroundShading="true">
 
-<h1>Bilbox</h1>
+<h5>Hala</h5>
+<DxComboBox Data=@halls
+            TextChanged="OnHallSelectInputChanged"
+            @bind-Value=SelectedHall
+            FilteringMode="DataGridFilteringMode.Contains"
+            NullText="Vyberte halu..."
+            CssClass="w-25 mb-3" />
+
+<h5>Řada</h5>
+<DxComboBox Data=@rows
+            TextChanged="OnRowSelectInputChanged"
+            @bind-Value=SelectedRow
+            FilteringMode="DataGridFilteringMode.Contains"
+            NullText="Vyberte řadu..."
+            CssClass="w-25 mb-3" />
+
+<h5>Bilbox</h5>
 <DxComboBox Data=@avaibleBilboxes
             TextChanged="OnBilboxSelectInputChanged"
             @bind-Value=SelectedBilbox
@@ -74,6 +90,7 @@
             <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" BeginGroup="true" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
+            <DxCheckBox @bind-Checked="@DelayedRetest">Začít Retest po dokončení kusu</DxCheckBox>
         </DxToolbar>
     </ToolbarTemplate>
     <Columns>
@@ -162,6 +179,16 @@
 
     bool PopupVisible { get; set; } = false;
 
+    private async Task OnHallSelectInputChanged(string selectedHall)
+    {
+        rows = await BilboxService.GetRows(selectedHall);
+    }
+
+    private async Task OnRowSelectInputChanged(string selectedRow)
+    {
+        await GetAvaibleBilboxes();
+    }
+
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
         loadVisible = true;
@@ -185,6 +212,14 @@
 
     bool loadVisible = false;
 
+    bool DelayedRetest { get; set; }
+
+    string SelectedHall { get; set; }
+    List<string> halls = new List<string>();
+
+    string SelectedRow { get; set; }
+    List<string> rows = new List<string>();
+
     string SelectedBilbox { get; set; }
     StandsList? bilboxInformation { get; set; }
 
@@ -206,7 +241,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await GetAvaibleBilboxes();
+        DelayedRetest = true;
+        halls = await BilboxService.GetHalls();
+        //await GetAvaibleBilboxes();
         defects = await BilboxService.GetDefectCodes();
         await base.OnInitializedAsync();
     }
@@ -273,7 +310,7 @@
 
     public async Task GetAvaibleBilboxes()
     {
-        avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+        avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall, SelectedRow);
     }
 
     private async Task SetNormalMode()
@@ -448,7 +485,7 @@
             }
         }
 
-        await BilboxService.SetRetestMode(SelectedBilbox, result, selectedNokL);
+        await BilboxService.SetRetestMode(SelectedBilbox, result, selectedNokL, DelayedRetest);
 
         await ClearUnsavedChangesAsync();
     }
