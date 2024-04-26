@@ -55,7 +55,23 @@ namespace PushAPI.Controllers
 
             return Ok(result);
         }
-        
+
+        [HttpGet("getHalls")]
+        public async Task<IActionResult> GetHalls()
+        {
+            List<string> halls = await _bilboxService.GetHalls();
+
+            return Ok(halls);
+        }
+
+        [HttpGet("getHalls")]
+        public async Task<IActionResult> GetRows(int hallNumber)
+        {
+            List<string> rows = await _bilboxService.GetRows(hallNumber);
+
+            return Ok(rows);
+        }
+
         private List<QualityCardBilbox> PopulateModel(List<ProductionData> productionDatas)
         {
             List<QualityCardBilbox> result = new();

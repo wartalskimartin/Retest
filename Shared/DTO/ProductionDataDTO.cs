@@ -1,4 +1,6 @@
-﻿namespace SharedLib.DTO
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SharedLib.DTO
 {
     public class ProductionDataDTO
     {
@@ -36,5 +38,8 @@
         public DateTime? DatetimeServer { get; set; }
 
         public string TeamNumber { get; set; }
+
+        [NotMapped]
+        public bool DelayedRetest { get; set; }
     }
 }

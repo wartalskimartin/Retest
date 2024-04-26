@@ -17,6 +17,13 @@ namespace PushAPI.Controllers
 
         private static ConcurrentDictionary<string, DeviceStateUpdateModel> connectedDevices = new ConcurrentDictionary<string, DeviceStateUpdateModel>();
 
+        public readonly BibloxService _bilboxService;
+
+        public SseController(BibloxService bilboxService)
+        {
+            _bilboxService = bilboxService;
+        }
+
         /// <summary>
         /// Sends information about number of connceted devices.
         /// </summary>
@@ -56,9 +63,20 @@ namespace PushAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("getAvaibleBilboxes")]
-        public List<string> GetAvaibleBilboxes()
+        public async List<string> GetAvailableBilboxes(int hall, string row)
         {
-            return connectedDevices.Keys.ToList();
+            List<string> stands = await _bilboxService.GetStands(hall, row);
+            List<string> result = new List<string>();
+
+            foreach (var st in stands) 
+            {
+                if (connectedDevices.Keys.Contains(st))
+                {
+                    result.Add(st);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -103,9 +121,9 @@ namespace PushAPI.Controllers
         }
 
         [HttpPost("retestMode/{bilboxNum}")]
-        public IActionResult RetestMode(string bilboxNum, [FromBody] List<QualityCardBilbox> productionDatas)
+        public IActionResult RetestMode(string bilboxNum, bool delayedRetest, [FromBody] List<QualityCardBilbox> productionDatas)
         {
-            List<ProductionDataDTO> productionDataDTOs = PopulateDTO(productionDatas);
+            List<ProductionDataDTO> productionDataDTOs = PopulateDTO(productionDatas, delayedRetest);
 
             Console.WriteLine(bilboxNum + RETEST_STATE);
             ChangeDeviceState(bilboxNum, RETEST_STATE, productionDataDTOs);
@@ -143,7 +161,7 @@ namespace PushAPI.Controllers
             }
         }
 
-        private List<ProductionDataDTO> PopulateDTO(List<QualityCardBilbox> productionDatas)
+        private List<ProductionDataDTO> PopulateDTO(List<QualityCardBilbox> productionDatas, bool delayedRetest)
         {
             List<ProductionDataDTO> result = new();
 
@@ -159,7 +177,8 @@ namespace PushAPI.Controllers
                     Device = productionData.DeviceNumber,
                     TeamNumber = productionData.TeamNumber,
                     BbxNum = productionData.BilboxNumber,
-                    DatetimeServer = productionData.NokDateTime
+                    DatetimeServer = productionData.NokDateTime,
+                    DelayedRetest = delayedRetest
                 });
             }
 

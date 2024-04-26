@@ -43,5 +43,20 @@ namespace PushAPI.Services
 
             return result.FirstOrDefault()?.QualityCounter1;
         }
+
+        public async Task<List<string>> GetHalls()
+        {
+            return await _dbcontext.StandsLists.Where(s => s.Hall != null).Select(s => s.Hall.ToString() ?? "").Distinct().ToListAsync();
+        }
+
+        public async Task<List<string>> GetRows(int hall)
+        {
+            return await _dbcontext.StandsLists.Where(s => s.Hall == hall).Select(s => s.StandRow).Distinct().ToListAsync();
+        }
+
+        public async Task<List<string>> GetStands(int hall, string row)
+        {
+            return await _dbcontext.StandsLists.Where(s => s.Hall == hall && s.StandRow == row).Select(s => s.StandRow).Distinct().ToListAsync();
+        }
     }
 }
