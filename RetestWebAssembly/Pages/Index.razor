@@ -87,10 +87,12 @@
             <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
                     @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
             </DxToolbarItem>
-            <DxToolbarItem Text="Zrušit změny" Click="Cancel_Click" Enabled="RetestEnabled" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" BeginGroup="true" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
-            <DxCheckBox @bind-Checked="@DelayedRetest">Začít Retest po dokončení kusu</DxCheckBox>
+
+            <DxToolbarItem Context="cc" Text="Retest" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Plain">
+                <DxCheckBox @bind-Checked="@DelayedRetest">Začít Retest po dokončení kusu</DxCheckBox>
+            </DxToolbarItem>
         </DxToolbar>
     </ToolbarTemplate>
     <Columns>
@@ -186,7 +188,7 @@
 
     private async Task OnRowSelectInputChanged(string selectedRow)
     {
-        await GetAvaibleBilboxes();
+        await GetAvaibleBilboxes(selectedRow);
     }
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
@@ -235,8 +237,8 @@
     string CurrentDefectCode { get; set; }
     string CurrentDefectType { get; set; }
 
-    //private readonly string ApiAddressTest = "http://localhost:5047/";
-    private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+    private readonly string ApiAddress = "http://localhost:5047/";
+    //private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
     //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
 
     protected override async Task OnInitializedAsync()
@@ -308,9 +310,9 @@
     }
     #endregion
 
-    public async Task GetAvaibleBilboxes()
+    public async Task GetAvaibleBilboxes(string row = "")
     {
-        avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall, SelectedRow);
+        avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall, SelectedRow ?? row);
     }
 
     private async Task SetNormalMode()
@@ -340,6 +342,13 @@
     {
         qualityCardBilbox.DefectCode = defect.DefectCode;
         qualityCardBilbox.DefectType = defect.DefectDescription;
+
+        //check for 999 defect code
+        if (defect.DefectCode == "999")
+        {
+            BilboxService.SaveQualityCardListAsync(new List<QualityCardBilbox> { qualityCardBilbox });
+            return;
+        }
 
         //auto filling of rows below selected item with same defect
         bool canFill = false;

@@ -17,7 +17,9 @@ namespace PushAPI.Services
 
         public async Task<List<ProductionData>> GetLatestNOKFrom(string standLoc, DateTime? startShift)
         {
-            return await _dbcontext.ProductionData.Where(pd => pd.Loc == standLoc && pd.ProductionDateTime >= startShift && pd.Nok == 1 && !_dbcontext.QualityCardBilboxes.Any(qcb => qcb.ProductionDataNokId == pd.Id)).ToListAsync();
+            return await _dbcontext.ProductionData
+                .Where(pd => pd.Loc == standLoc && pd.ProductionDateTime >= startShift && pd.Nok == 1 && !_dbcontext.QualityCardBilboxes.Any(qcb => qcb.ProductionDataNokId == pd.Id))
+                .OrderBy(pd => pd.DatetimeServer).ToListAsync();
         }
 
         public async Task AddQualityCardBilbox(List<QualityCardBilbox> retestedNok)
@@ -56,7 +58,7 @@ namespace PushAPI.Services
 
         public async Task<List<string>> GetStands(int hall, string row)
         {
-            return await _dbcontext.StandsLists.Where(s => s.Hall == hall && s.StandRow == row).Select(s => s.StandRow).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.Where(s => s.Hall == hall && s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
         }
     }
 }

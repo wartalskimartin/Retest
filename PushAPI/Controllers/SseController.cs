@@ -120,7 +120,7 @@ namespace PushAPI.Controllers
             }
         }
 
-        [HttpPost("retestMode/{bilboxNum}")]
+        [HttpPost("retestMode/{bilboxNum}/{delayedRetest}")]
         public IActionResult RetestMode(string bilboxNum, bool delayedRetest, [FromBody] List<QualityCardBilbox> productionDatas)
         {
             List<ProductionDataDTO> productionDataDTOs = PopulateDTO(productionDatas, delayedRetest);

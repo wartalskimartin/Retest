@@ -9,8 +9,8 @@ namespace RetestWebAssembly.Services
     public class BilboxService
     {
         private readonly HttpClient HttpClient;
-        //private readonly string ApiAddressTest = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+        private readonly string ApiAddress = "http://localhost:5047/";
+        //private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
         //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
@@ -42,14 +42,14 @@ namespace RetestWebAssembly.Services
 
         public async Task<List<string>> GetHalls()
         {
-            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getHalls");
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getHalls");
             string content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
         }
 
         public async Task<List<string>> GetRows(string hall)
         {
-            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getRows?hallNumber={hall}");
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getRows?hallNumber={hall}");
             string content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
         }
