@@ -8,9 +8,9 @@ namespace PushAPI.Controllers
     [Route("api/[controller]")]
     public class BilboxController : Controller
     {
-        public readonly BibloxService _bilboxService;
+        public readonly BilboxService _bilboxService;
 
-        public BilboxController(BibloxService bilboxService)
+        public BilboxController(BilboxService bilboxService)
         {
             _bilboxService = bilboxService;
         }

@@ -17,9 +17,9 @@ namespace PushAPI.Controllers
 
         private static ConcurrentDictionary<string, DeviceStateUpdateModel> connectedDevices = new ConcurrentDictionary<string, DeviceStateUpdateModel>();
 
-        public readonly BibloxService _bilboxService;
+        public readonly BilboxService _bilboxService;
 
-        public SseController(BibloxService bilboxService)
+        public SseController(BilboxService bilboxService)
         {
             _bilboxService = bilboxService;
         }

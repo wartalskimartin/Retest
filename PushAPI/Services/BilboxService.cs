@@ -6,11 +6,11 @@ using System.Data;
 
 namespace PushAPI.Services
 {
-    public class BibloxService
+    public class BilboxService
     {
         private readonly cockpitContext _dbcontext;
 
-        public BibloxService(cockpitContext dbContext) 
+        public BilboxService(cockpitContext dbContext) 
         {
             _dbcontext = dbContext;
         }
