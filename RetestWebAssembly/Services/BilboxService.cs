@@ -25,10 +25,7 @@ namespace RetestWebAssembly.Services
             //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             if(selectedNok is not null)
             {
-                if (selectedNok.Count != 0)
-                {
-                    await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}/{delayedRetest}", selectedNok);
-                }
+                await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}/{delayedRetest}", selectedNok);
             }
 
             // save rows
