@@ -64,6 +64,14 @@ namespace PushAPI.Controllers
             return Ok(halls);
         }
 
+        [HttpGet("getAllRows")]
+        public async Task<IActionResult> GetRows()
+        {
+            List<string> rows = await _bilboxService.GetRows();
+
+            return Ok(rows);
+        }
+
         [HttpGet("getRows")]
         public async Task<IActionResult> GetRows(int hallNumber)
         {

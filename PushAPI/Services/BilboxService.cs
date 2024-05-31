@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SharedLib.DataAccess;
 using SharedLib.Models;
+using System;
 using System.Data;
 
 namespace PushAPI.Services
@@ -56,9 +57,29 @@ namespace PushAPI.Services
             return await _dbcontext.StandsLists.Where(s => s.Hall == hall).Select(s => s.StandRow).Distinct().ToListAsync();
         }
 
+        public async Task<List<string>> GetRows()
+        {
+            return await _dbcontext.StandsLists.Select(s => s.StandRow).Distinct().ToListAsync();
+        }
+
         public async Task<List<string>> GetStands(int hall, string row)
         {
             return await _dbcontext.StandsLists.Where(s => s.Hall == hall && s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
+        }
+
+        public async Task<List<string>> GetStands(int hall)
+        {
+            return await _dbcontext.StandsLists.Where(s => s.Hall == hall).Select(s => s.Stand).Distinct().ToListAsync();
+        }
+
+        public async Task<List<string>> GetStands()
+        {
+            return await _dbcontext.StandsLists.Select(s => s.Stand).Distinct().ToListAsync();
+        }
+
+        public async Task<List<string>> GetStandsByRows(string row)
+        {
+            return await _dbcontext.StandsLists.Where(s => s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
         }
     }
 }

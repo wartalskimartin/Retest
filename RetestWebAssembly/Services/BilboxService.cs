@@ -10,7 +10,7 @@ namespace RetestWebAssembly.Services
     {
         private readonly HttpClient HttpClient;
         //private readonly string ApiAddress = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
+        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93
         //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
@@ -44,6 +44,13 @@ namespace RetestWebAssembly.Services
             return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
         }
 
+        public async Task<List<string>> GetRows()
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getAllRows");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        }
+
         public async Task<List<string>> GetRows(string hall)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getRows?hallNumber={hall}");
@@ -54,6 +61,27 @@ namespace RetestWebAssembly.Services
         public async Task<List<string>> GetAvaibleBilboxes(string hall, string row)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAvaibleBilboxes?hallNumber={hall}&row={row}");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        }
+
+        public async Task<List<string>> GetAvaibleBilboxesByRow(string row)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getBilboxesByRow?row={row}");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        }
+
+        public async Task<List<string>> GetAvaibleBilboxes(string hall)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getBilboxesByHall?hallNumber={hall}");
+            string content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
+        }
+
+        public async Task<List<string>> GetAvaibleBilboxes()
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAllBilboxes");
             string content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
         }

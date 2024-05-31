@@ -15,29 +15,40 @@
                 Text="Načítání"
                 ApplyBackgroundShading="true">
 
-<h5>Hala</h5>
-<DxComboBox Data=@halls
-            TextChanged="OnHallSelectInputChanged"
-            @bind-Value=SelectedHall
-            FilteringMode="DataGridFilteringMode.Contains"
-            NullText="Vyberte halu..."
-            CssClass="w-25 mb-3" />
+<div class="row">
+        <div class="col">
+            <h5>Hala</h5>
+            <DxComboBox Data=@halls
+                        TextChanged="OnHallSelectInputChanged"
+                        @bind-Value=SelectedHall
+                        FilteringMode="DataGridFilteringMode.Contains"
+                        NullText="Vyberte halu..."
+                        CssClass="w-100 mb-3" />
+        </div>
+        <div class="col">
+            <h5>Řada</h5>
+            <DxComboBox Data=@rows
+                        TextChanged="OnRowSelectInputChanged"
+                        @bind-Value=SelectedRow
+                        FilteringMode="DataGridFilteringMode.Contains"
+                        NullText="Vyberte řadu..."
+                        CssClass="w-100 mb-3" />
+        </div>
+        <div class="col">
+            <h5>Bilbox</h5>
+            <DxComboBox Data=@avaibleBilboxes
+                        TextChanged="OnBilboxSelectInputChanged"
+                        @bind-Value=SelectedBilbox
+                        FilteringMode="DataGridFilteringMode.Contains"
+                        NullText="Vyberte bilbox..."
+                        CssClass="w-100 mb-3" />
+        </div>
+</div>
 
-<h5>Řada</h5>
-<DxComboBox Data=@rows
-            TextChanged="OnRowSelectInputChanged"
-            @bind-Value=SelectedRow
-            FilteringMode="DataGridFilteringMode.Contains"
-            NullText="Vyberte řadu..."
-            CssClass="w-25 mb-3" />
 
-<h5>Bilbox</h5>
-<DxComboBox Data=@avaibleBilboxes
-            TextChanged="OnBilboxSelectInputChanged"
-            @bind-Value=SelectedBilbox
-            FilteringMode="DataGridFilteringMode.Contains"
-            NullText="Vyberte bilbox..."
-            CssClass="w-25 mb-3" />
+
+
+
 
 @if(bilboxInformation is not null)
 {
@@ -174,8 +185,7 @@
 
 @code {
 
-    
-
+    const string SelectedAllBoxes = "VŠE";
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
 
@@ -186,12 +196,38 @@
 
     private async Task OnHallSelectInputChanged(string selectedHall)
     {
-        rows = await BilboxService.GetRows(selectedHall);
+        SelectedRow = String.Empty;
+        SelectedBilbox = String.Empty;
+        if (selectedHall == SelectedAllBoxes)
+        {
+            rows = await BilboxService.GetRows();
+        }
+        else
+        {
+            rows = await BilboxService.GetRows(selectedHall);
+        }
+        rows.Insert(0, SelectedAllBoxes);
     }
 
     private async Task OnRowSelectInputChanged(string selectedRow)
     {
-        await GetAvaibleBilboxes(selectedRow);
+        SelectedBilbox = String.Empty;
+        if (selectedRow == SelectedAllBoxes && SelectedHall == SelectedAllBoxes)
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+        }
+        else if (selectedRow == SelectedAllBoxes && SelectedHall != SelectedAllBoxes)
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall);
+        }
+        else if (selectedRow != SelectedAllBoxes && SelectedHall == SelectedAllBoxes)
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
+        }
+        else
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall, selectedRow);
+        }
     }
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
@@ -249,16 +285,10 @@
     {
         DelayedRetest = true;
         halls = await BilboxService.GetHalls();
+        halls.Insert(0, SelectedAllBoxes);
         //await GetAvaibleBilboxes();
         defects = await BilboxService.GetDefectCodes();
         await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await JSRuntime.InvokeVoidAsync("sseInterop.connectSse", $"{ApiAddress}api/sse/notifyNumberOfDevicesChanged", DotNetObjectReference.Create(this));
-
-        await base.OnParametersSetAsync();
     }
 
     protected override void OnAfterRender(bool firstRender)
@@ -314,32 +344,10 @@
     }
     #endregion
 
-    public async Task GetAvaibleBilboxes(string row = "")
-    {
-        avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall, SelectedRow ?? row);
-    }
-
+    
     private async Task SetNormalMode()
     {
         await BilboxService.SetNormalMode(SelectedBilbox);
-    }
-
-    [JSInvokable]
-    public async Task HandleEventReceived(string eventData)
-    {
-        int serverAvaibleBilboxes = int.Parse(eventData);
-        if (avaibleBilboxes.Count != serverAvaibleBilboxes)
-        {
-            await GetAvaibleBilboxes();
-            StateHasChanged();
-        }
-    }
-
-    [JSInvokable]
-    public void HandleError(object error)
-    {
-        // Handle SSE error
-        Console.WriteLine(error.ToString());
     }
 
     void SelectedDefectTypeItemChanged(QualityDefectDescriptionBilbox defect, ref QualityCardBilbox qualityCardBilbox)
