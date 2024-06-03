@@ -85,9 +85,24 @@ namespace PushAPI.Controllers
             List<QualityCardBilbox> result = new();
             DateTime startOfActualShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
 
+            // Get the OperatorNumber from the current shift
+            var currentShiftOperatorNumber = productionDatas
+                .Where(pd => pd.DatetimeServer >= startOfActualShift)
+                .Select(pd => pd.OperatorNumber)
+                .FirstOrDefault();
+
             foreach (var productionData in productionDatas)
             {
-                result.Add(new QualityCardBilbox {
+                bool isFromPreviousShift = startOfActualShift > productionData.DatetimeServer;
+
+                // If the OperatorNumber from the previous shift matches the current shift, set the flag to false
+                if (isFromPreviousShift && productionData.OperatorNumber == currentShiftOperatorNumber)
+                {
+                    isFromPreviousShift = false;
+                }
+
+                result.Add(new QualityCardBilbox
+                {
                     ProductNumber = productionData.ProductNumber,
                     OrderNumber = productionData.OrderNumber,
                     OperationNumber = productionData.Operation,
@@ -97,7 +112,7 @@ namespace PushAPI.Controllers
                     TeamNumber = productionData.TeamNumber,
                     BilboxNumber = productionData.BbxNum,
                     NokDateTime = productionData.DatetimeServer,
-                    IsFromPreviousShift = startOfActualShift > productionData.DatetimeServer,
+                    IsFromPreviousShift = isFromPreviousShift,
                     ProductionDataNokId = productionData.Id
                 });
             }
