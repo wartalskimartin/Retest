@@ -358,7 +358,6 @@
         //check for 999 defect code
         if (defect.DefectCode == "999")
         {
-            BilboxService.SaveQualityCardListAsync(new List<QualityCardBilbox> { qualityCardBilbox });
             return;
         }
 
@@ -461,6 +460,7 @@
         List<QualityCardBilbox> result = new();
         List<QualityCardBilbox> selectedNokL = new();
 
+        /*
         foreach (var unsavedChange in UnsavedChanges)
         {
             //transform to list
@@ -468,6 +468,7 @@
             dataItem.DateTimeRecord = DateTime.Now;
             result.Add(dataItem);
         }
+        */
 
         foreach (var nk in nokList)
         {
