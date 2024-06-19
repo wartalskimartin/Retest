@@ -12,7 +12,7 @@
                 IsContentBlocked="true"
                 CloseOnClick="false"
                 CssClass="w-100"
-                Text="Načítání"
+                Text=@loadText
                 ApplyBackgroundShading="true">
 
 <div class="row">
@@ -76,8 +76,8 @@
 }
 
 <DxPopup HeaderText="Chyba"
-         @bind-Visible="@PopupVisible"
-         BodyText="Vyplňte u všech kusů na retest Typ vady.">
+         @bind-Visible="@ErrorPopupVisible"
+         BodyText=@ErrorPopupText>
 </DxPopup>
 
 <div class="grid-container">
@@ -192,7 +192,8 @@
     int NumberOfNOK { get; set; }
     int maxNOK = 2;
 
-    bool PopupVisible { get; set; } = false;
+    bool ErrorPopupVisible { get; set; } = false;
+    string ErrorPopupText { get; set; } = String.Empty;
 
     private async Task OnHallSelectInputChanged(string selectedHall)
     {
@@ -232,6 +233,7 @@
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
+        loadText = "Načítání";
         loadVisible = true;
 
         bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
@@ -252,6 +254,7 @@
     }
 
     bool loadVisible = false;
+    string loadText = "Načítání";
 
     bool DelayedRetest { get; set; }
 
@@ -344,7 +347,7 @@
     }
     #endregion
 
-    
+
     private async Task SetNormalMode()
     {
         await BilboxService.SetNormalMode(SelectedBilbox);
@@ -462,7 +465,7 @@
 
         /*
         foreach (var unsavedChange in UnsavedChanges)
-        {
+            {
             //transform to list
             QualityCardBilbox dataItem = unsavedChange.Key;
             dataItem.DateTimeRecord = DateTime.Now;
@@ -490,7 +493,8 @@
                 }
                 else
                 {
-                    PopupVisible = true;
+                    ErrorPopupText = "Vyplňte u všech kusů na retest Typ vady.";
+                    ErrorPopupVisible = true;
                     return;
                 }
             }
@@ -507,9 +511,19 @@
             }
         }
 
-        await BilboxService.SetRetestMode(SelectedBilbox, result, selectedNokL, DelayedRetest);
-
-        await ClearUnsavedChangesAsync();
+        loadText = "Připojování k Bilboxu";
+        loadVisible = true;
+        bool retestResult = await BilboxService.SetRetestMode(SelectedBilbox, result, selectedNokL, DelayedRetest);
+        loadVisible = false;
+        if(retestResult)
+        {
+            await ClearUnsavedChangesAsync();
+        }
+        else
+        {
+            ErrorPopupText = "Nedostupný Bilbox.";
+            ErrorPopupVisible = true;
+        }
     }
 
     async Task ClearUnsavedChangesAsync()

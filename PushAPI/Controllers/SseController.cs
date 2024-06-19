@@ -132,44 +132,75 @@ namespace PushAPI.Controllers
         }
 
         [HttpPost("retestMode/{bilboxNum}/{delayedRetest}")]
-        public IActionResult RetestMode(string bilboxNum, bool delayedRetest, [FromBody] List<QualityCardBilbox> productionDatas)
+        public async Task<IActionResult> RetestModeAsync(string bilboxNum, bool delayedRetest, [FromBody] List<QualityCardBilbox> productionDatas)
         {
             List<ProductionDataDTO> productionDataDTOs = PopulateDTO(productionDatas, delayedRetest);
 
             Console.WriteLine(bilboxNum + RETEST_STATE);
-            ChangeDeviceState(bilboxNum, RETEST_STATE, productionDataDTOs);
+            bool result = await ChangeDeviceState(bilboxNum, RETEST_STATE, productionDataDTOs);
 
-            return Ok();
+            if(result)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpPost("normalMode/{bilboxNum}")]
-        public IActionResult NormalMode(string bilboxNum)
+        public async Task<IActionResult> NormalModeAsync(string bilboxNum)
         {
             Console.WriteLine(bilboxNum + NORMAL_STATE);
-            ChangeDeviceState(bilboxNum, NORMAL_STATE);
+            bool result = await ChangeDeviceState(bilboxNum, NORMAL_STATE);
 
-            return Ok();
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
-        private void ChangeDeviceState(string bilboxNum, string stateToChange, List<ProductionDataDTO>? productionDatas = null)
+        private async Task<bool> ChangeDeviceState(string bilboxNum, string stateToChange, List<ProductionDataDTO>? productionDatas = null)
         {
-            if (connectedDevices.TryGetValue(bilboxNum, out var deviceState))
+            const int maxRetries = 3; // Maximum number of retries
+            int delayMilliseconds = 1000; // Initial delay in milliseconds
+
+            for (int currentRetry = 1; currentRetry <= maxRetries; currentRetry++)
             {
-                // Perform data generation here
-                deviceState.DeviceState = stateToChange;
-
-                //set up nok production data to be retested
-                if(productionDatas != null && stateToChange == RETEST_STATE)
+                if (connectedDevices.TryGetValue(bilboxNum, out var deviceState))
                 {
-                    deviceState.ProductionDatasForRetest = productionDatas;
+                    // Perform data generation here
+                    deviceState.DeviceState = stateToChange;
+
+                    // Set up NOK production data to be retested
+                    if (productionDatas != null && stateToChange == RETEST_STATE)
+                    {
+                        deviceState.ProductionDatasForRetest = productionDatas;
+                    }
+
+                    // Clean up after retest
+                    if (stateToChange == NORMAL_STATE)
+                    {
+                        deviceState.ProductionDatasForRetest = null;
+                    }
+
+                    return true; // Exit the method successfully
                 }
-
-                //clean up after retest
-                if (stateToChange == NORMAL_STATE)
+                else
                 {
-                    deviceState.ProductionDatasForRetest = null;
+                    // Log the retry attempt
+                    Console.WriteLine($"Attempt {currentRetry}: {bilboxNum} not found. Retrying in {delayMilliseconds}ms...");
+
+                    // Wait before retrying
+                    await Task.Delay(delayMilliseconds);
+
+                    // Increment the delay for the next retry
+                    delayMilliseconds *= currentRetry + 1;
                 }
             }
+
+            // Log or handle the failure to find the bilboxNum after all retries
+            Console.WriteLine($"Failed to change device state for {bilboxNum} after {maxRetries} retries.");
+            return false;
         }
 
         private List<ProductionDataDTO> PopulateDTO(List<QualityCardBilbox> productionDatas, bool delayedRetest)

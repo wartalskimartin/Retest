@@ -19,17 +19,24 @@ namespace RetestWebAssembly.Services
             this.HttpClient = httpClient;
         }
 
-        public async Task SetRetestMode(string bilbox, List<QualityCardBilbox> nokList, List<QualityCardBilbox> selectedNok, bool delayedRetest)
+        public async Task<bool> SetRetestMode(string bilbox, List<QualityCardBilbox> nokList, List<QualityCardBilbox> selectedNok, bool delayedRetest)
         {
             //var json = JsonSerializer.Serialize(nokList);
             //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = new();
+
             if(selectedNok is not null)
             {
-                await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}/{delayedRetest}", selectedNok);
+                responseMessage = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}/{delayedRetest}", selectedNok);
             }
 
-            // save rows
-            await SaveQualityCardListAsync(nokList);
+            if(responseMessage.IsSuccessStatusCode)
+            {
+                // save rows
+                await SaveQualityCardListAsync(nokList);
+                return true;
+            }
+            return false;
         }
 
         public async Task SetNormalMode(string bilbox)
