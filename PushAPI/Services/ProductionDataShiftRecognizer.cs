@@ -26,7 +26,7 @@ namespace PushAPI.Services
             }
             else //if (0 <= DateTime.Now.Hour && DateTime.Now.Hour < 6)
             {
-                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 22, 0, 0);
+                result = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 22, 0, 0).AddDays(-1);
             }
 
             return result;

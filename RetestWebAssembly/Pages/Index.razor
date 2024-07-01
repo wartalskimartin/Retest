@@ -94,6 +94,7 @@
         LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large" AllowSort=false>
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
+            <DxToolbarItem Text="Přidat záznam" Click="NewRecordClick" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" Enabled=@(!String.IsNullOrEmpty(SelectedBilbox))/>
             <DxToolbarItem Text="Normal mode" Click="SetNormalMode" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
                     @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
@@ -309,6 +310,7 @@
     }
 
     #region GridLayoutStateSaving
+
     async Task Grid_LayoutAutoLoading(GridPersistentLayoutEventArgs e)
     {
         e.Layout = await LoadLayoutFromLocalStorageAsync();
@@ -409,6 +411,29 @@
 
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
     {
+        if (e.IsNew)
+        {
+            var qcb = (QualityCardBilbox)e.EditModel;
+
+            if (nokList != null)
+            {
+                // Get the latest record
+                var lastNok = nokList.OrderByDescending(n => n.NokDateTime).FirstOrDefault();
+
+                if (lastNok != null)
+                {
+                    qcb.ProductNumber = lastNok.ProductNumber;
+                    qcb.OperationNumber = lastNok.OperationNumber;
+                    qcb.OrderNumber = lastNok.OrderNumber;
+                    qcb.OperatorNumber = lastNok.OperatorNumber;
+                    qcb.DeviceNumber = lastNok.DeviceNumber;
+                    qcb.WorkingPlaceNumber = lastNok.WorkingPlaceNumber;
+                    qcb.BilboxNumber = lastNok.BilboxNumber;
+                    qcb.NokDateTime = DateTime.Now;
+                    qcb.DateTimeRecord = DateTime.Now;
+                }
+            }
+        }
     }
 
     void Grid_EditModelSaving(GridEditModelSavingEventArgs e)
@@ -454,6 +479,11 @@
                     ea.CssClass = "grid-modified-cell";
             }
         }
+    }
+
+    async Task NewRecordClick() 
+    { 
+        await Grid.StartEditNewRowAsync();
     }
 
     async Task Cancel_Click() => await ClearUnsavedChangesAsync();
