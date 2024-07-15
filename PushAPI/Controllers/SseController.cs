@@ -220,7 +220,8 @@ namespace PushAPI.Controllers
                     TeamNumber = productionData.TeamNumber,
                     BbxNum = productionData.BilboxNumber,
                     DatetimeServer = productionData.NokDateTime,
-                    DelayedRetest = delayedRetest
+                    DelayedRetest = delayedRetest,
+                    Id = productionData.ProductionDataNokId
                 });
             }
 

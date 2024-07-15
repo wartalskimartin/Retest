@@ -108,7 +108,18 @@
         </DxToolbar>
     </ToolbarTemplate>
     <Columns>
-        <DxGridSelectionColumn Width="100px" ShowInColumnChooser=false />
+        <DxGridSelectionColumn Width="100px" ShowInColumnChooser="false">
+            <HeaderTemplate>
+                <DxCheckBox @bind-Checked="@AllSelected"></DxCheckBox>
+            </HeaderTemplate>
+            <CellDisplayTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.DataItem;//@bind-Checked="context.Selected"
+                }
+                <DxCheckBox Enabled=@(!qualityCardBilbox.IsFromPreviousShift) ReadOnly=@(qualityCardBilbox.IsFromPreviousShift) CheckedExpression="@(() => context.Selected)"
+                    Checked="@(SelectedNok == null ? false : SelectedNok.Contains(context.DataItem))" CheckedChanged="@((bool value) => OnCheckedChanged(value, ((QualityCardBilbox)context.DataItem)))" />
+            </CellDisplayTemplate>
+        </DxGridSelectionColumn>
         <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130" />
         <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" DataRowEditorVisible=false Width="90" />
         <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DataRowEditorVisible=false DisplayFormat="######" Width="100" />
@@ -190,8 +201,8 @@
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
 
-    int NumberOfNOK { get; set; }
-    int maxNOK = 2;
+    //int NumberOfNOK { get; set; }
+    //int maxNOK = 2;
 
     bool ErrorPopupVisible { get; set; } = false;
     string ErrorPopupText { get; set; } = String.Empty;
@@ -238,10 +249,13 @@
         loadVisible = true;
 
         bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
+        await ClearUnsavedChangesAsync();
+        /*
 
         if (!String.IsNullOrEmpty(selectedBilbox))
         {
             nokList = await BilboxService.GetNokList(selectedBilbox);
+            
             if(nokList is not null)
             {
                 if(nokList.Count > 0)
@@ -249,8 +263,9 @@
                     maxNOK = nokList.Count;
                 }
             }
+            
         }
-
+        */
         loadVisible = false;
     }
 
@@ -280,6 +295,25 @@
     string CurrentDefectCode { get; set; }
     string CurrentDefectType { get; set; }
 
+    bool allSelected = false;
+    bool AllSelected
+    {
+        get { return allSelected; }
+        set
+        {
+            allSelected = value;
+            if (allSelected)
+            {
+                foreach (QualityCardBilbox qcb in nokList)
+                {
+                    Grid.SelectDataItem(qcb, !qcb.IsFromPreviousShift);
+                }
+            }
+            else
+                Grid.ClearSelection();
+        }
+    }
+
     //private readonly string ApiAddress = "http://localhost:5047/";
     private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";
     //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
@@ -302,6 +336,13 @@
             PreRendered = true;
             StateHasChanged();
         }
+    }
+
+    //check if row is not from previose shift
+    void OnCheckedChanged(bool isSelected, QualityCardBilbox item)
+    {
+        if(!item.IsFromPreviousShift)
+            Grid.SelectDataItem(item, isSelected);
     }
 
     void ColumnChooserButton_Click()
@@ -463,7 +504,7 @@
                 if (qualityCardBilbox.IsFromPreviousShift)
                 {
                     ea.CssClass = "highlighted-item ";
-                    ea.CssClass += "non-selectable-row";
+                    //ea.CssClass += "non-selectable-row";
                 }
             }
         }
