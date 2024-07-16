@@ -114,10 +114,14 @@
             </HeaderTemplate>
             <CellDisplayTemplate>
                 @{
-                    var qualityCardBilbox = (QualityCardBilbox)context.DataItem;//@bind-Checked="context.Selected"
+                    var qualityCardBilbox = context.DataItem as QualityCardBilbox;
+                    if(qualityCardBilbox is null)
+                    {
+                        qualityCardBilbox = new QualityCardBilbox(){ IsFromPreviousShift = true };
+                    }
                 }
                 <DxCheckBox Enabled=@(!qualityCardBilbox.IsFromPreviousShift) ReadOnly=@(qualityCardBilbox.IsFromPreviousShift) CheckedExpression="@(() => context.Selected)"
-                    Checked="@(SelectedNok == null ? false : SelectedNok.Contains(context.DataItem))" CheckedChanged="@((bool value) => OnCheckedChanged(value, ((QualityCardBilbox)context.DataItem)))" />
+                        Checked="@(SelectedNok == null ? false : SelectedNok.Contains(context.DataItem))" CheckedChanged="@((bool value) => OnCheckedChanged(value, qualityCardBilbox))" />
             </CellDisplayTemplate>
         </DxGridSelectionColumn>
         <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130" />
@@ -189,6 +193,13 @@
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
+        <DxGridDataColumn Width="190" Caption=" " FieldName="ProductionDataNokId">
+            <CellEditTemplate>
+                <DxButton Text="Uložit" Click="SaveNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" />
+                <DxButton Text="Zrušit" Click="CancelNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" />
+            </CellEditTemplate>
+            <CellDisplayTemplate></CellDisplayTemplate>
+        </DxGridDataColumn>
     </Columns>
 </DxGrid>
 </div>
@@ -200,9 +211,6 @@
     const string SelectedAllBoxes = "VŠE";
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
-
-    //int NumberOfNOK { get; set; }
-    //int maxNOK = 2;
 
     bool ErrorPopupVisible { get; set; } = false;
     string ErrorPopupText { get; set; } = String.Empty;
@@ -250,22 +258,7 @@
 
         bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
         await ClearUnsavedChangesAsync();
-        /*
 
-        if (!String.IsNullOrEmpty(selectedBilbox))
-        {
-            nokList = await BilboxService.GetNokList(selectedBilbox);
-            
-            if(nokList is not null)
-            {
-                if(nokList.Count > 0)
-                {
-                    maxNOK = nokList.Count;
-                }
-            }
-            
-        }
-        */
         loadVisible = false;
     }
 
@@ -456,24 +449,26 @@
         {
             var qcb = (QualityCardBilbox)e.EditModel;
 
-            if (nokList != null)
+            if (nokList is null)
             {
-                // Get the latest record
-                var lastNok = nokList.OrderByDescending(n => n.NokDateTime).FirstOrDefault();
-
-                if (lastNok != null)
-                {
-                    qcb.ProductNumber = lastNok.ProductNumber;
-                    qcb.OperationNumber = lastNok.OperationNumber;
-                    qcb.OrderNumber = lastNok.OrderNumber;
-                    qcb.OperatorNumber = lastNok.OperatorNumber;
-                    qcb.DeviceNumber = lastNok.DeviceNumber;
-                    qcb.WorkingPlaceNumber = lastNok.WorkingPlaceNumber;
-                    qcb.BilboxNumber = lastNok.BilboxNumber;
-                    qcb.NokDateTime = DateTime.Now;
-                    qcb.DateTimeRecord = DateTime.Now;
-                }
+                return;
             }
+            // Get the latest record
+            var lastNok = nokList?.OrderByDescending(n => n.NokDateTime).FirstOrDefault();
+
+            if (lastNok != null)
+            {
+                qcb.ProductNumber = lastNok.ProductNumber;
+                qcb.OperationNumber = lastNok.OperationNumber;
+                qcb.OrderNumber = lastNok.OrderNumber;
+                qcb.OperatorNumber = lastNok.OperatorNumber;
+                qcb.DeviceNumber = lastNok.DeviceNumber;
+                qcb.WorkingPlaceNumber = lastNok.WorkingPlaceNumber;
+                qcb.BilboxNumber = lastNok.BilboxNumber;
+                qcb.NokDateTime = DateTime.Now;
+                qcb.DateTimeRecord = DateTime.Now;
+            }
+
         }
     }
 
@@ -491,6 +486,12 @@
                 else
                     UnsavedChanges.Add(qualityCardBilbox, new(DataChangeType.Modification, changedFields));
             }
+        }
+        else if (e.IsNew)
+        {
+            if(nokList is null){ return; }
+            nokList.Add(editablePD);
+            UnsavedChanges[editablePD] = new(DataChangeType.Addition, new());
         }
     }
 
@@ -612,4 +613,15 @@
 
     record DataChange(DataChangeType Type, HashSet<string> ChangedFields);
     enum DataChangeType { Modification, Addition, Delete }
+
+    async Task CancelNewRow()
+    {
+        await Grid.CancelEditAsync();
+    }
+
+    async Task SaveNewRow()
+    {
+         await Grid.SaveChangesAsync();
+        //call remote api to do the operation
+    }
 }
