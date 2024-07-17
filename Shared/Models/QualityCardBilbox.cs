@@ -49,4 +49,7 @@ public partial class QualityCardBilbox
 
     [NotMapped]
     public bool IsFromPreviousShift { get; set; }
+
+    [NotMapped]
+    public bool IsInserted { get; set; } = false;
 }

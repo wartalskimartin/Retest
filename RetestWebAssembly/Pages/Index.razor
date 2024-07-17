@@ -120,7 +120,7 @@
                         qualityCardBilbox = new QualityCardBilbox(){ IsFromPreviousShift = true };
                     }
                 }
-                <DxCheckBox Enabled=@(!qualityCardBilbox.IsFromPreviousShift) ReadOnly=@(qualityCardBilbox.IsFromPreviousShift) CheckedExpression="@(() => context.Selected)"
+                <DxCheckBox Enabled=@(!(qualityCardBilbox.IsFromPreviousShift || qualityCardBilbox.IsInserted)) ReadOnly=@(qualityCardBilbox.IsFromPreviousShift || qualityCardBilbox.IsInserted) CheckedExpression="@(() => context.Selected)"
                         Checked="@(SelectedNok == null ? false : SelectedNok.Contains(context.DataItem))" CheckedChanged="@((bool value) => OnCheckedChanged(value, qualityCardBilbox))" />
             </CellDisplayTemplate>
         </DxGridSelectionColumn>
@@ -193,10 +193,13 @@
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn Width="190" Caption=" " FieldName="ProductionDataNokId">
+        <DxGridDataColumn Width="210" Caption=" " FieldName="ProductionDataNokId">
             <CellEditTemplate>
-                <DxButton Text="Uložit" Click="SaveNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" />
-                <DxButton Text="Zrušit" Click="CancelNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" />
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxButton Text="Uložit" Click="SaveNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" Visible="qualityCardBilbox.IsInserted" />
+                <DxButton Text="Zrušit" Click="CancelNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" Visible="qualityCardBilbox.IsInserted" />
             </CellEditTemplate>
             <CellDisplayTemplate></CellDisplayTemplate>
         </DxGridDataColumn>
@@ -467,6 +470,8 @@
                 qcb.BilboxNumber = lastNok.BilboxNumber;
                 qcb.NokDateTime = DateTime.Now;
                 qcb.DateTimeRecord = DateTime.Now;
+                qcb.IsFromPreviousShift = false;
+                qcb.IsInserted = true;
             }
 
         }
@@ -524,7 +529,7 @@
     }
 
     async Task NewRecordClick() 
-    { 
+    {
         await Grid.StartEditNewRowAsync();
     }
 
