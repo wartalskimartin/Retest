@@ -51,7 +51,8 @@ namespace PushAPI.Controllers
             DateTime startOfPreviousShift = ProductionDataShiftRecognizer.GetPreviousShiftStartHour();
 
             List<ProductionData> pp = await _bilboxService.GetLatestNOKFrom(standLoc, startOfPreviousShift);
-            List<QualityCardBilbox> result = PopulateModel(pp);
+            int? latestOperatorNumber = await _bilboxService.GetActualOperatorNumber(standLoc);
+            List<QualityCardBilbox> result = PopulateModel(pp, latestOperatorNumber);
 
             return Ok(result);
         }
@@ -80,16 +81,10 @@ namespace PushAPI.Controllers
             return Ok(rows);
         }
 
-        private List<QualityCardBilbox> PopulateModel(List<ProductionData> productionDatas)
+        private List<QualityCardBilbox> PopulateModel(List<ProductionData> productionDatas, int? currentShiftOperatorNumber)
         {
             List<QualityCardBilbox> result = new();
             DateTime startOfActualShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
-
-            // Get the OperatorNumber from the current shift
-            var currentShiftOperatorNumber = productionDatas
-                .Where(pd => pd.DatetimeServer >= startOfActualShift)
-                .Select(pd => pd.OperatorNumber)
-                .FirstOrDefault();
 
             foreach (var productionData in productionDatas)
             {

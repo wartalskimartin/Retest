@@ -81,5 +81,10 @@ namespace PushAPI.Services
         {
             return await _dbcontext.StandsLists.Where(s => s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
         }
+
+        public async Task<int?> GetActualOperatorNumber(string standLoc)
+        {
+            return await _dbcontext.ProductionData.Where(s => s.Loc == standLoc).OrderByDescending(p => p.DatetimeServer).Select(s => s.OperatorNumber).FirstOrDefaultAsync();
+        }
     }
 }
