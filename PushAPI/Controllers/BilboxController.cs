@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using PushAPI.Services;
+using SharedLib.DTO;
 using SharedLib.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PushAPI.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificMethods")] // Apply the CORS policy
     public class BilboxController : Controller
     {
         public readonly BilboxService _bilboxService;
@@ -96,23 +99,72 @@ namespace PushAPI.Controllers
                     isFromPreviousShift = false;
                 }
 
-                result.Add(new QualityCardBilbox
-                {
-                    ProductNumber = productionData.ProductNumber,
-                    OrderNumber = productionData.OrderNumber,
-                    OperationNumber = productionData.Operation,
-                    OperatorNumber = productionData.OperatorNumber,
-                    WorkingPlaceNumber = productionData.Loc,
-                    DeviceNumber = productionData.Device,
-                    TeamNumber = productionData.TeamNumber,
-                    BilboxNumber = productionData.BbxNum,
-                    NokDateTime = productionData.DatetimeServer,
-                    IsFromPreviousShift = isFromPreviousShift,
-                    ProductionDataNokId = productionData.Id
-                });
+                var qualityCardBilbox = PopulateModelItem(productionData, isFromPreviousShift);
+                result.Add(qualityCardBilbox);
             }
 
             return result;
+        }
+
+        public QualityCardBilbox PopulateModelItem(ProductionData productionData, bool isFromPreviousShift)
+        {
+            return new QualityCardBilbox
+            {
+                ProductNumber = productionData.ProductNumber,
+                OrderNumber = productionData.OrderNumber,
+                OperationNumber = productionData.Operation,
+                OperatorNumber = productionData.OperatorNumber,
+                WorkingPlaceNumber = productionData.Loc,
+                DeviceNumber = productionData.Device,
+                TeamNumber = productionData.TeamNumber,
+                BilboxNumber = productionData.BbxNum,
+                NokDateTime = productionData.DatetimeServer,
+                IsFromPreviousShift = isFromPreviousShift,
+                ProductionDataNokId = productionData.Id
+            };
+        }
+
+        /*---------------------------------Manual NOK recording----------------------------------------------------*/
+
+        [HttpGet("getLastProductionData")]
+        public async Task<ActionResult<QualityCardBilbox>> GetLastProductionData(string standLoc)
+        {
+            var result = await _bilboxService.GetLastProductionData(standLoc);
+            return Ok(PopulateModelItem(result, false));
+        }
+
+        [HttpGet("getQualityCardBilboxData")]
+        public async Task<ActionResult<List<QualityCardBilbox>>> GetQualityCardBilboxData(string standLoc)
+        {
+            DateTime startOfPreviousShift = ProductionDataShiftRecognizer.GetPreviousShiftStartHour();
+            var result = await _bilboxService.GetQualityCardBilboxData(standLoc, startOfPreviousShift);
+            return Ok(result);
+        }
+
+        [HttpPost("insertQualityCardBilbox")]
+        public async Task<ActionResult> InsertQualityCardBilbox([FromBody] QualityCardBilbox qcb)
+        {
+            await _bilboxService.InsertQualityCardBilbox(qcb);
+            return Ok();
+        }
+
+        [HttpDelete("removeQualityCardBilbox")]
+        public async Task<ActionResult> RemoveQualityCardBilbox([FromBody] QualityCardBilbox qcb)
+        {
+            await _bilboxService.RemoveQualityCardBilbox(qcb);
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Show history by stands
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getStandsHistory")]
+        public async Task<ActionResult<List<StandsHistoryDTO>>> GetStandsHistory()
+        {
+            var result = await _bilboxService.GetStandsHistory();
+            return Ok(result);
         }
     }
 }

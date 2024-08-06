@@ -14,5 +14,6 @@ builder.Services.AddDevExpressBlazor(options => {
 });
 
 builder.Services.AddScoped<BilboxService>();
+builder.Services.AddSingleton<FilterService>();
 
 await builder.Build().RunAsync();

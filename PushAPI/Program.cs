@@ -44,6 +44,18 @@ builder.Services.AddOpenTelemetry()
             });
     });
 
+// Configure CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificMethods",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod(); // Allow all methods including DELETE
+        });
+});
+
 builder.Services.AddScoped<BilboxService>();
 
 builder.Services.AddControllers();

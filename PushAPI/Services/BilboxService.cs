@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SharedLib.DataAccess;
+using SharedLib.DTO;
 using SharedLib.Models;
 using System;
 using System.Data;
@@ -85,6 +86,48 @@ namespace PushAPI.Services
         public async Task<int?> GetActualOperatorNumber(string standLoc)
         {
             return await _dbcontext.ProductionData.Where(s => s.Loc == standLoc).OrderByDescending(p => p.DatetimeServer).Select(s => s.OperatorNumber).FirstOrDefaultAsync();
+        }
+
+
+        /*---------------------------------Manual NOK recording----------------------------------------------------*/
+
+        public async Task<ProductionData> GetLastProductionData(string standLoc)
+        {
+            return await _dbcontext.ProductionData.Where(q => q.Loc == standLoc).FirstOrDefaultAsync() ?? new();
+        }
+
+        public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc, DateTime? startShift)
+        {
+            return await _dbcontext.QualityCardBilboxes.Where(q => q.ProductionDataNokId == null && q.WorkingPlaceNumber == standLoc && q.DatetimeServer >= startShift).ToListAsync();
+        }
+
+        public async Task InsertQualityCardBilbox(QualityCardBilbox qcb)
+        {
+            await _dbcontext.QualityCardBilboxes.AddAsync(qcb);
+            await _dbcontext.SaveChangesAsync();
+        }
+
+        public async Task UpdateQualityCardBilbox(QualityCardBilbox current, QualityCardBilbox updated)
+        {
+            _dbcontext.Entry(current).CurrentValues.SetValues(updated);
+            await _dbcontext.SaveChangesAsync();
+        }
+
+        public async Task RemoveQualityCardBilbox(QualityCardBilbox qcb)
+        {
+            _dbcontext.QualityCardBilboxes.Remove(qcb);
+            await _dbcontext.SaveChangesAsync();
+        }
+
+        /*---------------------------------Show history by stands----------------------------------------------------*/
+
+        public async Task<List<StandsHistoryDTO>> GetStandsHistory()
+        {
+            return await _dbcontext.QualityCardBilboxes
+                .Where(q => q.ProductionDataNokId != null)
+                .GroupBy(q => q.WorkingPlaceNumber)
+                .Select(q => new StandsHistoryDTO { Stand = q.Key, CountOfRetests = q.Count() })
+                .ToListAsync();
         }
     }
 }

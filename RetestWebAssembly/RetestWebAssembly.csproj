@@ -6,9 +6,6 @@
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="appsettings.json" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.1" PrivateAssets="all" />

@@ -1,0 +1,243 @@
+﻿@using RetestWebAssembly.Services
+
+@page "/manualAdd"
+
+@inject BilboxService BilboxService
+@inject FilterService FilterService
+
+<div class="row">
+    <div class="col">
+        <h5>Hala</h5>
+        <DxComboBox Data=@halls
+                    TextChanged="OnHallSelectInputChanged"
+                    @bind-Value=FilterService.SelectedHall
+                    FilteringMode="DataGridFilteringMode.Contains"
+                    NullText="Vyberte halu..."
+                    CssClass="w-100 mb-3" />
+    </div>
+    <div class="col">
+        <h5>Řada</h5>
+        <DxComboBox Data=@rows
+                    TextChanged="OnRowSelectInputChanged"
+                    @bind-Value=FilterService.SelectedRow
+                    FilteringMode="DataGridFilteringMode.Contains"
+                    NullText="Vyberte řadu..."
+                    CssClass="w-100 mb-3" />
+    </div>
+    <div class="col">
+        <h5>Bilbox</h5>
+        <DxComboBox Data=@avaibleBilboxes
+                    SelectedItemChanged="@((string bbx) => OnBilboxSelectInputChanged(bbx))"
+                    @bind-Value=FilterService.SelectedBilbox
+                    FilteringMode="DataGridFilteringMode.Contains"
+                    NullText="Vyberte bilbox..."
+                    CssClass="w-100 mb-3" />
+    </div>
+</div>
+
+<DxGrid @ref="Grid"
+        Data="DataSource"
+        PageSize="30"
+        ValidationEnabled="false"
+        CustomizeEditModel="Grid_CustomizeEditModel"
+        EditModelSaving="Grid_EditModelSaving"
+        DataItemDeleting="Grid_DataItemDeleting"
+        EditMode="GridEditMode.EditRow"
+        ColumnResizeMode="GridColumnResizeMode.NextColumn"
+        TextWrapEnabled="true">
+    <Columns>
+        <DxGridDataColumn FieldName="ProductNumber" Width="130" AllowReorder="false" AllowSort="false">
+            <HeaderCaptionTemplate>
+                <button class="btn btn-link grid-btn-link" @onclick="@(() => Grid.StartEditNewRowAsync())">Přidat</button>
+            </HeaderCaptionTemplate>
+            <CellDisplayTemplate>
+                <button class="btn btn-link grid-btn-link" @onclick="() => Grid.ShowDataItemDeleteConfirmation(context.DataItem)">Odstranit</button>
+            </CellDisplayTemplate>
+            <CellEditTemplate>
+                <button class="btn btn-link grid-btn-link" @onclick="() => Grid.SaveChangesAsync()">Uložit</button>
+            </CellEditTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" Width="130" />
+        <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" Width="90" />
+        <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DisplayFormat="######" Width="100" />
+        <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" DisplayFormat="##" Width="100" />
+        <DxGridDataColumn FieldName="DatetimeServer" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss" Width="190" />
+        <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Stojan" Width="100" />
+        <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" ShowInColumnChooser=false>
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxComboBox Data="@defects"
+                                NullText="Vyberte vadu..."
+                                DropDownVisible="true"
+                                FilteringMode="DataGridFilteringMode.Contains"
+                                TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                                ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                                SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
+                                @bind-Value=@qualityCardBilbox.DefectCode>
+                        <Columns>
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                                                Caption="Kod" Width="50" />
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                                                Caption="Typ" />
+                        </Columns>
+                </DxComboBox>
+            </CellEditTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200" ShowInColumnChooser=false>
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxComboBox Data="@defects"
+                                NullText="Vyberte vadu..."
+                                FilteringMode="DataGridFilteringMode.Contains"
+                                TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                                ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                                SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
+                                @bind-Value=@qualityCardBilbox.DefectType>
+                        <Columns>
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
+                                                Caption="Kod" />
+                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
+                                                Caption="Typ" />
+                        </Columns>
+                </DxComboBox>
+            </CellEditTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200" ShowInColumnChooser=false>
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxMemo CssClass="cw-480"
+                        Rows="5"
+                        NullText="Popis vady..."
+                        @bind-Text=@qualityCardBilbox.DefectDescription />
+            </CellEditTemplate>
+        </DxGridDataColumn>
+    </Columns>
+</DxGrid>
+
+@code {
+    const string SelectedAllBoxes = "VŠE";
+
+    List<string> halls = new List<string>();
+
+    List<string> rows = new List<string>();
+
+    List<string> avaibleBilboxes = new List<string>();
+
+    private async Task OnHallSelectInputChanged(string selectedHall)
+    {
+        FilterService.SelectedRow = String.Empty;
+        FilterService.SelectedBilbox = String.Empty;
+        if (selectedHall == SelectedAllBoxes)
+        {
+            rows = await BilboxService.GetRows();
+        }
+        else
+        {
+            rows = await BilboxService.GetRows(selectedHall);
+        }
+        rows.Insert(0, SelectedAllBoxes);
+    }
+
+    private async Task OnRowSelectInputChanged(string selectedRow)
+    {
+        FilterService.SelectedBilbox = String.Empty;
+        if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+        }
+        else if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+        }
+        else if (selectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
+        }
+        else
+        {
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
+        }
+    }
+
+    private async Task OnBilboxSelectInputChanged(string selectedBilbox)
+    {
+        DataSource = await BilboxService.GetQualityCardBilboxData(selectedBilbox);
+        LastProductionData = await BilboxService.GetLastProductionData(selectedBilbox);
+        //StateHasChanged();
+        //Grid.Reload();
+    }
+
+    List<QualityDefectDescriptionBilbox>? defects = new();
+
+    IList<QualityCardBilbox> DataSource { get; set; }
+    IGrid Grid { get; set; }
+
+    //private string SelectedBilbox { get; set; } = "ST2.999";
+    private QualityCardBilbox? LastProductionData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        halls = await BilboxService.GetHalls();
+        halls.Insert(0, SelectedAllBoxes);
+        //await GetAvaibleBilboxes();
+        defects = await BilboxService.GetDefectCodes();
+
+        if (FilterService.SelectedBilbox != null)
+        {
+            DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
+            LastProductionData = await BilboxService.GetLastProductionData(FilterService.SelectedBilbox);
+        }
+    }
+    void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
+    {
+        if (e.IsNew)
+        {
+            var qcb = (QualityCardBilbox)e.EditModel;
+
+            if (LastProductionData is not null)
+            {
+                qcb.ProductNumber = LastProductionData.ProductNumber;
+                qcb.OperationNumber = LastProductionData.OperationNumber;
+                qcb.OrderNumber = LastProductionData.OrderNumber;
+                qcb.OperatorNumber = LastProductionData.OperatorNumber;
+                qcb.DeviceNumber = LastProductionData.DeviceNumber;
+                qcb.WorkingPlaceNumber = LastProductionData.WorkingPlaceNumber;
+                qcb.BilboxNumber = LastProductionData.BilboxNumber;
+                qcb.DateTimeRecord = DateTime.Now;
+                qcb.DatetimeServer = DateTime.Now;
+            }
+        }
+    }
+
+    async Task Grid_EditModelSaving(GridEditModelSavingEventArgs e)
+    {
+        if (e.IsNew)
+            await BilboxService.InsertQualityCardBilbox((QualityCardBilbox)e.EditModel);
+
+        await UpdateDataAsync();
+    }
+
+    async Task Grid_DataItemDeleting(GridDataItemDeletingEventArgs e)
+    {
+        await BilboxService.RemoveQualityCardBilbox((QualityCardBilbox)e.DataItem);
+        await UpdateDataAsync();
+    }
+
+    async Task UpdateDataAsync()
+    {
+        DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
+    }
+
+    void SelectedDefectTypeItemChanged(QualityDefectDescriptionBilbox defect, ref QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.DefectCode = defect.DefectCode;
+        qualityCardBilbox.DefectType = defect.DefectDescription;
+    }
+}
+

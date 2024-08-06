@@ -1,0 +1,29 @@
+﻿@using RetestWebAssembly.Services
+
+@page "/history"
+
+@inject BilboxService BilboxService
+
+<div class="grid-container">
+<DxGrid @ref="Grid"
+        Data="DataSource"
+        PageSize="30"
+        ValidationEnabled="false"
+        ColumnResizeMode="GridColumnResizeMode.NextColumn"
+        TextWrapEnabled="true" CssClass="w-25">
+    <Columns>
+        <DxGridDataColumn FieldName="Stand" Caption="Stojan" DataRowEditorVisible=false />
+        <DxGridDataColumn FieldName="CountOfRetests" Caption="Počet" DataRowEditorVisible=false />
+    </Columns>
+</DxGrid>
+</div>
+
+@code {
+    IEnumerable<StandsHistoryDTO> DataSource { get; set; }
+    IGrid Grid { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        DataSource = await BilboxService.GetStandsHistory();
+    }
+}

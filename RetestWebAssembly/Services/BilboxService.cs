@@ -1,5 +1,7 @@
 ﻿using SharedLib.DTO;
 using SharedLib.Models;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -9,8 +11,8 @@ namespace RetestWebAssembly.Services
     public class BilboxService
     {
         private readonly HttpClient HttpClient;
-        //private readonly string ApiAddress = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93
+        private readonly string ApiAddress = "http://localhost:5047/";
+        //private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93
         //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
@@ -143,5 +145,63 @@ namespace RetestWebAssembly.Services
             }
             return JsonSerializer.Deserialize<StandsList>(content, _jsonSerializerOptions);
         }
+
+        /*---------------------------------Manual NOK recording----------------------------------------------------*/
+
+        public async Task<QualityCardBilbox?> GetLastProductionData(string standLoc)
+        {
+            var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getLastProductionData?standLoc={standLoc}");
+            return await response.Content.ReadFromJsonAsync<QualityCardBilbox>();
+        }
+
+        public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc)
+        {
+            var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getQualityCardBilboxData?standLoc={standLoc}");
+            return await response.Content.ReadFromJsonAsync<List<QualityCardBilbox>>() ?? new();
+        }
+
+        public async Task InsertQualityCardBilbox(QualityCardBilbox qcb)
+        {
+            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/Bilbox/insertQualityCardBilbox", qcb);
+        }
+
+        public async Task RemoveQualityCardBilbox(QualityCardBilbox qcb)
+        {
+            await HttpClient.SendAsync(new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"{ApiAddress}api/Bilbox/removeQualityCardBilbox"),
+                Content = JsonContent.Create(qcb)
+            });
+        }
+
+        /*---------------------------------Show history by stands----------------------------------------------------*/
+
+        public async Task<List<StandsHistoryDTO>> GetStandsHistory()
+        {
+            var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getStandsHistory");
+            List<StandsHistoryDTO> result = new();
+            try
+            {
+                result = await response.Content.ReadFromJsonAsync<List<StandsHistoryDTO>>() ?? new();
+            }
+            catch (JsonException jsonEx)
+            {
+                // Handle JSON parsing errors
+                Console.WriteLine($"JSON error: {jsonEx.Message}");
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Handle HTTP request errors
+                Console.WriteLine($"HTTP error: {httpEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Handle other errors
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+            }
+            return result;
+        }
+
     }
 }

@@ -3,10 +3,11 @@
 @using RetestWebAssembly.Services
 
 @page "/"
+@page "/index"
 
 @inject BilboxService BilboxService
+@inject FilterService FilterService
 @inject IJSRuntime JSRuntime
-
 
 <DxLoadingPanel @bind-Visible="loadVisible"
                 IsContentBlocked="true"
@@ -20,7 +21,7 @@
             <h5>Hala</h5>
             <DxComboBox Data=@halls
                         TextChanged="OnHallSelectInputChanged"
-                        @bind-Value=SelectedHall
+                        @bind-Value=FilterService.SelectedHall
                         FilteringMode="DataGridFilteringMode.Contains"
                         NullText="Vyberte halu..."
                         CssClass="w-100 mb-3" />
@@ -29,7 +30,7 @@
             <h5>Řada</h5>
             <DxComboBox Data=@rows
                         TextChanged="OnRowSelectInputChanged"
-                        @bind-Value=SelectedRow
+                        @bind-Value=FilterService.SelectedRow
                         FilteringMode="DataGridFilteringMode.Contains"
                         NullText="Vyberte řadu..."
                         CssClass="w-100 mb-3" />
@@ -38,7 +39,7 @@
             <h5>Bilbox</h5>
             <DxComboBox Data=@avaibleBilboxes
                         TextChanged="OnBilboxSelectInputChanged"
-                        @bind-Value=SelectedBilbox
+                        @bind-Value=FilterService.SelectedBilbox
                         FilteringMode="DataGridFilteringMode.Contains"
                         NullText="Vyberte bilbox..."
                         CssClass="w-100 mb-3" />
@@ -94,12 +95,10 @@
         LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large" AllowSort=false>
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
-            <DxToolbarItem Text="Přidat záznam" Click="NewRecordClick" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" Enabled=@(!String.IsNullOrEmpty(SelectedBilbox))/>
-            <DxToolbarItem Text="Normal mode" Click="SetNormalMode" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
                     @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
             </DxToolbarItem>
-            <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
+            <DxToolbarItem Text="Načíst znovu" Click="@(async() => await OnBilboxSelectInputChanged(FilterService.SelectedBilbox))" Enabled=@(!string.IsNullOrEmpty(FilterService.SelectedBilbox)) RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
             <DxToolbarItem Text="Vybrat sloupce" Click="ColumnChooserButton_Click" BeginGroup="true" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained" />
 
             <DxToolbarItem Context="cc" Text="Retest" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Plain">
@@ -130,7 +129,7 @@
         <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" DataRowEditorVisible=false DisplayFormat="##" Width="100" />
         <DxGridDataColumn FieldName="NokDateTime" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss"  DataRowEditorVisible=false Width="190" />
         <DxGridDataColumn FieldName="DeviceNumber" Caption="Device" DataRowEditorVisible=false Width="130" />
-        <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Loc" DataRowEditorVisible=false Width="100" />
+        <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Stojan" DataRowEditorVisible=false Width="100" />
         <DxGridDataColumn FieldName="BilboxNumber" Caption="BbxNum" DataRowEditorVisible=false Width="120" />
         <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" ShowInColumnChooser=false >
             <CellEditTemplate>
@@ -193,16 +192,6 @@
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn Width="210" Caption=" " FieldName="ProductionDataNokId">
-            <CellEditTemplate>
-                @{
-                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
-                }
-                <DxButton Text="Uložit" Click="SaveNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" Visible="qualityCardBilbox.IsInserted" />
-                <DxButton Text="Zrušit" Click="CancelNewRow" RenderStyle="ButtonRenderStyle.Secondary" RenderStyleMode="ButtonRenderStyleMode.Contained" Visible="qualityCardBilbox.IsInserted" />
-            </CellEditTemplate>
-            <CellDisplayTemplate></CellDisplayTemplate>
-        </DxGridDataColumn>
     </Columns>
 </DxGrid>
 </div>
@@ -210,7 +199,6 @@
 
 
 @code {
-
     const string SelectedAllBoxes = "VŠE";
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
@@ -220,8 +208,8 @@
 
     private async Task OnHallSelectInputChanged(string selectedHall)
     {
-        SelectedRow = String.Empty;
-        SelectedBilbox = String.Empty;
+        FilterService.SelectedRow = String.Empty;
+        FilterService.SelectedBilbox = String.Empty;
         if (selectedHall == SelectedAllBoxes)
         {
             rows = await BilboxService.GetRows();
@@ -235,22 +223,22 @@
 
     private async Task OnRowSelectInputChanged(string selectedRow)
     {
-        SelectedBilbox = String.Empty;
-        if (selectedRow == SelectedAllBoxes && SelectedHall == SelectedAllBoxes)
+        FilterService.SelectedBilbox = String.Empty;
+        if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
         {
             avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
         }
-        else if (selectedRow == SelectedAllBoxes && SelectedHall != SelectedAllBoxes)
+        else if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
         {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall);
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
         }
-        else if (selectedRow != SelectedAllBoxes && SelectedHall == SelectedAllBoxes)
+        else if (selectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
         {
             avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
         }
         else
         {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(SelectedHall, selectedRow);
+            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
         }
     }
 
@@ -270,13 +258,10 @@
 
     bool DelayedRetest { get; set; }
 
-    string SelectedHall { get; set; }
     List<string> halls = new List<string>();
 
-    string SelectedRow { get; set; }
     List<string> rows = new List<string>();
 
-    string SelectedBilbox { get; set; }
     StandsList? bilboxInformation { get; set; }
 
     IGrid Grid { get; set; }
@@ -320,9 +305,16 @@
         DelayedRetest = true;
         halls = await BilboxService.GetHalls();
         halls.Insert(0, SelectedAllBoxes);
-        //await GetAvaibleBilboxes();
+
         defects = await BilboxService.GetDefectCodes();
         await base.OnInitializedAsync();
+
+
+        if (FilterService.SelectedBilbox != null)
+        {
+            bilboxInformation = await BilboxService.GetBilboxDetail(FilterService.SelectedBilbox);
+            await ClearUnsavedChangesAsync();
+        }
     }
 
     protected override void OnAfterRender(bool firstRender)
@@ -389,7 +381,7 @@
 
     private async Task SetNormalMode()
     {
-        await BilboxService.SetNormalMode(SelectedBilbox);
+        await BilboxService.SetNormalMode(FilterService.SelectedBilbox);
     }
 
     void SelectedDefectTypeItemChanged(QualityDefectDescriptionBilbox defect, ref QualityCardBilbox qualityCardBilbox)
@@ -473,7 +465,6 @@
                 qcb.IsFromPreviousShift = false;
                 qcb.IsInserted = true;
             }
-
         }
     }
 
@@ -526,11 +517,6 @@
                     ea.CssClass = "grid-modified-cell";
             }
         }
-    }
-
-    async Task NewRecordClick() 
-    {
-        await Grid.StartEditNewRowAsync();
     }
 
     async Task Cancel_Click() => await ClearUnsavedChangesAsync();
@@ -590,7 +576,7 @@
 
         loadText = "Připojování k Bilboxu";
         loadVisible = true;
-        bool retestResult = await BilboxService.SetRetestMode(SelectedBilbox, result, selectedNokL, DelayedRetest);
+        bool retestResult = await BilboxService.SetRetestMode(FilterService.SelectedBilbox, result, selectedNokL, DelayedRetest);
         loadVisible = false;
         if(retestResult)
         {
@@ -612,7 +598,7 @@
 
     async Task UpdateDataAsync()
     {
-        var data = await BilboxService.GetNokList(SelectedBilbox);
+        var data = await BilboxService.GetNokList(FilterService.SelectedBilbox);
         nokList = new List<QualityCardBilbox>(data);
     }
 
@@ -622,11 +608,5 @@
     async Task CancelNewRow()
     {
         await Grid.CancelEditAsync();
-    }
-
-    async Task SaveNewRow()
-    {
-         await Grid.SaveChangesAsync();
-        //call remote api to do the operation
     }
 }
