@@ -46,15 +46,32 @@
         ColumnResizeMode="GridColumnResizeMode.NextColumn"
         TextWrapEnabled="true">
     <Columns>
-        <DxGridDataColumn FieldName="ProductNumber" Width="130" AllowReorder="false" AllowSort="false">
+        <DxGridDataColumn FieldName="ProductNumber" Width="210" AllowReorder="false" AllowSort="false">
             <HeaderCaptionTemplate>
                 <button class="btn btn-link grid-btn-link" @onclick="@(() => Grid.StartEditNewRowAsync())">Přidat</button>
             </HeaderCaptionTemplate>
             <CellDisplayTemplate>
-                <button class="btn btn-link grid-btn-link" @onclick="() => Grid.ShowDataItemDeleteConfirmation(context.DataItem)">Odstranit</button>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.DataItem;
+                }
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-link grid-btn-link" @onclick="() => Grid.ShowDataItemDeleteConfirmation(context.DataItem)">Odstranit</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-link grid-btn-link" @onclick="() => CopyRowsAsync(qualityCardBilbox)">Kopírovat</button>
+                    </div>
+                </div>
             </CellDisplayTemplate>
             <CellEditTemplate>
-                <button class="btn btn-link grid-btn-link" @onclick="() => Grid.SaveChangesAsync()">Uložit</button>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-link grid-btn-link" @onclick="() => Grid.SaveChangesAsync()">Uložit</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-link grid-btn-link" @onclick="() => Grid.CancelEditAsync()">Zrušit</button>
+                    </div>
+                </div>
             </CellEditTemplate>
         </DxGridDataColumn>
         <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" Width="130" />
@@ -239,5 +256,17 @@
         qualityCardBilbox.DefectCode = defect.DefectCode;
         qualityCardBilbox.DefectType = defect.DefectDescription;
     }
+
+
+    public async Task CopyRowsAsync(QualityCardBilbox qcb)
+    {
+        qcb.IdQualityCard = default;
+        qcb.DateTimeRecord = DateTime.Now;
+        qcb.DatetimeServer = DateTime.Now;
+
+        await BilboxService.InsertQualityCardBilbox(qcb);
+        await UpdateDataAsync();
+    }
+
 }
 
