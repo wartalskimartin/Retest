@@ -126,13 +126,11 @@ namespace PushAPI.Services
 
         /*---------------------------------Show history by stands----------------------------------------------------*/
 
-        public async Task<List<StandsHistoryDTO>> GetStandsHistory(DateTime startShift)
+        public async Task<int> GetStandsHistory(DateTime startShift, string stand)
         {
             return await _dbcontext.QualityCardBilboxes
-                .Where(q => q.ProductionDataNokId != null && q.DateTimeRecord >= startShift)
-                .GroupBy(q => q.WorkingPlaceNumber)
-                .Select(q => new StandsHistoryDTO { Stand = q.Key, CountOfRetests = q.Count() })
-                .ToListAsync();
+                .Where(q => q.ProductionDataNokId != null && q.DateTimeRecord >= startShift && q.WorkingPlaceNumber == stand)
+                .CountAsync();
         }
     }
 }

@@ -177,6 +177,13 @@ namespace RetestWebAssembly.Services
 
         /*---------------------------------Show history by stands----------------------------------------------------*/
 
+        public async Task<int> GetStandRetest(string stand)
+        {
+            var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getStandsHistory?stand={stand}");
+            return await response.Content.ReadFromJsonAsync<int>();
+        }
+
+        /*
         public async Task<List<StandsHistoryDTO>> GetStandsHistory()
         {
             var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getStandsHistory");
@@ -201,7 +208,7 @@ namespace RetestWebAssembly.Services
                 Console.WriteLine($"Unexpected error: {ex.Message}");
             }
             return result;
-        }
+        }*/
 
     }
 }

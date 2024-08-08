@@ -64,6 +64,9 @@
         <div class="col">
             <h6>Řada: @bilboxInformation.StandRow</h6>
         </div>
+        <div class="col">
+            <h6>Retesty: @RetestCount</h6>
+        </div>
     </div>
 
     <label class="">
@@ -248,6 +251,7 @@
         loadVisible = true;
 
         bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
+        RetestCount = await BilboxService.GetStandRetest(FilterService.SelectedBilbox);
         await ClearUnsavedChangesAsync();
 
         loadVisible = false;
@@ -263,6 +267,7 @@
     List<string> rows = new List<string>();
 
     StandsList? bilboxInformation { get; set; }
+    int RetestCount { get; set; }
 
     IGrid Grid { get; set; }
     List<string> avaibleBilboxes = new List<string>();
@@ -314,6 +319,40 @@
         {
             bilboxInformation = await BilboxService.GetBilboxDetail(FilterService.SelectedBilbox);
             await ClearUnsavedChangesAsync();
+        }
+
+        //load filter data after redirection; rows
+        if (!string.IsNullOrEmpty(FilterService.SelectedHall))
+        {
+            if (FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                rows = await BilboxService.GetRows();
+            }
+            else
+            {
+                rows = await BilboxService.GetRows(FilterService.SelectedHall);
+            }
+            rows.Insert(0, SelectedAllBoxes);
+        }
+        //bilboxes
+        if (!string.IsNullOrEmpty(FilterService.SelectedRow))
+        {
+            if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+            }
+            else if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+            }
+            else if (FilterService.SelectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(FilterService.SelectedRow);
+            }
+            else
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
+            }
         }
     }
 

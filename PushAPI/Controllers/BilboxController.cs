@@ -161,10 +161,10 @@ namespace PushAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("getStandsHistory")]
-        public async Task<ActionResult<List<StandsHistoryDTO>>> GetStandsHistory()
+        public async Task<ActionResult<List<StandsHistoryDTO>>> GetStandsHistory(string stand)
         {
             DateTime startShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
-            var result = await _bilboxService.GetStandsHistory(startShift);
+            var result = await _bilboxService.GetStandsHistory(startShift, stand);
             return Ok(result);
         }
     }

@@ -205,7 +205,42 @@
             DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
             LastProductionData = await BilboxService.GetLastProductionData(FilterService.SelectedBilbox);
         }
+
+        //load filter data after redirection; rows
+        if (!string.IsNullOrEmpty(FilterService.SelectedHall))
+        {
+            if (FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                rows = await BilboxService.GetRows();
+            }
+            else
+            {
+                rows = await BilboxService.GetRows(FilterService.SelectedHall);
+            }
+            rows.Insert(0, SelectedAllBoxes);
+        }
+        //bilboxes
+        if (!string.IsNullOrEmpty(FilterService.SelectedRow))
+        {
+            if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+            }
+            else if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+            }
+            else if (FilterService.SelectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(FilterService.SelectedRow);
+            }
+            else
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
+            }
+        }
     }
+
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
     {
         if (e.IsNew)
