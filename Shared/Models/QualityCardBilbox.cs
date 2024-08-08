@@ -40,6 +40,7 @@ public partial class QualityCardBilbox
 
     public DateTime? DatetimeServer { get; set; }
     public long? ProductionDataNokId { get; set; }
+    public int? SaveCount { get; set; }
 
     [NotMapped]
     public string? BilboxNumber { get; set; }

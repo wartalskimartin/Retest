@@ -153,6 +153,7 @@ public partial class cockpitContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("workingPlaceNumber");
             entity.Property(e => e.ProductionDataNokId).HasColumnName("productionDataNokId");
+            entity.Property(e => e.SaveCount).HasColumnName("saveCount");
         });
 
         modelBuilder.Entity<QualityDefectDescriptionBilbox>(entity =>

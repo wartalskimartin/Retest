@@ -93,7 +93,7 @@ namespace PushAPI.Services
 
         public async Task<ProductionData> GetLastProductionData(string standLoc)
         {
-            return await _dbcontext.ProductionData.Where(q => q.Loc == standLoc).FirstOrDefaultAsync() ?? new();
+            return await _dbcontext.ProductionData.Where(q => q.Loc == standLoc).OrderByDescending(q => q.DatetimeServer).FirstOrDefaultAsync() ?? new();
         }
 
         public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc, DateTime? startShift)
@@ -104,6 +104,11 @@ namespace PushAPI.Services
         public async Task InsertQualityCardBilbox(QualityCardBilbox qcb)
         {
             await _dbcontext.QualityCardBilboxes.AddAsync(qcb);
+            await _dbcontext.SaveChangesAsync();
+        }
+        public async Task InsertQualityCardBilbox(List<QualityCardBilbox> qualityCards)
+        {
+            await _dbcontext.QualityCardBilboxes.AddRangeAsync(qualityCards);
             await _dbcontext.SaveChangesAsync();
         }
 

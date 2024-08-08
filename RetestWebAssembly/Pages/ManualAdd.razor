@@ -48,20 +48,13 @@
     <Columns>
         <DxGridDataColumn FieldName="ProductNumber" Width="210" AllowReorder="false" AllowSort="false">
             <HeaderCaptionTemplate>
-                <button class="btn btn-link grid-btn-link" @onclick="@(() => Grid.StartEditNewRowAsync())">Přidat</button>
+                <DxButton Enabled="@(!string.IsNullOrEmpty(FilterService.SelectedBilbox))" RenderStyle="ButtonRenderStyle.Primary" Click="@(() => Grid.StartEditNewRowAsync())" Context="hi">Přidat</DxButton>
             </HeaderCaptionTemplate>
             <CellDisplayTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.DataItem;
                 }
-                <div class="row">
-                    <div class="col">
-                        <button class="btn btn-link grid-btn-link" @onclick="() => DeleteGridItem(qualityCardBilbox)">Odstranit</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-link grid-btn-link" @onclick="() => CopyRowsAsync(qualityCardBilbox)">Kopírovat</button>
-                    </div>
-                </div>
+                <button class="btn btn-link grid-btn-link" @onclick="() => DeleteGridItem(qualityCardBilbox)">Odstranit</button>
             </CellDisplayTemplate>
             <CellEditTemplate>
                 <div class="row">
@@ -80,6 +73,7 @@
         <DxGridDataColumn FieldName="OperatorNumber" Caption="Operator" DisplayFormat="##" Width="100" />
         <DxGridDataColumn FieldName="DatetimeServer" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss" Width="190" />
         <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Stojan" Width="100" />
+        <DxGridDataColumn FieldName="SaveCount" Caption="Počet" Width="100" />
         <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" ShowInColumnChooser=false>
             <CellEditTemplate>
                 @{
@@ -229,6 +223,7 @@
                 qcb.BilboxNumber = LastProductionData.BilboxNumber;
                 qcb.DateTimeRecord = DateTime.Now;
                 qcb.DatetimeServer = DateTime.Now;
+                qcb.SaveCount = 1;
             }
         }
     }
