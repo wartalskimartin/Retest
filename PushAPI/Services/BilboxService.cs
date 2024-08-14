@@ -93,7 +93,7 @@ namespace PushAPI.Services
 
         public async Task<ProductionData> GetLastProductionData(string standLoc)
         {
-            return await _dbcontext.ProductionData.Where(q => q.Loc == standLoc).OrderByDescending(q => q.DatetimeServer).FirstOrDefaultAsync() ?? new();
+            return await _dbcontext.ProductionData.Where(q => q.Loc == standLoc).OrderByDescending(q => q.Id).FirstOrDefaultAsync() ?? new();
         }
 
         public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc, DateTime? startShift)

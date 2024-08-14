@@ -48,7 +48,7 @@
     <Columns>
         <DxGridDataColumn FieldName="ProductNumber" Width="210" AllowReorder="false" AllowSort="false">
             <HeaderCaptionTemplate>
-                <DxButton Enabled="@(!string.IsNullOrEmpty(FilterService.SelectedBilbox))" RenderStyle="ButtonRenderStyle.Primary" Click="@(() => Grid.StartEditNewRowAsync())" Context="hi">Přidat</DxButton>
+                <DxButton CssClass="w-100" Enabled="@(!string.IsNullOrEmpty(FilterService.SelectedBilbox))" RenderStyle="ButtonRenderStyle.Primary" Click="@(() => Grid.StartEditNewRowAsync())" Context="hi">Přidat</DxButton>
             </HeaderCaptionTemplate>
             <CellDisplayTemplate>
                 @{
