@@ -19,9 +19,9 @@ namespace PushAPI.Services
 
         public async Task<List<ProductionData>> GetLatestNOKFrom(string standLoc, DateTime? startShift)
         {
-            return await _dbcontext.ProductionData
+            return await _dbcontext.ProductionData.AsNoTracking()
                 .Where(pd => pd.Loc == standLoc && pd.ProductionDateTime >= startShift && pd.Nok == 1 && !_dbcontext.QualityCardBilboxes.Any(qcb => qcb.ProductionDataNokId == pd.Id))
-                .OrderBy(pd => pd.DatetimeServer).ToListAsync();
+                .OrderBy(pd => pd.Id).ToListAsync();
         }
 
         public async Task AddQualityCardBilbox(List<QualityCardBilbox> retestedNok)
@@ -32,12 +32,12 @@ namespace PushAPI.Services
 
         public async Task<List<QualityDefectDescriptionBilbox>> GetDefectCodes()
         {
-            return await _dbcontext.QualityDefectDescriptionBilboxes.ToListAsync();
+            return await _dbcontext.QualityDefectDescriptionBilboxes.AsNoTracking().ToListAsync();
         }
 
         public async Task<StandsList?> GetBilboxInformation(string bilboxLoc)
         {
-            return await _dbcontext.StandsLists.FirstOrDefaultAsync(b => b.Stand == bilboxLoc);
+            return await _dbcontext.StandsLists.AsNoTracking().FirstOrDefaultAsync(b => b.Stand == bilboxLoc);
         }
 
         public async Task<int?> GetQualityCounter(string locationNumber)
@@ -50,42 +50,42 @@ namespace PushAPI.Services
 
         public async Task<List<string>> GetHalls()
         {
-            return await _dbcontext.StandsLists.Where(s => s.Hall != null).Select(s => s.Hall.ToString() ?? "").Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Where(s => s.Hall != null).Select(s => s.Hall.ToString() ?? "").Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetRows(int hall)
         {
-            return await _dbcontext.StandsLists.Where(s => s.Hall == hall).Select(s => s.StandRow).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Where(s => s.Hall == hall).Select(s => s.StandRow).Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetRows()
         {
-            return await _dbcontext.StandsLists.Select(s => s.StandRow).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Select(s => s.StandRow).Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetStands(int hall, string row)
         {
-            return await _dbcontext.StandsLists.Where(s => s.Hall == hall && s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Where(s => s.Hall == hall && s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetStands(int hall)
         {
-            return await _dbcontext.StandsLists.Where(s => s.Hall == hall).Select(s => s.Stand).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Where(s => s.Hall == hall).Select(s => s.Stand).Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetStands()
         {
-            return await _dbcontext.StandsLists.Select(s => s.Stand).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Select(s => s.Stand).Distinct().ToListAsync();
         }
 
         public async Task<List<string>> GetStandsByRows(string row)
         {
-            return await _dbcontext.StandsLists.Where(s => s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
+            return await _dbcontext.StandsLists.AsNoTracking().Where(s => s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
         }
 
         public async Task<int?> GetActualOperatorNumber(string standLoc)
         {
-            return await _dbcontext.ProductionData.Where(s => s.Loc == standLoc).OrderByDescending(p => p.DatetimeServer).Select(s => s.OperatorNumber).FirstOrDefaultAsync();
+            return await _dbcontext.ProductionData.AsNoTracking().Where(s => s.Loc == standLoc).OrderByDescending(p => p.Id).Select(s => s.OperatorNumber).FirstOrDefaultAsync();
         }
 
 
@@ -93,7 +93,7 @@ namespace PushAPI.Services
 
         public async Task<ProductionData> GetLastProductionData(string standLoc)
         {
-            return await _dbcontext.ProductionData.Where(q => q.Loc == standLoc).OrderByDescending(q => q.Id).FirstOrDefaultAsync() ?? new();
+            return await _dbcontext.ProductionData.AsNoTracking().Where(q => q.Loc == standLoc).OrderByDescending(q => q.Id).FirstOrDefaultAsync() ?? new();
         }
 
         public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc, DateTime? startShift)
