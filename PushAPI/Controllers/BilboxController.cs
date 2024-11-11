@@ -51,6 +51,11 @@ namespace PushAPI.Controllers
         [HttpGet("getActualShiftNOK")]
         public async Task<IActionResult> GetActualShiftNOK(string standLoc)
         {
+            if (string.IsNullOrEmpty(standLoc))
+            {
+                return Ok(new List<QualityCardBilbox>());
+            }
+
             DateTime startOfPreviousShift = ProductionDataShiftRecognizer.GetPreviousShiftStartHour();
 
             List<ProductionData> pp = await _bilboxService.GetLatestNOKFrom(standLoc, startOfPreviousShift);
