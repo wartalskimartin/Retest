@@ -83,9 +83,9 @@ namespace PushAPI.Services
             return await _dbcontext.StandsLists.AsNoTracking().Where(s => s.StandRow == row).Select(s => s.Stand).Distinct().ToListAsync();
         }
 
-        public async Task<int?> GetActualOperatorNumber(string standLoc)
+        public async Task<int?> GetActualOperatorNumber(string standLoc, DateTime? startShift)
         {
-            return await _dbcontext.ProductionData.AsNoTracking().Where(s => s.Loc == standLoc).OrderByDescending(p => p.Id).Select(s => s.OperatorNumber).FirstOrDefaultAsync();
+            return await _dbcontext.ProductionData.AsNoTracking().Where(s => s.Loc == standLoc && s.ProductionDateTime >= startShift).OrderByDescending(p => p.Id).Select(s => s.OperatorNumber).FirstOrDefaultAsync();
         }
 
 

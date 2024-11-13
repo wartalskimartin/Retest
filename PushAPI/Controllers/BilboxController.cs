@@ -59,7 +59,7 @@ namespace PushAPI.Controllers
             DateTime startOfPreviousShift = ProductionDataShiftRecognizer.GetPreviousShiftStartHour();
 
             List<ProductionData> pp = await _bilboxService.GetLatestNOKFrom(standLoc, startOfPreviousShift);
-            int? latestOperatorNumber = await _bilboxService.GetActualOperatorNumber(standLoc);
+            int? latestOperatorNumber = await _bilboxService.GetActualOperatorNumber(standLoc, startOfPreviousShift);
             List<QualityCardBilbox> result = PopulateModel(pp, latestOperatorNumber);
 
             return Ok(result);
