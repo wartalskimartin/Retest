@@ -91,9 +91,9 @@ namespace PushAPI.Services
 
         /*---------------------------------Manual NOK recording----------------------------------------------------*/
 
-        public async Task<ProductionData> GetLastProductionData(string standLoc)
+        public async Task<ProductionData> GetLastProductionData(string standLoc, DateTime startShift)
         {
-            return await _dbcontext.ProductionData.AsNoTracking().Where(q => q.Loc == standLoc).OrderByDescending(q => q.Id).FirstOrDefaultAsync() ?? new();
+            return await _dbcontext.ProductionData.AsNoTracking().Where(q => q.Loc == standLoc && q.ProductionDateTime >= startShift).OrderByDescending(q => q.Id).FirstOrDefaultAsync() ?? new();
         }
 
         public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc, DateTime? startShift)

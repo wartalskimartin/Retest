@@ -134,7 +134,8 @@ namespace PushAPI.Controllers
         [HttpGet("getLastProductionData")]
         public async Task<ActionResult<QualityCardBilbox>> GetLastProductionData(string standLoc)
         {
-            var result = await _bilboxService.GetLastProductionData(standLoc);
+            DateTime startShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
+            var result = await _bilboxService.GetLastProductionData(standLoc, startShift);
             return Ok(PopulateModelItem(result, false));
         }
 
