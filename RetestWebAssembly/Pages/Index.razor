@@ -98,6 +98,9 @@
         LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large" AllowSort=false>
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
+            <DxToolbarItem Context="cc" Text="" RenderStyle="ButtonRenderStyle.None" RenderStyleMode="ToolbarItemRenderStyleMode.Plain">
+                <div style="width:100px;"></div>
+            </DxToolbarItem>
             <DxToolbarItem Context="cc" Text="Retest" Click="Save_Click" RenderStyle="ButtonRenderStyle.Primary" RenderStyleMode="ToolbarItemRenderStyleMode.Contained">
                     @cc.Text<span class="badge rounded-pill bg-secondary ms-1">@(Grid.SelectedDataItems == null ? 0 : Grid.SelectedDataItems.Count)</span>
             </DxToolbarItem>
