@@ -641,7 +641,7 @@
     async Task UpdateDataAsync()
     {
         var data = await BilboxService.GetNokList(FilterService.SelectedBilbox);
-        nokList = new List<QualityCardBilbox>(data);
+        nokList = new List<QualityCardBilbox>(data ?? new List<QualityCardBilbox>());
     }
 
     record DataChange(DataChangeType Type, HashSet<string> ChangedFields);
