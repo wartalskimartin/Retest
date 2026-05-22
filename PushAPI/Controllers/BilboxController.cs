@@ -123,7 +123,7 @@ namespace PushAPI.Controllers
                 DeviceNumber = productionData.Device,
                 TeamNumber = productionData.TeamNumber,
                 BilboxNumber = productionData.BbxNum,
-                NokDateTime = productionData.DatetimeServer,
+                NokDateTime = productionData.ProductionDateTime,
                 IsFromPreviousShift = isFromPreviousShift,
                 ProductionDataNokId = productionData.Id
             };
