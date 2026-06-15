@@ -35,6 +35,14 @@ namespace PushAPI.Services
             return await _dbcontext.QualityDefectDescriptionBilboxes.AsNoTracking().ToListAsync();
         }
 
+
+        public async Task<List<QualityDefectDescriptionBilbox>> GetDefectCodesEn()
+        {
+            return await _dbcontext.QualityDefectDescriptionBilboxEns
+                .Select(q => new QualityDefectDescriptionBilbox { IdQualityDefectDescription = q.Id, DefectCode = q.DefectCode, DefectDescription = q.DefectDescription })
+                .AsNoTracking().ToListAsync();
+        }
+
         public async Task<StandsList?> GetBilboxInformation(string bilboxLoc)
         {
             return await _dbcontext.StandsLists.AsNoTracking().FirstOrDefaultAsync(b => b.Stand == bilboxLoc);

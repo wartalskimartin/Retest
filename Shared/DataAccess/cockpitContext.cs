@@ -21,8 +21,26 @@ public partial class cockpitContext : DbContext
     public virtual DbSet<QualityDefectDescriptionBilbox> QualityDefectDescriptionBilboxes { get; set; }
     public virtual DbSet<QualityCounterResult> QualityCounterResult { get; set; } = null!;
 
+    public virtual DbSet<QualityDefectDescriptionBilboxEn> QualityDefectDescriptionBilboxEns { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<QualityDefectDescriptionBilboxEn>(entity =>
+        {
+            entity.ToTable("qualityDefectDescriptionBilboxEn");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.DefectCode)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("defectCode");
+            entity.Property(e => e.DefectDescription)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("defectDescription");
+        });
+
+
         modelBuilder.Entity<QualityCounterResult>(entity =>
         {
             entity.ToTable("qualityCounter");

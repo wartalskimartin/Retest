@@ -48,6 +48,13 @@ namespace PushAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getDefectCodesEn")]
+        public async Task<IActionResult> GetDefectCodesEn()
+        {
+            List<QualityDefectDescriptionBilbox> result = await _bilboxService.GetDefectCodesEn();
+            return Ok(result);
+        }
+
         [HttpGet("getActualShiftNOK")]
         public async Task<IActionResult> GetActualShiftNOK(string standLoc)
         {
