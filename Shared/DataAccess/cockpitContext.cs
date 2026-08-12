@@ -13,6 +13,9 @@ public partial class cockpitContext : DbContext
         : base(options)
     {
     }
+    public virtual DbSet<RetestKomponent> RetestKomponents { get; set; }
+
+    public virtual DbSet<RetestVadum> RetestVada { get; set; }
 
     public virtual DbSet<StandsList> StandsLists { get; set; }
     public virtual DbSet<ProductionData> ProductionData { get; set; }
@@ -25,6 +28,32 @@ public partial class cockpitContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<RetestKomponent>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__RetestKo__3214EC077BD1A3FC");
+
+            entity.ToTable("RetestKomponent");
+
+            entity.Property(e => e.Nazev)
+                .IsRequired()
+                .HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<RetestVadum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__RetestVa__3214EC07C8CD6746");
+
+            entity.Property(e => e.Nazev)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.HasOne(d => d.RetestKomponent).WithMany(p => p.RetestVada)
+                .HasForeignKey(d => d.RetestKomponentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RetestVada_RetestKomponent");
+        });
+
         modelBuilder.Entity<QualityDefectDescriptionBilboxEn>(entity =>
         {
             entity.ToTable("qualityDefectDescriptionBilboxEn");
@@ -172,6 +201,14 @@ public partial class cockpitContext : DbContext
                 .HasColumnName("workingPlaceNumber");
             entity.Property(e => e.ProductionDataNokId).HasColumnName("productionDataNokId");
             entity.Property(e => e.SaveCount).HasColumnName("saveCount");
+            entity.Property(e => e.Komponent)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("komponent");
+            entity.Property(e => e.Vada)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("vada");
         });
 
         modelBuilder.Entity<QualityDefectDescriptionBilbox>(entity =>

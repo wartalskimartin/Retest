@@ -17,6 +17,28 @@ namespace PushAPI.Services
             _dbcontext = dbContext;
         }
 
+        public async Task<List<RetestKomponentVadyDTO>> GetKomponents()
+        {
+            return await _dbcontext.RetestKomponents
+                .AsNoTracking()
+                .OrderBy(k => k.Nazev)
+                .Select(k => new RetestKomponentVadyDTO
+                {
+                    KomponentId = k.Id,
+                    KomponentName = k.Nazev,
+                    Vady = k.RetestVada
+                        .OrderBy(v => v.Nazev)
+                        .Select(v => new RetestVadaDTO
+                        {
+                            VadaId = v.Id,
+                            KomponentId = v.RetestKomponentId,
+                            VadaName = v.Nazev
+                        })
+                        .ToList()
+                })
+                .ToListAsync();
+        }
+
         public async Task<List<ProductionData>> GetLatestNOKFrom(string standLoc, DateTime? startShift)
         {
             return await _dbcontext.ProductionData.AsNoTracking()

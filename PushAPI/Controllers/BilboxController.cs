@@ -96,6 +96,14 @@ namespace PushAPI.Controllers
             return Ok(rows);
         }
 
+        [HttpGet("getKomponentVady")]
+        public async Task<IActionResult> GetKomponentVady()
+        {
+            List<RetestKomponentVadyDTO> rows = await _bilboxService.GetKomponents();
+
+            return Ok(rows);
+        }
+
         private List<QualityCardBilbox> PopulateModel(List<ProductionData> productionDatas, int? currentShiftOperatorNumber)
         {
             List<QualityCardBilbox> result = new();

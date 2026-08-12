@@ -1,6 +1,7 @@
-﻿@using System.Text.Json;
+﻿@using System.Text.Json
 @using Microsoft.JSInterop
 @using RetestWebAssembly.Services
+@using SharedLib.DTO
 
 @page "/"
 @page "/index"
@@ -88,14 +89,19 @@
 <DxGrid @ref=Grid Data="@nokList" CssClass="mt-3"
         @bind-SelectedDataItems="SelectedNok"
         PageSize="100"
+        AllowColumnReorder="false"
         ValidationEnabled="false"
-        EditMode="GridEditMode.EditCell"
+        EditMode="GridEditMode.EditRow"
         KeyboardNavigationEnabled="true"
+        RowClick="Grid_RowClick"
+        KeyFieldName="@nameof(QualityCardBilbox.ProductionDataNokId)"
         CustomizeEditModel="Grid_CustomizeEditModel"
         EditModelSaving="Grid_EditModelSaving"
         CustomizeElement="Grid_CustomizeElement"
         LayoutAutoLoading="Grid_LayoutAutoLoading"
-        LayoutAutoSaving="Grid_LayoutAutoSaving" SizeMode="SizeMode.Large" AllowSort=false>
+        LayoutAutoSaving="Grid_LayoutAutoSaving"
+        SizeMode="SizeMode.Large"
+                AllowSort="false">
     <ToolbarTemplate>
         <DxToolbar ItemRenderStyleMode="ToolbarRenderStyleMode.Plain">
             <DxToolbarItem Context="cc" Text="" RenderStyle="ButtonRenderStyle.None" RenderStyleMode="ToolbarItemRenderStyleMode.Plain">
@@ -137,54 +143,47 @@
         <DxGridDataColumn FieldName="DeviceNumber" Caption="Device" DataRowEditorVisible=false Width="130" />
         <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Stojan" DataRowEditorVisible=false Width="100" />
         <DxGridDataColumn FieldName="BilboxNumber" Caption="BbxNum" DataRowEditorVisible=false Width="120" />
-        <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" ShowInColumnChooser=false >
+        
+        <DxGridDataColumn FieldName="Komponent" Caption="Komponent" MinWidth="180" ShowInColumnChooser="false">
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
                 }
-                @if (!qualityCardBilbox.IsFromPreviousShift){
-                <DxComboBox Data="@defects"
-                            NullText="Vyberte vadu..."
-                            DropDownVisible="true"
-                            FilteringMode="DataGridFilteringMode.Contains"
-                            TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                            ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                            SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
-                            @bind-Value=@qualityCardBilbox.DefectCode>
-                        <Columns>
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                                Caption="Kod" Width="50" />
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                                                Caption="Typ" />
-                        </Columns>
-                </DxComboBox>
+                @if (!qualityCardBilbox.IsFromPreviousShift)
+                {
+                    <DxComboBox Data="@komponentVady"
+                                NullText="Vyberte komponent..."
+                                DropDownVisible="true"
+                                TextFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
+                                ValueFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
+                                SelectedItemChanged="@((RetestKomponentVadyDTO? komponent) => SelectedKomponentItemChanged(komponent, qualityCardBilbox))"
+                                @bind-Value="@qualityCardBilbox.Komponent">
+                    </DxComboBox>
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200" ShowInColumnChooser=false >
+
+        <DxGridDataColumn FieldName="Vada" Caption="Vada" MinWidth="220" ShowInColumnChooser="false">
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                    var vadyProKomponent = GetVadyForKomponent(qualityCardBilbox.Komponent);
                 }
-                @if (!qualityCardBilbox.IsFromPreviousShift){
-                <DxComboBox Data="@defects"
-                            NullText="Vyberte vadu..."
-                            DropDownVisible="true"
-                            FilteringMode="DataGridFilteringMode.Contains"
-                            TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                            ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                            SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
-                            @bind-Value=@qualityCardBilbox.DefectType>
-                        <Columns>
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                                Caption="Kod" />
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                                                Caption="Typ" />
-                        </Columns>
-                </DxComboBox>
+                @if (!qualityCardBilbox.IsFromPreviousShift)
+                {
+                    <DxComboBox Data="@vadyProKomponent"
+                                NullText="Vyberte vadu..."
+                                DropDownVisible="true"
+                                TextFieldName="@nameof(RetestVadaDTO.VadaName)"
+                                ValueFieldName="@nameof(RetestVadaDTO.VadaName)"
+                                @bind-Value="@qualityCardBilbox.Vada"
+                                Enabled="@(!string.IsNullOrEmpty(qualityCardBilbox.Komponent))"
+                                SelectedItemChanged="@((RetestVadaDTO? vada) => SelectedVadaItemChanged(vada, qualityCardBilbox))" />
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
+
+
         <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200"  ShowInColumnChooser=false >
             <CellEditTemplate>
                 @{
@@ -194,10 +193,12 @@
                 <DxMemo CssClass="cw-480"
                         Rows="5"
                         NullText="Popis vady..."
-                                @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, ref qualityCardBilbox))" />
+                                @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, qualityCardBilbox))" />
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
+        
+
     </Columns>
 </DxGrid>
 </div>
@@ -250,14 +251,21 @@
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
-        loadText = "Načítání";
-        loadVisible = true;
-
-        bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
-        RetestCount = await BilboxService.GetStandRetest(FilterService.SelectedBilbox);
-        await ClearUnsavedChangesAsync();
-
-        loadVisible = false;
+        try
+        {
+            await RunWithBlockedUiAsync("Načítání", async () =>
+            {
+                bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
+                RetestCount = await BilboxService.GetStandRetest(FilterService.SelectedBilbox);
+                await ClearUnsavedChangesAsync();
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+            ErrorPopupText = "Načítání selhalo. Zkontrolujte připojení a zkuste to znovu.";
+            ErrorPopupVisible = true;
+        }
     }
 
     bool loadVisible = false;
@@ -269,6 +277,8 @@
 
     List<string> rows = new List<string>();
 
+    List<RetestKomponentVadyDTO> komponentVady = new();
+
     StandsList? bilboxInformation { get; set; }
     int RetestCount { get; set; }
 
@@ -279,10 +289,6 @@
     bool RetestEnabled => UnsavedChanges.Count > 0 || Grid.IsEditing();
 
     IReadOnlyList<object> SelectedNok { get; set; }
-
-    List<QualityDefectDescriptionBilbox>? defects = new();
-    string CurrentDefectCode { get; set; }
-    string CurrentDefectType { get; set; }
 
     bool allSelected = false;
     bool AllSelected
@@ -314,7 +320,6 @@
         halls = await BilboxService.GetHalls();
         halls.Insert(0, SelectedAllBoxes);
 
-        defects = await BilboxService.GetDefectCodes();
         await base.OnInitializedAsync();
 
 
@@ -357,7 +362,10 @@
                 avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
             }
         }
+        komponentVady = await BilboxService.GetKomponentVady();
     }
+    
+
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -368,7 +376,7 @@
         }
     }
 
-    //check if row is not from previose shift
+    //check if row is not from previous shift
     void OnCheckedChanged(bool isSelected, QualityCardBilbox item)
     {
         if(!item.IsFromPreviousShift)
@@ -455,31 +463,16 @@
         }
     }
 
-    private void HandleMemoInputChange(ChangeEventArgs e, ref QualityCardBilbox qualityCardBilbox)
+    private void HandleMemoInputChange(ChangeEventArgs e, QualityCardBilbox qualityCardBilbox)
     {
-        string text = e.Value.ToString();
-        // Do something with the updated value
-        Console.WriteLine(text);
+        string text = e.Value?.ToString() ?? string.Empty;
+        qualityCardBilbox.DefectDescription = text;
 
-        //auto filling of rows below selected item with same defect
-        bool canFill = false;
-
-        for (int i = 0; i < nokList.Count; i++)
+        FillDown(qualityCardBilbox, row =>
         {
-            if (!canFill)
-            {
-                canFill = string.Equals(nokList[i].NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"), qualityCardBilbox.NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"));
-            }
-
-            if (canFill)
-            {
-                nokList[i].DefectDescription = text;
-            }
-        }
-
-        StateHasChanged();
-    }
-
+            row.DefectDescription = text;
+        }, nameof(QualityCardBilbox.DefectDescription));
+}
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
     {
         if (e.IsNew)
@@ -565,69 +558,89 @@
 
     async Task Save_Click()
     {
+        // 1) commit aktuálně editovaného řádku
+        await Grid.SaveChangesAsync();
+
+        var selectedRows = SelectedNok?.OfType<QualityCardBilbox>().ToList() ?? new List<QualityCardBilbox>();
+
+        // 2) validace: vybrané řádky (mimo previous shift) musí mít Komponent + Vada
+        var invalidSelected = selectedRows
+            .Where(x => !x.IsFromPreviousShift &&
+                        (string.IsNullOrWhiteSpace(x.Komponent) || string.IsNullOrWhiteSpace(x.Vada)))
+            .ToList();
+
+        if (invalidSelected.Any())
+        {
+            ErrorPopupText = "Vyplňte u všech vybraných kusů Komponent a Vadu.";
+            ErrorPopupVisible = true;
+            StateHasChanged();
+            return;
+        }
+
         List<QualityCardBilbox> result = new();
         List<QualityCardBilbox> selectedNokL = new();
 
-        /*
-        foreach (var unsavedChange in UnsavedChanges)
-            {
-            //transform to list
-            QualityCardBilbox dataItem = unsavedChange.Key;
-            dataItem.DateTimeRecord = DateTime.Now;
-            result.Add(dataItem);
-        }
-        */
-
+        // 3) data pro save
         foreach (var nk in nokList)
         {
-            //transform to list
-            QualityCardBilbox dataItem = nk;
-            dataItem.DateTimeRecord = DateTime.Now;
-            if(!string.IsNullOrEmpty(nk.DefectCode))
-                result.Add(dataItem);
-        }
+            nk.DateTimeRecord = DateTime.Now;
 
-        //check if selected rows have filled defect
-        if(SelectedNok is not null)
-        {
-            foreach (QualityCardBilbox selected in SelectedNok)
+            if (nk.IsFromPreviousShift)
             {
-                if (result.Contains(selected))
-                {
-                    selectedNokL.Add(selected);
-                }
-                else
-                {
-                    ErrorPopupText = "Vyplňte u všech kusů na retest Typ vady.";
-                    ErrorPopupVisible = true;
-                    return;
-                }
+                nk.DefectCode = "ps";
+                nk.DefectType = "prev_shift";
+                result.Add(nk);
+                continue;
             }
+
+            if (!string.IsNullOrWhiteSpace(nk.Komponent) && !string.IsNullOrWhiteSpace(nk.Vada))
+                result.Add(nk);
         }
 
-        //write also nok from previouse shift
-        foreach (QualityCardBilbox qc in nokList)
+        // 4) selected list bez reference porovnávání přes Contains(result)
+        selectedNokL = selectedRows
+            .Where(x => !x.IsFromPreviousShift)
+            .ToList();
+
+        bool retestResult = false;
+        try
         {
-            if (qc.IsFromPreviousShift)
+            await RunWithBlockedUiAsync("Připojování k Bilboxu", async () =>
             {
-                qc.DefectCode = "ps";
-                qc.DefectType = "prev_shift";
-                result.Add(qc);
-            }
+                retestResult = await BilboxService.SetRetestMode(
+                    FilterService.SelectedBilbox,
+                    result,
+                    selectedNokL,
+                    DelayedRetest);
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+            retestResult = false;
         }
 
-        loadText = "Připojování k Bilboxu";
-        loadVisible = true;
-        bool retestResult = await BilboxService.SetRetestMode(FilterService.SelectedBilbox, result, selectedNokL, DelayedRetest);
-        loadVisible = false;
-        if(retestResult)
-        {
+        if (retestResult)
             await ClearUnsavedChangesAsync();
-        }
         else
         {
             ErrorPopupText = "Nedostupný Bilbox.";
             ErrorPopupVisible = true;
+        }
+    }
+
+    private async Task RunWithBlockedUiAsync(string text, Func<Task> action)
+    {
+        loadText = text;
+        loadVisible = true;
+
+        try
+        {
+            await action();
+        }
+        finally
+        {
+            loadVisible = false;
         }
     }
 
@@ -650,5 +663,93 @@
     async Task CancelNewRow()
     {
         await Grid.CancelEditAsync();
+    }
+
+    private List<RetestVadaDTO> GetVadyForKomponent(string? komponentName)
+    {
+        if (string.IsNullOrWhiteSpace(komponentName))
+        {
+            return new List<RetestVadaDTO>();
+        }
+
+        return komponentVady
+            .FirstOrDefault(k => k.KomponentName == komponentName)?
+            .Vady ?? new List<RetestVadaDTO>();
+    }
+
+    void SelectedKomponentItemChanged(RetestKomponentVadyDTO? komponent, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.Komponent = komponent?.KomponentName ?? string.Empty;
+
+        var vady = GetVadyForKomponent(qualityCardBilbox.Komponent);
+        if (!vady.Any(v => v.VadaName == qualityCardBilbox.Vada))
+            qualityCardBilbox.Vada = string.Empty;
+
+        FillDown(qualityCardBilbox, row =>
+        {
+            row.Komponent = qualityCardBilbox.Komponent;
+            var rowVady = GetVadyForKomponent(row.Komponent);
+            if (!rowVady.Any(v => v.VadaName == row.Vada))
+                row.Vada = string.Empty;
+        }, nameof(QualityCardBilbox.Komponent), nameof(QualityCardBilbox.Vada));
+    }
+
+    void SelectedVadaItemChanged(RetestVadaDTO? vada, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.Vada = vada?.VadaName ?? string.Empty;
+
+        FillDown(qualityCardBilbox, row =>
+        {
+            row.Vada = qualityCardBilbox.Vada;
+        }, nameof(QualityCardBilbox.Vada));
+    }
+
+    async Task Grid_RowClick(GridRowClickEventArgs e)
+    {
+        var item = (QualityCardBilbox?)e.Grid.GetDataItem(e.VisibleIndex);
+        if (item is null || item.IsFromPreviousShift)
+            return;
+
+        if (!e.Grid.IsEditingRow(e.VisibleIndex))
+            await e.Grid.StartEditRowAsync(e.VisibleIndex);
+    }
+
+    private int FindStartIndex(QualityCardBilbox source)
+    {
+        if (nokList is null || nokList.Count == 0)
+            return -1;
+
+        if (source.ProductionDataNokId.HasValue)
+        {
+            var byId = nokList.ToList().FindIndex(x => x.ProductionDataNokId == source.ProductionDataNokId);
+            if (byId >= 0) return byId;
+        }
+
+        return nokList.ToList().FindIndex(x =>
+            x.NokDateTime == source.NokDateTime &&
+            x.WorkingPlaceNumber == source.WorkingPlaceNumber);
+    }
+
+    private void FillDown(QualityCardBilbox source, Action<QualityCardBilbox> apply, params string[] changedFields)
+    {
+        if (nokList is null) return;
+
+        int start = FindStartIndex(source);
+        if (start < 0) return;
+
+        for (int i = start; i < nokList.Count; i++)
+        {
+            var row = nokList[i];
+            if (row.IsFromPreviousShift) continue;
+
+            apply(row);
+
+            if (UnsavedChanges.TryGetValue(row, out var changes))
+                changes.ChangedFields.UnionWith(changedFields);
+            else
+                UnsavedChanges[row] = new(DataChangeType.Modification, changedFields.ToHashSet());
+        }
+
+        StateHasChanged();
     }
 }

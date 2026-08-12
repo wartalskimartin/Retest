@@ -1,431 +1,309 @@
 ﻿using SharedLib.DTO;
 using SharedLib.Models;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace RetestWebAssembly.Services
-{
+{   
     public class BilboxService
     {
         private readonly HttpClient HttpClient;
         //private readonly string ApiAddress = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93 65
+        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8993/";//93 65
         //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private readonly TimeSpan _requestTimeout = TimeSpan.FromSeconds(15);
+        private readonly TimeSpan _getRetryDelay = TimeSpan.FromMilliseconds(400);
+        private const int GetMaxAttempts = 2; // first try + one retry
 
         public BilboxService(HttpClient httpClient)
         {
-            this.HttpClient = httpClient;
+            HttpClient = httpClient;
+        }
+
+        private async Task<T> ExecuteWithTimeoutAsync<T>(Func<CancellationToken, Task<T>> action, T fallbackValue, string operationName)
+        {
+            using var cts = new CancellationTokenSource(_requestTimeout);
+            try
+            {
+                return await action(cts.Token);
+            }
+            catch (OperationCanceledException) when (cts.IsCancellationRequested)
+            {
+                Console.WriteLine($"Timeout error in {operationName}: exceeded {_requestTimeout.TotalSeconds} s.");
+                return fallbackValue;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Network error in {operationName}: {ex.Message}");
+                return fallbackValue;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error in {operationName}: {ex.Message}");
+                return fallbackValue;
+            }
+        }
+
+        private async Task ExecuteWithTimeoutAsync(Func<CancellationToken, Task> action, string operationName)
+        {
+            using var cts = new CancellationTokenSource(_requestTimeout);
+            try
+            {
+                await action(cts.Token);
+            }
+            catch (OperationCanceledException) when (cts.IsCancellationRequested)
+            {
+                Console.WriteLine($"Timeout error in {operationName}: exceeded {_requestTimeout.TotalSeconds} s.");
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Network error in {operationName}: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error in {operationName}: {ex.Message}");
+            }
+        }
+
+        // GET-only wrapper: retry once on timeout/network error
+        private async Task<T> ExecuteGetWithTimeoutRetryAsync<T>(Func<CancellationToken, Task<T>> action, T fallbackValue, string operationName)
+        {
+            for (int attempt = 1; attempt <= GetMaxAttempts; attempt++)
+            {
+                using var cts = new CancellationTokenSource(_requestTimeout);
+                try
+                {
+                    return await action(cts.Token);
+                }
+                catch (OperationCanceledException) when (cts.IsCancellationRequested)
+                {
+                    Console.WriteLine($"Timeout in {operationName} (attempt {attempt}/{GetMaxAttempts}): exceeded {_requestTimeout.TotalSeconds} s.");
+                }
+                catch (HttpRequestException ex)
+                {
+                    Console.WriteLine($"Network error in {operationName} (attempt {attempt}/{GetMaxAttempts}): {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unexpected error in {operationName}: {ex.Message}");
+                    return fallbackValue;
+                }
+
+                if (attempt < GetMaxAttempts)
+                {
+                    await Task.Delay(_getRetryDelay);
+                }
+            }
+
+            return fallbackValue;
+        }
+
+        private async Task<List<string>> GetStringListAsync(string requestUri, string operationName)
+        {
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
+            {
+                var response = await HttpClient.GetAsync(requestUri, token);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<string>>(_jsonSerializerOptions, token)
+                    ?? new List<string>();
+            }, new List<string>(), operationName);
         }
 
         public async Task<bool> SetRetestMode(string bilbox, List<QualityCardBilbox> nokList, List<QualityCardBilbox> selectedNok, bool delayedRetest)
         {
-            //var json = JsonSerializer.Serialize(nokList);
-            //HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            try
+            return await ExecuteWithTimeoutAsync(async token =>
             {
-                HttpResponseMessage responseMessage = new();
-
-                if(selectedNok is not null)
+                if (selectedNok is null)
                 {
-                    responseMessage = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/sse/retestMode/{bilbox}/{delayedRetest}", selectedNok);
+                    return false;
                 }
 
-                if(responseMessage.IsSuccessStatusCode)
+                var responseMessage = await HttpClient.PostAsJsonAsync(
+                    $"{ApiAddress}api/sse/retestMode/{bilbox}/{delayedRetest}",
+                    selectedNok,
+                    token);
+
+                if (!responseMessage.IsSuccessStatusCode)
                 {
-                    // save rows
-                    await SaveQualityCardListAsync(nokList);
-                    return true;
+                    return false;
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                // Ošetření chyb sítě
-                Console.WriteLine($"Network error: {ex.Message}");
-                return false;
-            }
-            catch (Exception ex)
-            {
-                // Ošetření jiných neočekávaných chyb
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return false;
-            }
-            return false;
+
+                return await SaveQualityCardListInternalAsync(nokList, token);
+            }, false, nameof(SetRetestMode));
         }
 
         public async Task SetNormalMode(string bilbox)
         {
-            try
+            await ExecuteWithTimeoutAsync(async token =>
             {
-                await HttpClient.PostAsync($"{ApiAddress}api/sse/normalMode/{bilbox}", null);
-            }
-            catch (HttpRequestException ex)
-            {
-                // Ošetření chyb sítě
-                Console.WriteLine($"Network error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                // Ošetření jiných neočekávaných chyb
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
+                await HttpClient.PostAsync($"{ApiAddress}api/sse/normalMode/{bilbox}", null, token);
+            }, nameof(SetNormalMode));
         }
 
         public async Task<List<string>> GetHalls()
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getHalls");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/bilbox/getHalls", nameof(GetHalls));
         }
 
         public async Task<List<string>> GetRows()
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getAllRows");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/bilbox/getAllRows", nameof(GetRows));
         }
 
         public async Task<List<string>> GetRows(string hall)
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/bilbox/getRows?hallNumber={hall}");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/bilbox/getRows?hallNumber={hall}", nameof(GetRows));
         }
 
         public async Task<List<string>> GetAvaibleBilboxes(string hall, string row)
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAvaibleBilboxes?hallNumber={hall}&row={row}");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/sse/getAvaibleBilboxes?hallNumber={hall}&row={row}", nameof(GetAvaibleBilboxes));
         }
 
         public async Task<List<string>> GetAvaibleBilboxesByRow(string row)
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getBilboxesByRow?row={row}");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/sse/getBilboxesByRow?row={row}", nameof(GetAvaibleBilboxesByRow));
         }
 
         public async Task<List<string>> GetAvaibleBilboxes(string hall)
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getBilboxesByHall?hallNumber={hall}");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/sse/getBilboxesByHall?hallNumber={hall}", nameof(GetAvaibleBilboxes));
         }
 
         public async Task<List<string>> GetAvaibleBilboxes()
         {
-            try
-            {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/sse/getAllBilboxes");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<string>>(content, _jsonSerializerOptions) ?? new List<string>();
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<string>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<string>();
-            }
+            return await GetStringListAsync($"{ApiAddress}api/sse/getAllBilboxes", nameof(GetAvaibleBilboxes));
         }
 
         public async Task<List<QualityCardBilbox>?> GetNokList(string bilbox)
         {
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getActualShiftNOK?standLoc={bilbox}");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<QualityCardBilbox>>(content, _jsonSerializerOptions);
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getActualShiftNOK?standLoc={bilbox}", token);
+                response.EnsureSuccessStatusCode();
 
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<QualityCardBilbox>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<QualityCardBilbox>();
-            }
+                return await response.Content.ReadFromJsonAsync<List<QualityCardBilbox>>(_jsonSerializerOptions, token)
+                    ?? new List<QualityCardBilbox>();
+            }, new List<QualityCardBilbox>(), nameof(GetNokList));
+        }
+
+        private async Task<bool> SaveQualityCardListInternalAsync(List<QualityCardBilbox> nokList, CancellationToken cancellationToken)
+        {
+            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/Bilbox/addRetestNok", nokList, cancellationToken);
+            return response.IsSuccessStatusCode;
         }
 
         public async Task SaveQualityCardListAsync(List<QualityCardBilbox> nokList)
         {
-            // Change your data here
-            var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/Bilbox/addRetestNok", nokList);
-
-            if (response.IsSuccessStatusCode)
+            await ExecuteWithTimeoutAsync(async token =>
             {
-                // Handle a successful response here
-            }
-            else
-            {
-                // Handle errors or failed response
-            }
+                await SaveQualityCardListInternalAsync(nokList, token);
+            }, nameof(SaveQualityCardListAsync));
         }
 
         public async Task<List<QualityDefectDescriptionBilbox>?> GetDefectCodes()
         {
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getDefectCodes");
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<QualityDefectDescriptionBilbox>>(content, _jsonSerializerOptions);
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getDefectCodes", token);
+                response.EnsureSuccessStatusCode();
 
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<QualityDefectDescriptionBilbox>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<QualityDefectDescriptionBilbox>();
-            }
+                return await response.Content.ReadFromJsonAsync<List<QualityDefectDescriptionBilbox>>(_jsonSerializerOptions, token)
+                    ?? new List<QualityDefectDescriptionBilbox>();
+            }, new List<QualityDefectDescriptionBilbox>(), nameof(GetDefectCodes));
         }
 
         public async Task<StandsList?> GetBilboxDetail(string bilboxName)
         {
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                string url = $"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}";
-                HttpResponseMessage response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}");
-                string content = await response.Content.ReadAsStringAsync();
-                if (string.IsNullOrEmpty(content))
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getBilboxInformation/{bilboxName}", token);
+                if (!response.IsSuccessStatusCode)
                 {
                     return null;
                 }
-                return JsonSerializer.Deserialize<StandsList>(content, _jsonSerializerOptions);
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return null;
-            }
-        }
 
-        /*---------------------------------Manual NOK recording----------------------------------------------------*/
+                var content = await response.Content.ReadAsStringAsync(token);
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    return null;
+                }
+
+                return JsonSerializer.Deserialize<StandsList>(content, _jsonSerializerOptions);
+            }, null, nameof(GetBilboxDetail));
+        }
 
         public async Task<QualityCardBilbox?> GetLastProductionData(string standLoc)
         {
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getLastProductionData?standLoc={standLoc}");
-                return await response.Content.ReadFromJsonAsync<QualityCardBilbox>();
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return null;
-            }
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getLastProductionData?standLoc={standLoc}", token);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<QualityCardBilbox>(cancellationToken: token);
+            }, null, nameof(GetLastProductionData));
         }
 
         public async Task<List<QualityCardBilbox>> GetQualityCardBilboxData(string standLoc)
         {
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getQualityCardBilboxData?standLoc={standLoc}");
-                return await response.Content.ReadFromJsonAsync<List<QualityCardBilbox>>() ?? new();
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return new List<QualityCardBilbox>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return new List<QualityCardBilbox>();
-            }
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getQualityCardBilboxData?standLoc={standLoc}", token);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<QualityCardBilbox>>(cancellationToken: token) ?? new List<QualityCardBilbox>();
+            }, new List<QualityCardBilbox>(), nameof(GetQualityCardBilboxData));
         }
 
         public async Task InsertQualityCardBilbox(QualityCardBilbox qcb)
         {
-            try
+            await ExecuteWithTimeoutAsync(async token =>
             {
-                var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/Bilbox/insertQualityCardBilbox", qcb);
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
+                var response = await HttpClient.PostAsJsonAsync($"{ApiAddress}api/Bilbox/insertQualityCardBilbox", qcb, token);
+                response.EnsureSuccessStatusCode();
+            }, nameof(InsertQualityCardBilbox));
         }
 
         public async Task RemoveQualityCardBilbox(QualityCardBilbox qcb)
         {
-            try
+            await ExecuteWithTimeoutAsync(async token =>
             {
-                await HttpClient.SendAsync(new HttpRequestMessage
+                var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
                     RequestUri = new Uri($"{ApiAddress}api/Bilbox/removeQualityCardBilbox"),
                     Content = JsonContent.Create(qcb)
-                });
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
-        }
+                };
 
-        /*---------------------------------Show history by stands----------------------------------------------------*/
+                var response = await HttpClient.SendAsync(request, token);
+                response.EnsureSuccessStatusCode();
+            }, nameof(RemoveQualityCardBilbox));
+        }
 
         public async Task<int> GetStandRetest(string stand)
         {
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getStandsHistory?stand={stand}");
-                return await response.Content.ReadFromJsonAsync<int>();
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Network error: {ex.Message}");
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-                return 0;
-            }
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getStandsHistory?stand={stand}", token);
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<int?>(cancellationToken: token) ?? 0;
+            }, 0, nameof(GetStandRetest));
         }
 
-        /*
-        public async Task<List<StandsHistoryDTO>> GetStandsHistory()
+        public async Task<List<RetestKomponentVadyDTO>> GetKomponentVady()
         {
-            var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getStandsHistory");
-            List<StandsHistoryDTO> result = new();
-            try
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
             {
-                result = await response.Content.ReadFromJsonAsync<List<StandsHistoryDTO>>() ?? new();
-            }
-            catch (JsonException jsonEx)
-            {
-                // Handle JSON parsing errors
-                Console.WriteLine($"JSON error: {jsonEx.Message}");
-            }
-            catch (HttpRequestException httpEx)
-            {
-                // Handle HTTP request errors
-                Console.WriteLine($"HTTP error: {httpEx.Message}");
-            }
-            catch (Exception ex)
-            {
-                // Handle other errors
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
-            return result;
-        }*/
+                var response = await HttpClient.GetAsync($"{ApiAddress}api/Bilbox/getKomponentVady", token);
+                response.EnsureSuccessStatusCode();
 
+                return await response.Content.ReadFromJsonAsync<List<RetestKomponentVadyDTO>>(_jsonSerializerOptions, token)
+                    ?? new List<RetestKomponentVadyDTO>();
+            }, new List<RetestKomponentVadyDTO>(), nameof(GetKomponentVady));
+        }
     }
 }

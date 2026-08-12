@@ -2,12 +2,11 @@
    "CodeGenerationMode": 4,
    "ContextClassName": "cockpitContext",
    "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "test",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "SharedLib",
    "Schemas": null,
@@ -16,14 +15,28 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "[dbo].[qualityCardBilbox]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[qualityCounter]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RetestKomponent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RetestVada]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "czvrsrvsql01\\czvrsqlserver.cockpit.dbo",
+   "UiHint": null,
    "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
    "UseDateOnlyTimeOnly": true,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
@@ -38,8 +51,10 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
-   "UseT4": false
+   "UseT4": false,
+   "UseT4Split": false
 }
