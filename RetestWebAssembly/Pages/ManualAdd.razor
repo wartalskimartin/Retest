@@ -74,49 +74,37 @@
         <DxGridDataColumn FieldName="DatetimeServer" Caption="Datum" DisplayFormat="dd.MM.yyyy HH:mm:ss" Width="190" />
         <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Stojan" Width="100" />
         <DxGridDataColumn FieldName="SaveCount" Caption="Počet" Width="100" />
-        <DxGridDataColumn FieldName="DefectCode" Caption="Kod vady" Width="100" ShowInColumnChooser=false>
+
+        <DxGridDataColumn FieldName="Komponent" Caption="Komponent" Width="180" ShowInColumnChooser="false">
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
                 }
-                <DxComboBox Data="@defects"
-                                NullText="Vyberte vadu..."
-                                DropDownVisible="true"
-                                FilteringMode="DataGridFilteringMode.Contains"
-                                TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
-                                @bind-Value=@qualityCardBilbox.DefectCode>
-                        <Columns>
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                                Caption="Kod" Width="50" />
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                                                Caption="Typ" />
-                        </Columns>
-                </DxComboBox>
+                <DxComboBox Data="@komponentVady"
+                            NullText="Vyberte komponent..."
+                            TextFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
+                            ValueFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
+                            SelectedItemChanged="@((RetestKomponentVadyDTO? komponent) => SelectedKomponentItemChanged(komponent, qualityCardBilbox))"
+                            @bind-Value="@qualityCardBilbox.Komponent" />
             </CellEditTemplate>
         </DxGridDataColumn>
-        <DxGridDataColumn FieldName="DefectType" Caption="Typ vady" MinWidth="200" ShowInColumnChooser=false>
+
+        <DxGridDataColumn FieldName="Vada" Caption="Vada" MinWidth="200" ShowInColumnChooser="false">
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                    var vadyProKomponent = GetVadyForKomponent(qualityCardBilbox.Komponent);
                 }
-                <DxComboBox Data="@defects"
-                                NullText="Vyberte vadu..."
-                                FilteringMode="DataGridFilteringMode.Contains"
-                                TextFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                                ValueFieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                                SelectedItemChanged="@((QualityDefectDescriptionBilbox defect) => SelectedDefectTypeItemChanged(defect, ref qualityCardBilbox))"
-                                @bind-Value=@qualityCardBilbox.DefectType>
-                        <Columns>
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectCode)"
-                                                Caption="Kod" />
-                            <DxListEditorColumn FieldName="@nameof(QualityDefectDescriptionBilbox.DefectDescription)"
-                                                Caption="Typ" />
-                        </Columns>
-                </DxComboBox>
+                <DxComboBox Data="@vadyProKomponent"
+                            NullText="Vyberte vadu..."
+                            TextFieldName="@nameof(RetestVadaDTO.VadaName)"
+                            ValueFieldName="@nameof(RetestVadaDTO.VadaName)"
+                            SelectedItemChanged="@((RetestVadaDTO? vada) => SelectedVadaItemChanged(vada, qualityCardBilbox))"
+                            @bind-Value="@qualityCardBilbox.Vada"
+                            Enabled="@(!string.IsNullOrEmpty(qualityCardBilbox.Komponent))" />
             </CellEditTemplate>
         </DxGridDataColumn>
+
         <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200" ShowInColumnChooser=false>
             <CellEditTemplate>
                 @{
@@ -185,7 +173,7 @@
         //Grid.Reload();
     }
 
-    List<QualityDefectDescriptionBilbox>? defects = new();
+    List<RetestKomponentVadyDTO> komponentVady = new();
 
     IList<QualityCardBilbox> DataSource { get; set; }
     IGrid Grid { get; set; }
@@ -198,7 +186,7 @@
         halls = await BilboxService.GetHalls();
         halls.Insert(0, SelectedAllBoxes);
         //await GetAvaibleBilboxes();
-        defects = await BilboxService.GetDefectCodes();
+        komponentVady = await BilboxService.GetKomponentVady();
 
         if (FilterService.SelectedBilbox != null)
         {
@@ -282,10 +270,28 @@
         DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
     }
 
-    void SelectedDefectTypeItemChanged(QualityDefectDescriptionBilbox defect, ref QualityCardBilbox qualityCardBilbox)
+    private List<RetestVadaDTO> GetVadyForKomponent(string? komponentName)
     {
-        qualityCardBilbox.DefectCode = defect.DefectCode;
-        qualityCardBilbox.DefectType = defect.DefectDescription;
+        if (string.IsNullOrWhiteSpace(komponentName))
+            return new List<RetestVadaDTO>();
+
+        return komponentVady
+            .FirstOrDefault(k => k.KomponentName == komponentName)?
+            .Vady ?? new List<RetestVadaDTO>();
+    }
+
+    void SelectedKomponentItemChanged(RetestKomponentVadyDTO? komponent, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.Komponent = komponent?.KomponentName ?? string.Empty;
+
+        var vady = GetVadyForKomponent(qualityCardBilbox.Komponent);
+        if (!vady.Any(v => v.VadaName == qualityCardBilbox.Vada))
+            qualityCardBilbox.Vada = string.Empty;
+    }
+
+    void SelectedVadaItemChanged(RetestVadaDTO? vada, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.Vada = vada?.VadaName ?? string.Empty;
     }
 
 
