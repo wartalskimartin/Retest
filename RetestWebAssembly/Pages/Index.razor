@@ -144,7 +144,7 @@
         <DxGridDataColumn FieldName="WorkingPlaceNumber" Caption="Stojan" DataRowEditorVisible=false Width="100" />
         <DxGridDataColumn FieldName="BilboxNumber" Caption="BbxNum" DataRowEditorVisible=false Width="120" />
         
-        <DxGridDataColumn FieldName="Komponent" Caption="Komponent" MinWidth="180" ShowInColumnChooser="false">
+        <DxGridDataColumn FieldName="Komponent" Caption="Komponent" MinWidth="150" ShowInColumnChooser="false">
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
@@ -163,7 +163,7 @@
             </CellEditTemplate>
         </DxGridDataColumn>
 
-        <DxGridDataColumn FieldName="Vada" Caption="Vada" MinWidth="220" ShowInColumnChooser="false">
+        <DxGridDataColumn FieldName="Vada" Caption="Vada" MinWidth="150" ShowInColumnChooser="false">
             <CellEditTemplate>
                 @{
                     var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
@@ -434,35 +434,6 @@
         await BilboxService.SetNormalMode(FilterService.SelectedBilbox);
     }
 
-    void SelectedDefectTypeItemChanged(QualityDefectDescriptionBilbox defect, ref QualityCardBilbox qualityCardBilbox)
-    {
-        qualityCardBilbox.DefectCode = defect.DefectCode;
-        qualityCardBilbox.DefectType = defect.DefectDescription;
-
-        //check for 999 defect code
-        if (defect.DefectCode == "999")
-        {
-            return;
-        }
-
-        //auto filling of rows below selected item with same defect
-        bool canFill = false;
-
-        for (int i = 0; i < nokList.Count; i++)
-        {
-            if(!canFill)
-            {
-                canFill = string.Equals(nokList[i].NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"), qualityCardBilbox.NokDateTime?.ToString("dd.MM.yyyy HH:mm:ss"));
-            }
-
-            if (canFill)
-            {
-                nokList[i].DefectCode = defect.DefectCode;
-                nokList[i].DefectType = defect.DefectDescription;
-            }
-        }
-    }
-
     private void HandleMemoInputChange(ChangeEventArgs e, QualityCardBilbox qualityCardBilbox)
     {
         string text = e.Value?.ToString() ?? string.Empty;
@@ -472,7 +443,8 @@
         {
             row.DefectDescription = text;
         }, nameof(QualityCardBilbox.DefectDescription));
-}
+    }
+
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
     {
         if (e.IsNew)
@@ -531,22 +503,21 @@
         if (ea.ElementType == GridElementType.DataRow)
         {
             var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);
-            if(qualityCardBilbox is not null)
-            {
-                if (qualityCardBilbox.IsFromPreviousShift)
-                {
-                    ea.CssClass = "highlighted-item ";
-                    //ea.CssClass += "non-selectable-row";
-                }
-            }
+            if (qualityCardBilbox is not null && qualityCardBilbox.IsFromPreviousShift)
+                ea.CssClass = "highlighted-item";
         }
 
         if (ea.ElementType == GridElementType.DataCell)
         {
             var qualityCardBilbox = (QualityCardBilbox)Grid.GetDataItem(ea.VisibleIndex);
+            if (qualityCardBilbox is not null && qualityCardBilbox.IsFromPreviousShift)
+            {
+                ea.CssClass = "highlighted-item-cell";
+                return;
+            }
+
             var column = (IGridDataColumn)ea.Column;
-            bool isNew = qualityCardBilbox == null;
-            if (!isNew && UnsavedChanges.TryGetValue(qualityCardBilbox, out var changes))
+            if (qualityCardBilbox is not null && UnsavedChanges.TryGetValue(qualityCardBilbox, out var changes))
             {
                 if (changes.Type == DataChangeType.Addition || changes.ChangedFields.Contains(column.FieldName))
                     ea.CssClass = "grid-modified-cell";
@@ -587,8 +558,8 @@
 
             if (nk.IsFromPreviousShift)
             {
-                nk.DefectCode = "ps";
-                nk.DefectType = "prev_shift";
+                nk.Komponent = "ps";
+                nk.Vada = "prev_shift";
                 result.Add(nk);
                 continue;
             }
@@ -752,4 +723,4 @@
 
         StateHasChanged();
     }
-}
+}}

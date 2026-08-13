@@ -111,7 +111,7 @@ namespace PushAPI.Controllers
 
             foreach (var productionData in productionDatas)
             {
-                bool isFromPreviousShift = startOfActualShift > productionData.DatetimeServer;
+                bool isFromPreviousShift = startOfActualShift > productionData.ProductionDateTime;
 
                 // If the OperatorNumber from the previous shift matches the current shift, set the flag to false
                 if (isFromPreviousShift && productionData.OperatorNumber == currentShiftOperatorNumber)
