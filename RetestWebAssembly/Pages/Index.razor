@@ -9,6 +9,7 @@
 @inject BilboxService BilboxService
 @inject FilterService FilterService
 @inject IJSRuntime JSRuntime
+@inject AppLogService AppLog
 
 <DxLoadingPanel @bind-Visible="loadVisible"
                 IsContentBlocked="true"
@@ -215,49 +216,85 @@
 
     private async Task OnHallSelectInputChanged(string selectedHall)
     {
-        FilterService.SelectedRow = String.Empty;
-        FilterService.SelectedBilbox = String.Empty;
-        if (selectedHall == SelectedAllBoxes)
-        {
-            rows = await BilboxService.GetRows();
-        }
-        else
-        {
-            rows = await BilboxService.GetRows(selectedHall);
-        }
-        rows.Insert(0, SelectedAllBoxes);
+        await AppLog.InfoAsync("RetestPage hall selected", new() { ["hall"] = selectedHall });
 
-        await AppLog.InfoAsync("Hall selected", new() { ["hall"] = selectedHall });
+        try
+        {
+            FilterService.SelectedRow = String.Empty;
+            FilterService.SelectedBilbox = String.Empty;
+
+            if (selectedHall == SelectedAllBoxes)
+            {
+                rows = await BilboxService.GetRows();
+            }
+            else
+            {
+                rows = await BilboxService.GetRows(selectedHall);
+            }
+            rows.Insert(0, SelectedAllBoxes);
+
+            await AppLog.InfoAsync($"Hall selected: {selectedHall}");
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("RetestPage hall loading failed", ex, new()
+            {
+                ["hall"] = selectedHall,
+                ["rowsCount"] = rows.Count.ToString()
+            });
+        }
     }
 
     private async Task OnRowSelectInputChanged(string selectedRow)
     {
-        FilterService.SelectedBilbox = String.Empty;
-        if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+        await AppLog.InfoAsync("RetestPage row selected", new()
         {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
-        }
-        else if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
-        {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
-        }
-        else if (selectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
-        {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
-        }
-        else
-        {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
-        }
+            ["hall"] = FilterService.SelectedHall ?? string.Empty,
+            ["row"] = selectedRow
+        });
 
-        await AppLog.InfoAsync("Row selected", new() { ["row"] = selectedRow });
+        try
+        {
+            FilterService.SelectedBilbox = String.Empty;
+            if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+            }
+            else if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+            }
+            else if (selectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
+            }
+            else
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
+            }
+
+            await AppLog.InfoAsync("RetestPage bilboxes loaded", new()
+            {
+                ["hall"] = FilterService.SelectedHall ?? string.Empty,
+                ["row"] = selectedRow,
+                ["bilboxesCount"] = avaibleBilboxes.Count.ToString()
+            });
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("RetestPage row loading failed", ex, new()
+            {
+                ["hall"] = FilterService.SelectedHall ?? string.Empty,
+                ["row"] = selectedRow
+            });
+        }
     }
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
         try
         {
-            await AppLog.InfoAsync("Bilbox loading started", new() { ["bilbox"] = selectedBilbox });
+            await AppLog.InfoAsync("RetestPage Bilbox loading started", new() { ["bilbox"] = selectedBilbox });
 
             await RunWithBlockedUiAsync("Načítání", async () =>
             {
@@ -266,13 +303,12 @@
                 await ClearUnsavedChangesAsync();
             });
 
-            await AppLog.InfoAsync("Bilbox loading finished", new() { ["bilbox"] = selectedBilbox });
+            await AppLog.InfoAsync("RetestPage Bilbox loading finished", new() { ["bilbox"] = selectedBilbox });
         }
         catch (Exception ex)
         {
-            await AppLog.ErrorAsync("Bilbox loading failed", ex, new() { ["bilbox"] = selectedBilbox });
+            await AppLog.ErrorAsync("RetestPage Bilbox loading failed", ex, new() { ["bilbox"] = selectedBilbox });
 
-            Console.WriteLine($"Unexpected error: {ex.Message}");
             ErrorPopupText = "Načítání selhalo. Zkontrolujte připojení a zkuste to znovu.";
             ErrorPopupVisible = true;
         }
@@ -326,55 +362,76 @@
 
     protected override async Task OnInitializedAsync()
     {
-        DelayedRetest = true;
-        halls = await BilboxService.GetHalls();
-        halls.Insert(0, SelectedAllBoxes);
-
-        await base.OnInitializedAsync();
-
-
-        if (FilterService.SelectedBilbox != null)
+        try
         {
-            bilboxInformation = await BilboxService.GetBilboxDetail(FilterService.SelectedBilbox);
-            await ClearUnsavedChangesAsync();
-        }
+            await AppLog.InfoAsync("RetestPage initialization started");
 
-        //load filter data after redirection; rows
-        if (!string.IsNullOrEmpty(FilterService.SelectedHall))
-        {
-            if (FilterService.SelectedHall == SelectedAllBoxes)
+            DelayedRetest = true;
+            halls = await BilboxService.GetHalls();
+            halls.Insert(0, SelectedAllBoxes);
+            
+            komponentVady = await BilboxService.GetKomponentVady();
+
+            await AppLog.InfoAsync("RetestPage lookup data loaded", new()
             {
-                rows = await BilboxService.GetRows();
-            }
-            else
+                ["hallsCount"] = halls.Count.ToString(),
+                ["komponentCount"] = komponentVady.Count.ToString()
+            });
+
+            await base.OnInitializedAsync();
+
+            if (FilterService.SelectedBilbox != null)
             {
-                rows = await BilboxService.GetRows(FilterService.SelectedHall);
+                bilboxInformation = await BilboxService.GetBilboxDetail(FilterService.SelectedBilbox);
+                await ClearUnsavedChangesAsync();
             }
-            rows.Insert(0, SelectedAllBoxes);
+
+            //load filter data after redirection; rows
+            if (!string.IsNullOrEmpty(FilterService.SelectedHall))
+            {
+                if (FilterService.SelectedHall == SelectedAllBoxes)
+                {
+                    rows = await BilboxService.GetRows();
+                }
+                else
+                {
+                    rows = await BilboxService.GetRows(FilterService.SelectedHall);
+                }
+                rows.Insert(0, SelectedAllBoxes);
+            }
+            //bilboxes
+            if (!string.IsNullOrEmpty(FilterService.SelectedRow))
+            {
+                if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+                }
+                else if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+                }
+                else if (FilterService.SelectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(FilterService.SelectedRow);
+                }
+                else
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
+                }
+            }
+
+            await AppLog.InfoAsync("RetestPage initialization finished", new()
+            {
+                ["rowsCount"] = rows.Count.ToString(),
+                ["bilboxesCount"] = avaibleBilboxes.Count.ToString()
+            });
         }
-        //bilboxes
-        if (!string.IsNullOrEmpty(FilterService.SelectedRow))
+        catch (Exception ex)
         {
-            if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
-            }
-            else if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
-            }
-            else if (FilterService.SelectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(FilterService.SelectedRow);
-            }
-            else
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
-            }
+            await AppLog.ErrorAsync("ManualAdd initialization failed", ex);
         }
-        komponentVady = await BilboxService.GetKomponentVady();
     }
-    
+
 
 
     protected override void OnAfterRender(bool firstRender)
@@ -541,10 +598,12 @@
     {
         await AppLog.InfoAsync("Retest save started", new() { ["selectedCount"] = (SelectedNok?.Count ?? 0).ToString() });
 
+        // 1) commit aktuálně editovaného řádku
         await Grid.SaveChangesAsync();
 
         var selectedRows = SelectedNok?.OfType<QualityCardBilbox>().ToList() ?? new List<QualityCardBilbox>();
 
+        // 2) validace: vybrané řádky (mimo previous shift) musí mít Komponent + Vada
         var invalidSelected = selectedRows
             .Where(x => !x.IsFromPreviousShift &&
                         (string.IsNullOrWhiteSpace(x.Komponent) || string.IsNullOrWhiteSpace(x.Vada)))
@@ -552,6 +611,8 @@
 
         if (invalidSelected.Any())
         {
+            await AppLog.InfoAsync("Retest validation failed", new() { ["invalidCount"] = invalidSelected.Count.ToString() });
+
             ErrorPopupText = "Vyplňte u všech vybraných kusů Komponent a Vadu.";
             ErrorPopupVisible = true;
             StateHasChanged();
@@ -597,14 +658,20 @@
         }
         catch (Exception ex)
         {
+            await AppLog.ErrorAsync("Retest save exception", ex, new() { ["bilbox"] = FilterService.SelectedBilbox ?? string.Empty });
             Console.WriteLine($"Unexpected error: {ex.Message}");
             retestResult = false;
         }
 
         if (retestResult)
+        {
+            await AppLog.InfoAsync("Retest save success", new() { ["bilbox"] = FilterService.SelectedBilbox ?? string.Empty });
             await ClearUnsavedChangesAsync();
+        }
         else
         {
+            await AppLog.InfoAsync("Retest save failed", new() { ["bilbox"] = FilterService.SelectedBilbox ?? string.Empty });
+
             ErrorPopupText = "Nedostupný Bilbox.";
             ErrorPopupVisible = true;
         }
@@ -691,6 +758,12 @@
         if (item is null || item.IsFromPreviousShift)
             return;
 
+        await AppLog.InfoAsync("Index row edit opened", new()
+        {
+            ["bilbox"] = FilterService.SelectedBilbox ?? string.Empty,
+            ["productionDataNokId"] = item.ProductionDataNokId?.ToString() ?? string.Empty
+        });
+
         if (!e.Grid.IsEditingRow(e.VisibleIndex))
             await e.Grid.StartEditRowAsync(e.VisibleIndex);
     }
@@ -733,4 +806,4 @@
 
         StateHasChanged();
     }
-}}
+}

@@ -10,7 +10,7 @@ namespace RetestWebAssembly.Services
     {
         private readonly HttpClient HttpClient;
         //private readonly string ApiAddress = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93 65
+        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8993/";//93 65
         //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private readonly TimeSpan _requestTimeout = TimeSpan.FromSeconds(15);

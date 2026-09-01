@@ -2,6 +2,8 @@
 
 @page "/manualAdd"
 
+@inject AppLogService AppLog
+
 @inject BilboxService BilboxService
 @inject FilterService FilterService
 
@@ -131,46 +133,84 @@
 
     private async Task OnHallSelectInputChanged(string selectedHall)
     {
-        FilterService.SelectedRow = String.Empty;
-        FilterService.SelectedBilbox = String.Empty;
-        if (selectedHall == SelectedAllBoxes)
+        try
         {
-            rows = await BilboxService.GetRows();
+            await AppLog.InfoAsync("ManualAdd hall selected", new() { ["hall"] = selectedHall });
+
+            FilterService.SelectedRow = String.Empty;
+            FilterService.SelectedBilbox = String.Empty;
+            if (selectedHall == SelectedAllBoxes)
+            {
+                rows = await BilboxService.GetRows();
+            }
+            else
+            {
+                rows = await BilboxService.GetRows(selectedHall);
+            }
+            rows.Insert(0, SelectedAllBoxes);
+
+            await AppLog.InfoAsync("ManualAdd rows loaded", new()
+            {
+                ["hall"] = selectedHall,
+                ["rowsCount"] = rows.Count.ToString()
+            });
         }
-        else
+        catch (Exception ex)
         {
-            rows = await BilboxService.GetRows(selectedHall);
+            await AppLog.ErrorAsync("ManualAdd hall selection failed", ex, new() { ["hall"] = selectedHall });
         }
-        rows.Insert(0, SelectedAllBoxes);
     }
 
     private async Task OnRowSelectInputChanged(string selectedRow)
     {
-        FilterService.SelectedBilbox = String.Empty;
-        if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+        try
         {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+            await AppLog.InfoAsync("ManualAdd row selected", new() { ["row"] = selectedRow });
+
+            FilterService.SelectedBilbox = String.Empty;
+            if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+            }
+            else if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+            }
+            else if (selectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
+            }
+            else
+            {
+                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
+            }
+
+            await AppLog.InfoAsync("ManualAdd bilboxes loaded", new()
+            {
+                ["hall"] = FilterService.SelectedHall ?? string.Empty,
+                ["row"] = selectedRow,
+                ["bilboxesCount"] = avaibleBilboxes.Count.ToString()
+            });
         }
-        else if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+        catch (Exception ex)
         {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
-        }
-        else if (selectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
-        {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(selectedRow);
-        }
-        else
-        {
-            avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
+            await AppLog.ErrorAsync("ManualAdd row selection failed", ex, new() { ["row"] = selectedRow });
         }
     }
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
-        DataSource = await BilboxService.GetQualityCardBilboxData(selectedBilbox);
-        LastProductionData = await BilboxService.GetLastProductionData(selectedBilbox);
-        //StateHasChanged();
-        //Grid.Reload();
+        try
+        {
+            await AppLog.InfoAsync("ManualAdd bilbox selected", new() { ["bilbox"] = selectedBilbox });
+
+            DataSource = await BilboxService.GetQualityCardBilboxData(selectedBilbox);
+            LastProductionData = await BilboxService.GetLastProductionData(selectedBilbox);
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("ManualAdd bilbox loading failed", ex, new() { ["bilbox"] = selectedBilbox });
+        }
     }
 
     List<RetestKomponentVadyDTO> komponentVady = new();
@@ -183,49 +223,75 @@
 
     protected override async Task OnInitializedAsync()
     {
-        halls = await BilboxService.GetHalls();
-        halls.Insert(0, SelectedAllBoxes);
-        //await GetAvaibleBilboxes();
-        komponentVady = await BilboxService.GetKomponentVady();
+        try
+        {
+            await AppLog.InfoAsync("ManualAdd initialization started");
 
-        if (FilterService.SelectedBilbox != null)
-        {
-            DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
-            LastProductionData = await BilboxService.GetLastProductionData(FilterService.SelectedBilbox);
-        }
+            halls = await BilboxService.GetHalls();
+            halls.Insert(0, SelectedAllBoxes);
 
-        //load filter data after redirection; rows
-        if (!string.IsNullOrEmpty(FilterService.SelectedHall))
-        {
-            if (FilterService.SelectedHall == SelectedAllBoxes)
+            komponentVady = await BilboxService.GetKomponentVady();
+
+            await AppLog.InfoAsync("ManualAdd lookup data loaded", new()
             {
-                rows = await BilboxService.GetRows();
-            }
-            else
+                ["hallsCount"] = halls.Count.ToString(),
+                ["komponentCount"] = komponentVady.Count.ToString()
+            });
+
+            if (FilterService.SelectedBilbox != null)
             {
-                rows = await BilboxService.GetRows(FilterService.SelectedHall);
+                DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
+                LastProductionData = await BilboxService.GetLastProductionData(FilterService.SelectedBilbox);
+
+                await AppLog.InfoAsync("ManualAdd restored selected bilbox", new()
+                {
+                    ["bilbox"] = FilterService.SelectedBilbox
+                });
             }
-            rows.Insert(0, SelectedAllBoxes);
+
+            //load filter data after redirection; rows
+            if (!string.IsNullOrEmpty(FilterService.SelectedHall))
+            {
+                if (FilterService.SelectedHall == SelectedAllBoxes)
+                {
+                    rows = await BilboxService.GetRows();
+                }
+                else
+                {
+                    rows = await BilboxService.GetRows(FilterService.SelectedHall);
+                }
+                rows.Insert(0, SelectedAllBoxes);
+            }
+            //bilboxes
+            if (!string.IsNullOrEmpty(FilterService.SelectedRow))
+            {
+                if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
+                }
+                else if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
+                }
+                else if (FilterService.SelectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(FilterService.SelectedRow);
+                }
+                else
+                {
+                    avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
+                }
+            }
+
+            await AppLog.InfoAsync("ManualAdd initialization finished", new()
+            {
+                ["rowsCount"] = rows.Count.ToString(),
+                ["bilboxesCount"] = avaibleBilboxes.Count.ToString()
+            });
         }
-        //bilboxes
-        if (!string.IsNullOrEmpty(FilterService.SelectedRow))
+        catch (Exception ex)
         {
-            if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
-            }
-            else if (FilterService.SelectedRow == SelectedAllBoxes && FilterService.SelectedHall != SelectedAllBoxes)
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall);
-            }
-            else if (FilterService.SelectedRow != SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxesByRow(FilterService.SelectedRow);
-            }
-            else
-            {
-                avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, FilterService.SelectedRow);
-            }
+            await AppLog.ErrorAsync("ManualAdd initialization failed", ex);
         }
     }
 
@@ -253,16 +319,38 @@
 
     async Task Grid_EditModelSaving(GridEditModelSavingEventArgs e)
     {
-        if (e.IsNew)
-            await BilboxService.InsertQualityCardBilbox((QualityCardBilbox)e.EditModel);
+        try
+        {
+            if (e.IsNew)
+            {
+                await AppLog.InfoAsync("ManualAdd inserting new row");
+                await BilboxService.InsertQualityCardBilbox((QualityCardBilbox)e.EditModel);
+                await AppLog.InfoAsync("ManualAdd insert finished");
+            }
 
-        await UpdateDataAsync();
+            await UpdateDataAsync();
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("ManualAdd save failed", ex);
+        }
     }
 
     async Task Grid_DataItemDeleting(GridDataItemDeletingEventArgs e)
     {
-        await BilboxService.RemoveQualityCardBilbox((QualityCardBilbox)e.DataItem);
-        await UpdateDataAsync();
+        try
+        {
+            await AppLog.InfoAsync("ManualAdd delete requested");
+
+            await BilboxService.RemoveQualityCardBilbox((QualityCardBilbox)e.DataItem);
+            await UpdateDataAsync();
+
+            await AppLog.InfoAsync("ManualAdd delete finished");
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("ManualAdd delete failed", ex);
+        }
     }
 
     async Task UpdateDataAsync()
@@ -297,19 +385,40 @@
 
     public async Task CopyRowsAsync(QualityCardBilbox qcb)
     {
-        qcb.IdQualityCard = default;
-        qcb.DateTimeRecord = DateTime.Now;
-        qcb.DatetimeServer = DateTime.Now;
+        try
+        {
+            await AppLog.InfoAsync("ManualAdd copy row requested");
 
-        await BilboxService.InsertQualityCardBilbox(qcb);
-        await UpdateDataAsync();
+            qcb.IdQualityCard = default;
+            qcb.DateTimeRecord = DateTime.Now;
+            qcb.DatetimeServer = DateTime.Now;
+
+            await BilboxService.InsertQualityCardBilbox(qcb);
+            await UpdateDataAsync();
+
+            await AppLog.InfoAsync("ManualAdd copy row finished");
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("ManualAdd copy row failed", ex);
+        }
     }
-
 
     async Task DeleteGridItem(QualityCardBilbox q)
     {
-        await BilboxService.RemoveQualityCardBilbox(q);
-        await UpdateDataAsync();
+        try
+        {
+            await AppLog.InfoAsync("ManualAdd delete button clicked");
+
+            await BilboxService.RemoveQualityCardBilbox(q);
+            await UpdateDataAsync();
+
+            await AppLog.InfoAsync("ManualAdd delete button finished");
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("ManualAdd delete button failed", ex);
+        }
     }
 }
 

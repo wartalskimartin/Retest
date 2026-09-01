@@ -16,4 +16,15 @@ builder.Services.AddDevExpressBlazor(options => {
 builder.Services.AddScoped<BilboxService>();
 builder.Services.AddSingleton<FilterService>();
 
-await builder.Build().RunAsync();
+builder.Services.AddScoped<ClientLogStoreService>();
+builder.Services.AddScoped<AppLogService>();
+builder.Services.AddScoped<ClientLogUploaderService>();
+
+var host = builder.Build();
+
+// startup log = jistota, že vznikne aspoň 1 záznam
+await host.Services.GetRequiredService<AppLogService>()
+    .InfoAsync("App started");
+
+host.Services.GetRequiredService<ClientLogUploaderService>().Start();
+await host.RunAsync();
