@@ -226,6 +226,8 @@
             rows = await BilboxService.GetRows(selectedHall);
         }
         rows.Insert(0, SelectedAllBoxes);
+
+        await AppLog.InfoAsync("Hall selected", new() { ["hall"] = selectedHall });
     }
 
     private async Task OnRowSelectInputChanged(string selectedRow)
@@ -247,21 +249,29 @@
         {
             avaibleBilboxes = await BilboxService.GetAvaibleBilboxes(FilterService.SelectedHall, selectedRow);
         }
+
+        await AppLog.InfoAsync("Row selected", new() { ["row"] = selectedRow });
     }
 
     private async Task OnBilboxSelectInputChanged(string selectedBilbox)
     {
         try
         {
+            await AppLog.InfoAsync("Bilbox loading started", new() { ["bilbox"] = selectedBilbox });
+
             await RunWithBlockedUiAsync("Načítání", async () =>
             {
                 bilboxInformation = await BilboxService.GetBilboxDetail(selectedBilbox);
                 RetestCount = await BilboxService.GetStandRetest(FilterService.SelectedBilbox);
                 await ClearUnsavedChangesAsync();
             });
+
+            await AppLog.InfoAsync("Bilbox loading finished", new() { ["bilbox"] = selectedBilbox });
         }
         catch (Exception ex)
         {
+            await AppLog.ErrorAsync("Bilbox loading failed", ex, new() { ["bilbox"] = selectedBilbox });
+
             Console.WriteLine($"Unexpected error: {ex.Message}");
             ErrorPopupText = "Načítání selhalo. Zkontrolujte připojení a zkuste to znovu.";
             ErrorPopupVisible = true;
@@ -529,12 +539,12 @@
 
     async Task Save_Click()
     {
-        // 1) commit aktuálně editovaného řádku
+        await AppLog.InfoAsync("Retest save started", new() { ["selectedCount"] = (SelectedNok?.Count ?? 0).ToString() });
+
         await Grid.SaveChangesAsync();
 
         var selectedRows = SelectedNok?.OfType<QualityCardBilbox>().ToList() ?? new List<QualityCardBilbox>();
 
-        // 2) validace: vybrané řádky (mimo previous shift) musí mít Komponent + Vada
         var invalidSelected = selectedRows
             .Where(x => !x.IsFromPreviousShift &&
                         (string.IsNullOrWhiteSpace(x.Komponent) || string.IsNullOrWhiteSpace(x.Vada)))
