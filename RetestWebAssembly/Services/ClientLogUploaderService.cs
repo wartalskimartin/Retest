@@ -6,12 +6,13 @@ namespace RetestWebAssembly.Services
     public class ClientLogUploaderService(ClientLogStoreService store, HttpClient httpClient)
     {
         private readonly TimeSpan _interval = TimeSpan.FromSeconds(60);
-        private readonly string _apiAddress = "https://czvrsrvweb01.intranet.zkw.at:8993/";//93 65
+        private readonly string _apiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93 65
         private readonly CancellationTokenSource _cts = new();
+        private DateTime _lastOfflineLogUtc = DateTime.MinValue;
 
-        public void Start() => _ = Task.Run(RunAsync);
+        public void Start() => _ = Task.Run(RunSafeAsync);
 
-        private async Task RunAsync()
+        private async Task RunSafeAsync()
         {
             while (!_cts.IsCancellationRequested)
             {
@@ -21,10 +22,35 @@ namespace RetestWebAssembly.Services
                 }
                 catch (Exception ex)
                 {
-                    Console.Error.WriteLine($"Log uploader failed: {ex.Message}");
+                    try
+                    {
+                        var now = DateTime.UtcNow;
+                        if ((now - _lastOfflineLogUtc) > TimeSpan.FromMinutes(2))
+                        {
+                            _lastOfflineLogUtc = now;
+                            await store.AddAsync(new ClientLogEntryDto
+                            {
+                                UtcTime = now,
+                                Level = "Warn",
+                                Message = "Log uploader offline / upload failed",
+                                Exception = ex.Message
+                            });
+                        }
+                    }
+                    catch
+                    {
+                        // never throw from background uploader
+                    }
                 }
 
-                await Task.Delay(_interval, _cts.Token);
+                try
+                {
+                    await Task.Delay(_interval, _cts.Token);
+                }
+                catch
+                {
+                    // ignore cancellation/timer errors
+                }
             }
         }
 
