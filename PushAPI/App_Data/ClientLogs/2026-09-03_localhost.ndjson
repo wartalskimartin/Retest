@@ -1,0 +1,944 @@
+{"LocalId":2833,"UtcTime":"2026-09-03T00:40:51.469Z","Level":"Info","Message":"RetestPage hall selected","Exception":null,"Page":null,"Tags":{"hall":"3"}}
+{"LocalId":2834,"UtcTime":"2026-09-03T00:40:51.782Z","Level":"Info","Message":"Hall selected: 3","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2835,"UtcTime":"2026-09-03T00:40:51.828Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":""}}
+{"LocalId":2836,"UtcTime":"2026-09-03T00:40:51.879Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":2837,"UtcTime":"2026-09-03T00:40:52.104Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"","bilboxesCount":"0"}}
+{"LocalId":2838,"UtcTime":"2026-09-03T00:40:52.462Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":2839,"UtcTime":"2026-09-03T00:40:53.708Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"V\u0160E"}}
+{"LocalId":2840,"UtcTime":"2026-09-03T00:40:53.912Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"V\u0160E","bilboxesCount":"135"}}
+{"LocalId":2841,"UtcTime":"2026-09-03T00:40:59.134Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.127"}}
+{"LocalId":2842,"UtcTime":"2026-09-03T00:40:59.441Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.127"}}
+{"LocalId":2843,"UtcTime":"2026-09-03T00:41:01.024Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2844,"UtcTime":"2026-09-03T00:41:01.459Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2845,"UtcTime":"2026-09-03T00:41:01.528Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.127"}}
+{"LocalId":2846,"UtcTime":"2026-09-03T00:41:01.581Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2847,"UtcTime":"2026-09-03T00:41:19.408Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2848,"UtcTime":"2026-09-03T00:41:19.501Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2849,"UtcTime":"2026-09-03T00:41:20.977Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2850,"UtcTime":"2026-09-03T00:41:21.621Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2851,"UtcTime":"2026-09-03T00:41:21.784Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2852,"UtcTime":"2026-09-03T00:44:52.037Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.137"}}
+{"LocalId":2853,"UtcTime":"2026-09-03T00:44:52.471Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.137"}}
+{"LocalId":2854,"UtcTime":"2026-09-03T00:44:55.248Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.137","productionDataNokId":"114988209"}}
+{"LocalId":2855,"UtcTime":"2026-09-03T00:45:02.958Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":2856,"UtcTime":"2026-09-03T00:45:03.281Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.137"}}
+{"LocalId":2857,"UtcTime":"2026-09-03T00:45:51.571Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143"}}
+{"LocalId":2858,"UtcTime":"2026-09-03T00:45:51.808Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143"}}
+{"LocalId":2859,"UtcTime":"2026-09-03T00:45:55.207Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143","productionDataNokId":"114989459"}}
+{"LocalId":2860,"UtcTime":"2026-09-03T00:46:03.898Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"5"}}
+{"LocalId":2861,"UtcTime":"2026-09-03T00:46:04.228Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143"}}
+{"LocalId":2862,"UtcTime":"2026-09-03T00:46:54.438Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142"}}
+{"LocalId":2863,"UtcTime":"2026-09-03T00:46:54.994Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142"}}
+{"LocalId":2864,"UtcTime":"2026-09-03T00:46:58.377Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142","productionDataNokId":"114987003"}}
+{"LocalId":2865,"UtcTime":"2026-09-03T00:47:08.233Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142","productionDataNokId":"114987925"}}
+{"LocalId":2866,"UtcTime":"2026-09-03T00:47:18.971Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"5"}}
+{"LocalId":2867,"UtcTime":"2026-09-03T00:47:19.326Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142"}}
+{"LocalId":2868,"UtcTime":"2026-09-03T00:47:49.672Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":2869,"UtcTime":"2026-09-03T00:47:50.048Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":2870,"UtcTime":"2026-09-03T00:47:51.471Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079","productionDataNokId":"114985447"}}
+{"LocalId":2871,"UtcTime":"2026-09-03T00:48:06.255Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":2872,"UtcTime":"2026-09-03T00:48:06.539Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":2873,"UtcTime":"2026-09-03T00:49:43.047Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.149"}}
+{"LocalId":2874,"UtcTime":"2026-09-03T00:49:43.317Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.149"}}
+{"LocalId":2875,"UtcTime":"2026-09-03T00:53:37.932Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.149","productionDataNokId":"114994870"}}
+{"LocalId":2876,"UtcTime":"2026-09-03T00:53:48.139Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.149","productionDataNokId":"114996367"}}
+{"LocalId":2877,"UtcTime":"2026-09-03T00:53:56.716Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":2878,"UtcTime":"2026-09-03T00:53:56.994Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.149"}}
+{"LocalId":2879,"UtcTime":"2026-09-03T01:07:22.964Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.056"}}
+{"LocalId":2880,"UtcTime":"2026-09-03T01:07:23.294Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.056"}}
+{"LocalId":2881,"UtcTime":"2026-09-03T01:07:33.193Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":2882,"UtcTime":"2026-09-03T01:07:33.414Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":2883,"UtcTime":"2026-09-03T01:07:36.99Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056","productionDataNokId":"115004261"}}
+{"LocalId":2884,"UtcTime":"2026-09-03T01:07:47.575Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056","productionDataNokId":"115004546"}}
+{"LocalId":2885,"UtcTime":"2026-09-03T01:07:53.934Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":2886,"UtcTime":"2026-09-03T01:07:54.206Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":2887,"UtcTime":"2026-09-03T01:08:32.722Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":2888,"UtcTime":"2026-09-03T01:08:33.727Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":2889,"UtcTime":"2026-09-03T01:08:36.895Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059","productionDataNokId":"114991677"}}
+{"LocalId":2890,"UtcTime":"2026-09-03T01:08:44.657Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":2891,"UtcTime":"2026-09-03T01:08:44.903Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":2892,"UtcTime":"2026-09-03T01:09:41.404Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060"}}
+{"LocalId":2893,"UtcTime":"2026-09-03T01:09:41.672Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060"}}
+{"LocalId":2894,"UtcTime":"2026-09-03T01:09:45.655Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060","productionDataNokId":"114995933"}}
+{"LocalId":2895,"UtcTime":"2026-09-03T01:10:03.985Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":2896,"UtcTime":"2026-09-03T01:10:04.222Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060"}}
+{"LocalId":2897,"UtcTime":"2026-09-03T01:13:02.685Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.172"}}
+{"LocalId":2898,"UtcTime":"2026-09-03T01:13:02.907Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.172"}}
+{"LocalId":2899,"UtcTime":"2026-09-03T01:13:06.161Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.172","productionDataNokId":"114990913"}}
+{"LocalId":2900,"UtcTime":"2026-09-03T01:13:27.315Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":2901,"UtcTime":"2026-09-03T01:13:27.538Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.172"}}
+{"LocalId":2902,"UtcTime":"2026-09-03T01:13:42.447Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.090"}}
+{"LocalId":2903,"UtcTime":"2026-09-03T01:13:42.722Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.090"}}
+{"LocalId":2904,"UtcTime":"2026-09-03T01:13:44.796Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2905,"UtcTime":"2026-09-03T01:13:45.13Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2906,"UtcTime":"2026-09-03T01:13:45.206Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.090"}}
+{"LocalId":2907,"UtcTime":"2026-09-03T01:13:45.263Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2908,"UtcTime":"2026-09-03T01:13:58.932Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2909,"UtcTime":"2026-09-03T01:13:59.031Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2910,"UtcTime":"2026-09-03T01:14:06.687Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2911,"UtcTime":"2026-09-03T01:14:07.192Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2912,"UtcTime":"2026-09-03T01:14:07.332Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2913,"UtcTime":"2026-09-03T01:14:12.081Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.231"}}
+{"LocalId":2914,"UtcTime":"2026-09-03T01:14:12.27Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.231"}}
+{"LocalId":2915,"UtcTime":"2026-09-03T01:14:13.722Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2916,"UtcTime":"2026-09-03T01:14:14.077Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2917,"UtcTime":"2026-09-03T01:14:14.17Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.231"}}
+{"LocalId":2918,"UtcTime":"2026-09-03T01:14:14.23Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2919,"UtcTime":"2026-09-03T01:14:24.325Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2920,"UtcTime":"2026-09-03T01:14:24.415Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2921,"UtcTime":"2026-09-03T01:14:25.545Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2922,"UtcTime":"2026-09-03T01:14:26.046Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2923,"UtcTime":"2026-09-03T01:14:26.359Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2924,"UtcTime":"2026-09-03T01:15:52.148Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229"}}
+{"LocalId":2925,"UtcTime":"2026-09-03T01:15:52.408Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229"}}
+{"LocalId":2926,"UtcTime":"2026-09-03T01:15:56.668Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229","productionDataNokId":"114999599"}}
+{"LocalId":2927,"UtcTime":"2026-09-03T01:16:02.38Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229","productionDataNokId":"114999599"}}
+{"LocalId":2928,"UtcTime":"2026-09-03T01:16:06.516Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229","productionDataNokId":"114999599"}}
+{"LocalId":2929,"UtcTime":"2026-09-03T01:16:26.842Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229","productionDataNokId":"114999599"}}
+{"LocalId":2930,"UtcTime":"2026-09-03T01:16:48.981Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229","productionDataNokId":"115008049"}}
+{"LocalId":2931,"UtcTime":"2026-09-03T01:17:38.62Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":2932,"UtcTime":"2026-09-03T01:17:38.919Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.229"}}
+{"LocalId":2933,"UtcTime":"2026-09-03T01:19:15.379Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230"}}
+{"LocalId":2934,"UtcTime":"2026-09-03T01:19:15.623Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230"}}
+{"LocalId":2935,"UtcTime":"2026-09-03T01:19:17.352Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230","productionDataNokId":"115000274"}}
+{"LocalId":2936,"UtcTime":"2026-09-03T01:23:08.37Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":2937,"UtcTime":"2026-09-03T01:23:08.641Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230"}}
+{"LocalId":2938,"UtcTime":"2026-09-03T01:25:16.859Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":2939,"UtcTime":"2026-09-03T01:25:17.106Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":2940,"UtcTime":"2026-09-03T01:26:21.998Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171","productionDataNokId":"115001282"}}
+{"LocalId":2941,"UtcTime":"2026-09-03T01:26:38.882Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":2942,"UtcTime":"2026-09-03T01:26:39.142Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":2943,"UtcTime":"2026-09-03T01:26:43.579Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2944,"UtcTime":"2026-09-03T01:26:43.876Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2945,"UtcTime":"2026-09-03T01:26:44.018Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":2946,"UtcTime":"2026-09-03T01:26:44.095Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2947,"UtcTime":"2026-09-03T01:27:09.544Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2948,"UtcTime":"2026-09-03T01:27:09.635Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2949,"UtcTime":"2026-09-03T01:27:10.765Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2950,"UtcTime":"2026-09-03T01:27:11.275Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2951,"UtcTime":"2026-09-03T01:27:11.441Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2952,"UtcTime":"2026-09-03T01:28:54.677Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.196"}}
+{"LocalId":2953,"UtcTime":"2026-09-03T01:28:54.946Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.196"}}
+{"LocalId":2954,"UtcTime":"2026-09-03T01:28:58.184Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.196","productionDataNokId":"114989903"}}
+{"LocalId":2955,"UtcTime":"2026-09-03T01:35:49.572Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.196","productionDataNokId":"115004044"}}
+{"LocalId":2956,"UtcTime":"2026-09-03T01:36:01.189Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":2957,"UtcTime":"2026-09-03T01:36:01.409Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.196"}}
+{"LocalId":2958,"UtcTime":"2026-09-03T01:36:56.489Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.184"}}
+{"LocalId":2959,"UtcTime":"2026-09-03T01:36:56.852Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.184"}}
+{"LocalId":2960,"UtcTime":"2026-09-03T01:37:00.336Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.184","productionDataNokId":"114988920"}}
+{"LocalId":2961,"UtcTime":"2026-09-03T01:37:05.326Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":2962,"UtcTime":"2026-09-03T01:37:05.593Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.184"}}
+{"LocalId":2963,"UtcTime":"2026-09-03T01:38:02.979Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.191"}}
+{"LocalId":2964,"UtcTime":"2026-09-03T01:38:03.255Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.191"}}
+{"LocalId":2965,"UtcTime":"2026-09-03T01:38:07.023Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.191","productionDataNokId":"114996116"}}
+{"LocalId":2966,"UtcTime":"2026-09-03T01:38:17.048Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.191","productionDataNokId":"114997716"}}
+{"LocalId":2967,"UtcTime":"2026-09-03T01:38:18.587Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.191","productionDataNokId":"114996116"}}
+{"LocalId":2968,"UtcTime":"2026-09-03T01:38:25.869Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":2969,"UtcTime":"2026-09-03T01:38:26.37Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.191"}}
+{"LocalId":2970,"UtcTime":"2026-09-03T01:40:51.796Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":2971,"UtcTime":"2026-09-03T01:40:52.128Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":2972,"UtcTime":"2026-09-03T01:40:55.659Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197","productionDataNokId":"114991125"}}
+{"LocalId":2973,"UtcTime":"2026-09-03T01:41:04.38Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":2974,"UtcTime":"2026-09-03T01:41:04.667Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":2975,"UtcTime":"2026-09-03T01:41:05.705Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2976,"UtcTime":"2026-09-03T01:41:06.06Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2977,"UtcTime":"2026-09-03T01:41:06.151Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":2978,"UtcTime":"2026-09-03T01:41:06.23Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2979,"UtcTime":"2026-09-03T01:41:15.531Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2980,"UtcTime":"2026-09-03T01:41:15.632Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2981,"UtcTime":"2026-09-03T01:41:30.953Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2982,"UtcTime":"2026-09-03T01:41:31.091Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2983,"UtcTime":"2026-09-03T01:41:32.555Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":2984,"UtcTime":"2026-09-03T01:41:33.081Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":2985,"UtcTime":"2026-09-03T01:41:33.223Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":2986,"UtcTime":"2026-09-03T01:42:31.466Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.214"}}
+{"LocalId":2987,"UtcTime":"2026-09-03T01:42:32.831Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.214"}}
+{"LocalId":2988,"UtcTime":"2026-09-03T01:42:35.456Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.214","productionDataNokId":"114994209"}}
+{"LocalId":2989,"UtcTime":"2026-09-03T01:42:44.812Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":2990,"UtcTime":"2026-09-03T01:42:45.094Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.214"}}
+{"LocalId":2991,"UtcTime":"2026-09-03T01:43:19.964Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.213"}}
+{"LocalId":2992,"UtcTime":"2026-09-03T01:43:20.161Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.213"}}
+{"LocalId":2993,"UtcTime":"2026-09-03T01:43:24.225Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.213","productionDataNokId":"114994103"}}
+{"LocalId":2994,"UtcTime":"2026-09-03T01:43:30.549Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":2995,"UtcTime":"2026-09-03T01:43:30.927Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.213"}}
+{"LocalId":2996,"UtcTime":"2026-09-03T01:44:49.341Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111"}}
+{"LocalId":2997,"UtcTime":"2026-09-03T01:44:49.896Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111"}}
+{"LocalId":2998,"UtcTime":"2026-09-03T01:44:54.245Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111","productionDataNokId":"115003065"}}
+{"LocalId":2999,"UtcTime":"2026-09-03T01:44:59.996Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3000,"UtcTime":"2026-09-03T01:45:00.249Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111"}}
+{"LocalId":3001,"UtcTime":"2026-09-03T01:46:11.645Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.202"}}
+{"LocalId":3002,"UtcTime":"2026-09-03T01:46:11.866Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.202"}}
+{"LocalId":3003,"UtcTime":"2026-09-03T01:47:52.852Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.245"}}
+{"LocalId":3004,"UtcTime":"2026-09-03T01:47:53.114Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.245"}}
+{"LocalId":3005,"UtcTime":"2026-09-03T01:47:57.077Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.245","productionDataNokId":"114997970"}}
+{"LocalId":3006,"UtcTime":"2026-09-03T01:48:02.936Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3007,"UtcTime":"2026-09-03T01:48:03.27Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.245"}}
+{"LocalId":3008,"UtcTime":"2026-09-03T01:49:29.108Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.222"}}
+{"LocalId":3009,"UtcTime":"2026-09-03T01:49:29.369Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.222"}}
+{"LocalId":3010,"UtcTime":"2026-09-03T01:49:32.217Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.222","productionDataNokId":"114991589"}}
+{"LocalId":3011,"UtcTime":"2026-09-03T01:49:39.891Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3012,"UtcTime":"2026-09-03T01:49:40.129Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.222"}}
+{"LocalId":3013,"UtcTime":"2026-09-03T01:51:49.587Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.087"}}
+{"LocalId":3014,"UtcTime":"2026-09-03T01:51:49.827Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.087"}}
+{"LocalId":3015,"UtcTime":"2026-09-03T01:51:53.278Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.087","productionDataNokId":"115011625"}}
+{"LocalId":3016,"UtcTime":"2026-09-03T01:52:02.995Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3017,"UtcTime":"2026-09-03T01:52:03.228Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.087"}}
+{"LocalId":3018,"UtcTime":"2026-09-03T01:52:55.961Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.223"}}
+{"LocalId":696,"UtcTime":"2026-09-03T02:16:43.476Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":697,"UtcTime":"2026-09-03T02:16:45.102Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":698,"UtcTime":"2026-09-03T02:16:45.476Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":699,"UtcTime":"2026-09-03T02:16:45.814Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":700,"UtcTime":"2026-09-03T02:16:55.534Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":701,"UtcTime":"2026-09-03T02:16:56.827Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":702,"UtcTime":"2026-09-03T02:17:02.636Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":703,"UtcTime":"2026-09-03T02:17:08.185Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":704,"UtcTime":"2026-09-03T02:17:08.75Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":705,"UtcTime":"2026-09-03T02:17:11.118Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001","productionDataNokId":"114999602"}}
+{"LocalId":706,"UtcTime":"2026-09-03T02:17:39.287Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":707,"UtcTime":"2026-09-03T02:17:39.607Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":3019,"UtcTime":"2026-09-03T01:52:56.216Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.223"}}
+{"LocalId":3020,"UtcTime":"2026-09-03T01:52:58.733Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.223","productionDataNokId":"114994533"}}
+{"LocalId":3021,"UtcTime":"2026-09-03T01:53:15.952Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3022,"UtcTime":"2026-09-03T01:53:16.155Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.223"}}
+{"LocalId":3023,"UtcTime":"2026-09-03T01:53:56.99Z","Level":"Warn","Message":"Log uploader offline / upload failed","Exception":"TypeError: Failed to fetch","Page":null,"Tags":null}
+{"LocalId":708,"UtcTime":"2026-09-03T02:24:44.333Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099"}}
+{"LocalId":709,"UtcTime":"2026-09-03T02:24:44.97Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099"}}
+{"LocalId":3024,"UtcTime":"2026-09-03T02:20:59.093Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.057"}}
+{"LocalId":3025,"UtcTime":"2026-09-03T02:20:59.333Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.057"}}
+{"LocalId":3026,"UtcTime":"2026-09-03T02:21:01.005Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3027,"UtcTime":"2026-09-03T02:21:01.331Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3028,"UtcTime":"2026-09-03T02:21:01.41Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.057"}}
+{"LocalId":3029,"UtcTime":"2026-09-03T02:21:01.468Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":3030,"UtcTime":"2026-09-03T02:21:17.861Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3031,"UtcTime":"2026-09-03T02:21:17.948Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3032,"UtcTime":"2026-09-03T02:21:19.149Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3033,"UtcTime":"2026-09-03T02:21:19.634Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3034,"UtcTime":"2026-09-03T02:21:19.789Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":3035,"UtcTime":"2026-09-03T02:21:39.662Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143"}}
+{"LocalId":3036,"UtcTime":"2026-09-03T02:21:39.897Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143"}}
+{"LocalId":3037,"UtcTime":"2026-09-03T02:21:43.004Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143","productionDataNokId":"115008165"}}
+{"LocalId":3038,"UtcTime":"2026-09-03T02:21:50.269Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3039,"UtcTime":"2026-09-03T02:21:50.64Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.143"}}
+{"LocalId":710,"UtcTime":"2026-09-03T02:25:28.85Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099","productionDataNokId":"115012878"}}
+{"LocalId":711,"UtcTime":"2026-09-03T02:25:29.12Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099","productionDataNokId":"115011596"}}
+{"LocalId":712,"UtcTime":"2026-09-03T02:25:31.777Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099","productionDataNokId":"115001670"}}
+{"LocalId":713,"UtcTime":"2026-09-03T02:25:56.39Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099","productionDataNokId":"115011596"}}
+{"LocalId":714,"UtcTime":"2026-09-03T02:26:11.369Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":715,"UtcTime":"2026-09-03T02:26:11.791Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.099"}}
+{"LocalId":3040,"UtcTime":"2026-09-03T02:22:11.685Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142"}}
+{"LocalId":3041,"UtcTime":"2026-09-03T02:22:11.922Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142"}}
+{"LocalId":3042,"UtcTime":"2026-09-03T02:22:15.233Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142","productionDataNokId":"115012089"}}
+{"LocalId":3043,"UtcTime":"2026-09-03T02:22:23.335Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3044,"UtcTime":"2026-09-03T02:22:23.571Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.142"}}
+{"LocalId":716,"UtcTime":"2026-09-03T02:27:53.272Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002"}}
+{"LocalId":717,"UtcTime":"2026-09-03T02:27:53.723Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002"}}
+{"LocalId":718,"UtcTime":"2026-09-03T02:28:01.097Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"114998002"}}
+{"LocalId":719,"UtcTime":"2026-09-03T02:28:01.587Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"114998002"}}
+{"LocalId":720,"UtcTime":"2026-09-03T02:28:01.725Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"114998847"}}
+{"LocalId":721,"UtcTime":"2026-09-03T02:28:04.517Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"114998002"}}
+{"LocalId":722,"UtcTime":"2026-09-03T02:28:14.724Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"115000957"}}
+{"LocalId":723,"UtcTime":"2026-09-03T02:28:28.775Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":724,"UtcTime":"2026-09-03T02:28:29.066Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002"}}
+{"LocalId":725,"UtcTime":"2026-09-03T02:33:33.982Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.006"}}
+{"LocalId":726,"UtcTime":"2026-09-03T02:33:34.524Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.006"}}
+{"LocalId":727,"UtcTime":"2026-09-03T02:33:37.047Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.006","productionDataNokId":"115002692"}}
+{"LocalId":728,"UtcTime":"2026-09-03T02:33:58.434Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":729,"UtcTime":"2026-09-03T02:33:58.718Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.006"}}
+{"LocalId":3045,"UtcTime":"2026-09-03T02:29:56.416Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3046,"UtcTime":"2026-09-03T02:29:56.665Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3047,"UtcTime":"2026-09-03T02:30:00.171Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248","productionDataNokId":"115008095"}}
+{"LocalId":3048,"UtcTime":"2026-09-03T02:30:09.339Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3049,"UtcTime":"2026-09-03T02:30:09.684Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3050,"UtcTime":"2026-09-03T02:30:35.962Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.086"}}
+{"LocalId":3051,"UtcTime":"2026-09-03T02:30:37.317Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.086"}}
+{"LocalId":3052,"UtcTime":"2026-09-03T02:30:38.812Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.083"}}
+{"LocalId":3053,"UtcTime":"2026-09-03T02:30:39.144Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.083"}}
+{"LocalId":3054,"UtcTime":"2026-09-03T02:30:42.2Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.083","productionDataNokId":"115013626"}}
+{"LocalId":3055,"UtcTime":"2026-09-03T02:30:50.326Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.083","productionDataNokId":"115013148"}}
+{"LocalId":3056,"UtcTime":"2026-09-03T02:30:59.513Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3057,"UtcTime":"2026-09-03T02:30:59.734Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.083"}}
+{"LocalId":3058,"UtcTime":"2026-09-03T02:31:23.261Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.056"}}
+{"LocalId":3059,"UtcTime":"2026-09-03T02:31:23.528Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.056"}}
+{"LocalId":3060,"UtcTime":"2026-09-03T02:31:29.032Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":3061,"UtcTime":"2026-09-03T02:31:29.299Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":3062,"UtcTime":"2026-09-03T02:31:32.452Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056","productionDataNokId":"115013868"}}
+{"LocalId":3063,"UtcTime":"2026-09-03T02:31:39.687Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":3064,"UtcTime":"2026-09-03T02:31:40.007Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":3065,"UtcTime":"2026-09-03T02:31:43.09Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056","productionDataNokId":"115013868"}}
+{"LocalId":3066,"UtcTime":"2026-09-03T02:31:45.623Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3067,"UtcTime":"2026-09-03T02:31:45.776Z","Level":"Info","Message":"Retest validation failed","Exception":null,"Page":null,"Tags":{"invalidCount":"1"}}
+{"LocalId":3068,"UtcTime":"2026-09-03T02:31:48.381Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056","productionDataNokId":"115013868"}}
+{"LocalId":3069,"UtcTime":"2026-09-03T02:31:57.317Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3070,"UtcTime":"2026-09-03T02:31:57.535Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.056"}}
+{"LocalId":3071,"UtcTime":"2026-09-03T02:32:28.986Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":3072,"UtcTime":"2026-09-03T02:32:30.057Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":3073,"UtcTime":"2026-09-03T02:32:34.039Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059","productionDataNokId":"115009027"}}
+{"LocalId":3074,"UtcTime":"2026-09-03T02:32:43.296Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3075,"UtcTime":"2026-09-03T02:32:43.536Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":730,"UtcTime":"2026-09-03T02:36:30.5Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":731,"UtcTime":"2026-09-03T02:36:31.977Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":732,"UtcTime":"2026-09-03T02:36:44.857Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":733,"UtcTime":"2026-09-03T02:36:45.21Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":734,"UtcTime":"2026-09-03T02:36:45.271Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":735,"UtcTime":"2026-09-03T02:36:45.324Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":736,"UtcTime":"2026-09-03T02:37:12.371Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":737,"UtcTime":"2026-09-03T02:37:12.478Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":738,"UtcTime":"2026-09-03T02:37:13.428Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":739,"UtcTime":"2026-09-03T02:37:14.021Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":740,"UtcTime":"2026-09-03T02:37:14.132Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":3076,"UtcTime":"2026-09-03T02:33:04.509Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.090"}}
+{"LocalId":3077,"UtcTime":"2026-09-03T02:33:04.743Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.090"}}
+{"LocalId":3078,"UtcTime":"2026-09-03T02:33:06.637Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3079,"UtcTime":"2026-09-03T02:33:06.986Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3080,"UtcTime":"2026-09-03T02:33:07.058Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.090"}}
+{"LocalId":3081,"UtcTime":"2026-09-03T02:33:07.117Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":3082,"UtcTime":"2026-09-03T02:33:18.509Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3083,"UtcTime":"2026-09-03T02:33:18.609Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3084,"UtcTime":"2026-09-03T02:33:20.377Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3085,"UtcTime":"2026-09-03T02:33:20.895Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3086,"UtcTime":"2026-09-03T02:33:21.057Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":3087,"UtcTime":"2026-09-03T02:33:25.634Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.231"}}
+{"LocalId":3088,"UtcTime":"2026-09-03T02:33:25.822Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.231"}}
+{"LocalId":3089,"UtcTime":"2026-09-03T02:33:27.405Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3090,"UtcTime":"2026-09-03T02:33:27.831Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3091,"UtcTime":"2026-09-03T02:33:28.01Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.231"}}
+{"LocalId":3092,"UtcTime":"2026-09-03T02:33:28.066Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":3093,"UtcTime":"2026-09-03T02:33:36.948Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3094,"UtcTime":"2026-09-03T02:33:37.043Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3095,"UtcTime":"2026-09-03T02:33:38.133Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3096,"UtcTime":"2026-09-03T02:33:38.674Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3097,"UtcTime":"2026-09-03T02:33:38.808Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"135"}}
+{"LocalId":741,"UtcTime":"2026-09-03T02:38:24.286Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.022"}}
+{"LocalId":742,"UtcTime":"2026-09-03T02:38:25.949Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.022"}}
+{"LocalId":743,"UtcTime":"2026-09-03T02:38:29.811Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.022","productionDataNokId":"114998411"}}
+{"LocalId":744,"UtcTime":"2026-09-03T02:38:40.427Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":745,"UtcTime":"2026-09-03T02:38:40.659Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.022"}}
+{"LocalId":746,"UtcTime":"2026-09-03T02:40:27.896Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029"}}
+{"LocalId":747,"UtcTime":"2026-09-03T02:40:29.372Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029"}}
+{"LocalId":748,"UtcTime":"2026-09-03T02:40:35.683Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029","productionDataNokId":"115001288"}}
+{"LocalId":749,"UtcTime":"2026-09-03T02:40:53.119Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"5"}}
+{"LocalId":750,"UtcTime":"2026-09-03T02:40:53.477Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029"}}
+{"LocalId":751,"UtcTime":"2026-09-03T02:41:11.651Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":752,"UtcTime":"2026-09-03T02:41:12.167Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":753,"UtcTime":"2026-09-03T02:41:13.5Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031","productionDataNokId":"114998944"}}
+{"LocalId":754,"UtcTime":"2026-09-03T02:41:29.343Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":755,"UtcTime":"2026-09-03T02:41:29.638Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":756,"UtcTime":"2026-09-03T02:42:22.383Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.041"}}
+{"LocalId":757,"UtcTime":"2026-09-03T02:42:23.821Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.041"}}
+{"LocalId":758,"UtcTime":"2026-09-03T02:42:25.482Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.041","productionDataNokId":"115015247"}}
+{"LocalId":759,"UtcTime":"2026-09-03T02:43:33.964Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":760,"UtcTime":"2026-09-03T02:43:34.224Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.041"}}
+{"LocalId":761,"UtcTime":"2026-09-03T02:44:02.221Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037"}}
+{"LocalId":762,"UtcTime":"2026-09-03T02:44:02.773Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037"}}
+{"LocalId":763,"UtcTime":"2026-09-03T02:44:04.905Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037","productionDataNokId":"115016122"}}
+{"LocalId":764,"UtcTime":"2026-09-03T02:44:24.351Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":765,"UtcTime":"2026-09-03T02:44:24.594Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037"}}
+{"LocalId":766,"UtcTime":"2026-09-03T02:45:14.064Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.005"}}
+{"LocalId":767,"UtcTime":"2026-09-03T02:45:14.647Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.005"}}
+{"LocalId":768,"UtcTime":"2026-09-03T02:45:17.982Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.005","productionDataNokId":"115002549"}}
+{"LocalId":769,"UtcTime":"2026-09-03T02:45:38.269Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":770,"UtcTime":"2026-09-03T02:45:38.505Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.005"}}
+{"LocalId":771,"UtcTime":"2026-09-03T02:46:06.042Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.002"}}
+{"LocalId":772,"UtcTime":"2026-09-03T02:46:06.537Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.002"}}
+{"LocalId":773,"UtcTime":"2026-09-03T02:46:09.263Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.002","productionDataNokId":"115006054"}}
+{"LocalId":774,"UtcTime":"2026-09-03T02:46:19.626Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":775,"UtcTime":"2026-09-03T02:46:19.938Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.002"}}
+{"LocalId":3098,"UtcTime":"2026-09-03T02:44:08.627Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":3099,"UtcTime":"2026-09-03T02:44:08.909Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":3100,"UtcTime":"2026-09-03T02:44:10.808Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197","productionDataNokId":"115012052"}}
+{"LocalId":3101,"UtcTime":"2026-09-03T02:44:18.248Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3102,"UtcTime":"2026-09-03T02:44:18.475Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.197"}}
+{"LocalId":776,"UtcTime":"2026-09-03T02:48:45.945Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":777,"UtcTime":"2026-09-03T02:48:46.372Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":778,"UtcTime":"2026-09-03T02:48:48.049Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045","productionDataNokId":"114998372"}}
+{"LocalId":779,"UtcTime":"2026-09-03T02:48:48.212Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045","productionDataNokId":"115005238"}}
+{"LocalId":780,"UtcTime":"2026-09-03T02:48:52.48Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045","productionDataNokId":"114998372"}}
+{"LocalId":781,"UtcTime":"2026-09-03T02:49:03.586Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":782,"UtcTime":"2026-09-03T02:49:03.835Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":783,"UtcTime":"2026-09-03T02:49:05.823Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":784,"UtcTime":"2026-09-03T02:49:06.153Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":785,"UtcTime":"2026-09-03T02:49:06.228Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":786,"UtcTime":"2026-09-03T02:49:06.288Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":787,"UtcTime":"2026-09-03T02:49:17.939Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":788,"UtcTime":"2026-09-03T02:49:18.058Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":789,"UtcTime":"2026-09-03T02:49:36.282Z","Level":"Info","Message":"ManualAdd bilbox selected","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.048"}}
+{"LocalId":790,"UtcTime":"2026-09-03T02:49:37.45Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":791,"UtcTime":"2026-09-03T02:49:37.997Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":792,"UtcTime":"2026-09-03T02:49:38.113Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":793,"UtcTime":"2026-09-03T02:49:47.244Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.048","productionDataNokId":"115010161"}}
+{"LocalId":3103,"UtcTime":"2026-09-03T02:46:30.557Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111"}}
+{"LocalId":3104,"UtcTime":"2026-09-03T02:46:31.55Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111"}}
+{"LocalId":3105,"UtcTime":"2026-09-03T02:46:36.779Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111","productionDataNokId":"115013342"}}
+{"LocalId":3106,"UtcTime":"2026-09-03T02:46:47.886Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3107,"UtcTime":"2026-09-03T02:46:48.132Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.111"}}
+{"LocalId":794,"UtcTime":"2026-09-03T02:51:23.068Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.048","productionDataNokId":"115010161"}}
+{"LocalId":795,"UtcTime":"2026-09-03T02:51:56.503Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.048","productionDataNokId":"115010290"}}
+{"LocalId":796,"UtcTime":"2026-09-03T02:52:08.393Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":797,"UtcTime":"2026-09-03T02:52:08.676Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.048"}}
+{"LocalId":798,"UtcTime":"2026-09-03T02:52:21.467Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049"}}
+{"LocalId":799,"UtcTime":"2026-09-03T02:52:22.935Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049"}}
+{"LocalId":800,"UtcTime":"2026-09-03T02:53:12.076Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049","productionDataNokId":"115004309"}}
+{"LocalId":801,"UtcTime":"2026-09-03T02:53:18.929Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":802,"UtcTime":"2026-09-03T02:53:19.243Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049"}}
+{"LocalId":803,"UtcTime":"2026-09-03T02:53:49.167Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007"}}
+{"LocalId":804,"UtcTime":"2026-09-03T02:53:49.619Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007"}}
+{"LocalId":805,"UtcTime":"2026-09-03T02:53:51.133Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007","productionDataNokId":"115009960"}}
+{"LocalId":806,"UtcTime":"2026-09-03T02:53:56.859Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007","productionDataNokId":"115009960"}}
+{"LocalId":807,"UtcTime":"2026-09-03T02:54:12.354Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":808,"UtcTime":"2026-09-03T02:54:12.523Z","Level":"Info","Message":"Retest validation failed","Exception":null,"Page":null,"Tags":{"invalidCount":"1"}}
+{"LocalId":809,"UtcTime":"2026-09-03T02:54:19.053Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007","productionDataNokId":"115009960"}}
+{"LocalId":810,"UtcTime":"2026-09-03T02:54:23.824Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":811,"UtcTime":"2026-09-03T02:54:24.096Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007"}}
+{"LocalId":812,"UtcTime":"2026-09-03T02:56:31.279Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005"}}
+{"LocalId":813,"UtcTime":"2026-09-03T02:56:32.055Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005"}}
+{"LocalId":814,"UtcTime":"2026-09-03T02:57:15.209Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005","productionDataNokId":"115016515"}}
+{"LocalId":815,"UtcTime":"2026-09-03T02:57:16.18Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005","productionDataNokId":"115014497"}}
+{"LocalId":816,"UtcTime":"2026-09-03T02:57:21.558Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":817,"UtcTime":"2026-09-03T02:57:21.867Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005"}}
+{"LocalId":818,"UtcTime":"2026-09-03T03:00:15.133Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.074"}}
+{"LocalId":819,"UtcTime":"2026-09-03T03:00:15.633Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.074"}}
+{"LocalId":820,"UtcTime":"2026-09-03T03:00:24.746Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.074","productionDataNokId":"115001484"}}
+{"LocalId":821,"UtcTime":"2026-09-03T03:00:28.053Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.074","productionDataNokId":"115000914"}}
+{"LocalId":822,"UtcTime":"2026-09-03T03:00:35.427Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.074","productionDataNokId":"115005852"}}
+{"LocalId":823,"UtcTime":"2026-09-03T03:01:00.068Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":824,"UtcTime":"2026-09-03T03:01:00.414Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.074"}}
+{"LocalId":825,"UtcTime":"2026-09-03T03:01:37.057Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.015"}}
+{"LocalId":826,"UtcTime":"2026-09-03T03:01:37.508Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.015"}}
+{"LocalId":827,"UtcTime":"2026-09-03T03:01:39.667Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.015","productionDataNokId":"114999345"}}
+{"LocalId":828,"UtcTime":"2026-09-03T03:01:52.686Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":829,"UtcTime":"2026-09-03T03:01:52.953Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.015"}}
+{"LocalId":3108,"UtcTime":"2026-09-03T03:02:05.142Z","Level":"Info","Message":"RetestPage hall selected","Exception":null,"Page":null,"Tags":{"hall":"2"}}
+{"LocalId":3109,"UtcTime":"2026-09-03T03:02:05.285Z","Level":"Info","Message":"Hall selected: 2","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3110,"UtcTime":"2026-09-03T03:02:05.317Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":""}}
+{"LocalId":3111,"UtcTime":"2026-09-03T03:02:05.364Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3112,"UtcTime":"2026-09-03T03:02:05.427Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"","bilboxesCount":"0"}}
+{"LocalId":3113,"UtcTime":"2026-09-03T03:02:05.514Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3114,"UtcTime":"2026-09-03T03:02:07.737Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"V\u0160E"}}
+{"LocalId":3115,"UtcTime":"2026-09-03T03:02:07.835Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"V\u0160E","bilboxesCount":"150"}}
+{"LocalId":3116,"UtcTime":"2026-09-03T03:02:15.462Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.063"}}
+{"LocalId":3117,"UtcTime":"2026-09-03T03:02:15.665Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.063"}}
+{"LocalId":3118,"UtcTime":"2026-09-03T03:02:18.262Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.063","productionDataNokId":"115004662"}}
+{"LocalId":3119,"UtcTime":"2026-09-03T03:02:27.24Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3120,"UtcTime":"2026-09-03T03:02:27.479Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.063"}}
+{"LocalId":3121,"UtcTime":"2026-09-03T03:03:01.077Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064"}}
+{"LocalId":3122,"UtcTime":"2026-09-03T03:03:01.386Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064"}}
+{"LocalId":830,"UtcTime":"2026-09-03T03:06:49.229Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":831,"UtcTime":"2026-09-03T03:06:49.83Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":832,"UtcTime":"2026-09-03T03:06:52.192Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"114999268"}}
+{"LocalId":833,"UtcTime":"2026-09-03T03:06:52.597Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"114999268"}}
+{"LocalId":834,"UtcTime":"2026-09-03T03:06:53.88Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"115002261"}}
+{"LocalId":835,"UtcTime":"2026-09-03T03:06:54.358Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"115011110"}}
+{"LocalId":836,"UtcTime":"2026-09-03T03:06:55.746Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"114999268"}}
+{"LocalId":837,"UtcTime":"2026-09-03T03:07:01.901Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":838,"UtcTime":"2026-09-03T03:07:02.542Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":839,"UtcTime":"2026-09-03T03:07:03.575Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":840,"UtcTime":"2026-09-03T03:07:03.932Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":841,"UtcTime":"2026-09-03T03:07:04.057Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":842,"UtcTime":"2026-09-03T03:07:04.176Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":843,"UtcTime":"2026-09-03T03:07:18.019Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":844,"UtcTime":"2026-09-03T03:07:18.133Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":845,"UtcTime":"2026-09-03T03:07:19.23Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":846,"UtcTime":"2026-09-03T03:07:19.775Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":847,"UtcTime":"2026-09-03T03:07:19.977Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"89","bilboxesCount":"640"}}
+{"LocalId":3123,"UtcTime":"2026-09-03T03:03:04.245Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064","productionDataNokId":"115006777"}}
+{"LocalId":3124,"UtcTime":"2026-09-03T03:03:05.804Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064","productionDataNokId":"114995772"}}
+{"LocalId":3125,"UtcTime":"2026-09-03T03:03:17.268Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064","productionDataNokId":"114995921"}}
+{"LocalId":3126,"UtcTime":"2026-09-03T03:03:27.205Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064","productionDataNokId":"115006777"}}
+{"LocalId":3127,"UtcTime":"2026-09-03T03:03:59.233Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3128,"UtcTime":"2026-09-03T03:03:59.518Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.064"}}
+{"LocalId":848,"UtcTime":"2026-09-03T03:07:43.56Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.019"}}
+{"LocalId":849,"UtcTime":"2026-09-03T03:07:44.106Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.019"}}
+{"LocalId":850,"UtcTime":"2026-09-03T03:07:45.043Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.019","productionDataNokId":"115004447"}}
+{"LocalId":851,"UtcTime":"2026-09-03T03:07:51.282Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":852,"UtcTime":"2026-09-03T03:07:51.511Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.019"}}
+{"LocalId":853,"UtcTime":"2026-09-03T03:08:07.298Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.021"}}
+{"LocalId":854,"UtcTime":"2026-09-03T03:08:07.855Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.021"}}
+{"LocalId":855,"UtcTime":"2026-09-03T03:08:08.924Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.021","productionDataNokId":"115011367"}}
+{"LocalId":856,"UtcTime":"2026-09-03T03:08:16.599Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":857,"UtcTime":"2026-09-03T03:08:16.929Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.021"}}
+{"LocalId":3129,"UtcTime":"2026-09-03T03:04:33.934Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.037"}}
+{"LocalId":3130,"UtcTime":"2026-09-03T03:04:35.091Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.037"}}
+{"LocalId":3131,"UtcTime":"2026-09-03T03:04:38.264Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.037","productionDataNokId":"115000262"}}
+{"LocalId":3132,"UtcTime":"2026-09-03T03:04:53.283Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3133,"UtcTime":"2026-09-03T03:04:53.49Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.037"}}
+{"LocalId":3134,"UtcTime":"2026-09-03T03:05:22.538Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.092"}}
+{"LocalId":3135,"UtcTime":"2026-09-03T03:05:22.779Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.092"}}
+{"LocalId":3136,"UtcTime":"2026-09-03T03:05:25.148Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.092","productionDataNokId":"115018167"}}
+{"LocalId":3137,"UtcTime":"2026-09-03T03:05:37.506Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3138,"UtcTime":"2026-09-03T03:05:37.755Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.092"}}
+{"LocalId":858,"UtcTime":"2026-09-03T03:09:40.141Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":859,"UtcTime":"2026-09-03T03:09:41.026Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":860,"UtcTime":"2026-09-03T03:09:42.823Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075","productionDataNokId":"115002159"}}
+{"LocalId":861,"UtcTime":"2026-09-03T03:10:02.41Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"8"}}
+{"LocalId":862,"UtcTime":"2026-09-03T03:10:03.59Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":863,"UtcTime":"2026-09-03T03:10:23.734Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":864,"UtcTime":"2026-09-03T03:10:25.091Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":865,"UtcTime":"2026-09-03T03:10:28.072Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033","productionDataNokId":"114993314"}}
+{"LocalId":3139,"UtcTime":"2026-09-03T03:06:06.861Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.247"}}
+{"LocalId":3140,"UtcTime":"2026-09-03T03:06:07.105Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.247"}}
+{"LocalId":3141,"UtcTime":"2026-09-03T03:06:09.921Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.247","productionDataNokId":"115010349"}}
+{"LocalId":3142,"UtcTime":"2026-09-03T03:06:21.305Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":3143,"UtcTime":"2026-09-03T03:06:21.604Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.247"}}
+{"LocalId":3144,"UtcTime":"2026-09-03T03:06:49.563Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131"}}
+{"LocalId":3145,"UtcTime":"2026-09-03T03:06:50.342Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131"}}
+{"LocalId":3146,"UtcTime":"2026-09-03T03:06:52.194Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131","productionDataNokId":"115007376"}}
+{"LocalId":3147,"UtcTime":"2026-09-03T03:06:52.938Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131","productionDataNokId":"115007376"}}
+{"LocalId":3148,"UtcTime":"2026-09-03T03:06:53.434Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131","productionDataNokId":"115008276"}}
+{"LocalId":3149,"UtcTime":"2026-09-03T03:06:56.101Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131","productionDataNokId":"115007376"}}
+{"LocalId":3150,"UtcTime":"2026-09-03T03:07:02.717Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131","productionDataNokId":"115011891"}}
+{"LocalId":866,"UtcTime":"2026-09-03T03:10:40.284Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"14"}}
+{"LocalId":867,"UtcTime":"2026-09-03T03:10:40.876Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":868,"UtcTime":"2026-09-03T03:11:48.534Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.034"}}
+{"LocalId":869,"UtcTime":"2026-09-03T03:11:49.267Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.034"}}
+{"LocalId":870,"UtcTime":"2026-09-03T03:11:50.312Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.034","productionDataNokId":"114997605"}}
+{"LocalId":3151,"UtcTime":"2026-09-03T03:08:32.637Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3152,"UtcTime":"2026-09-03T03:08:32.97Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.131"}}
+{"LocalId":871,"UtcTime":"2026-09-03T03:14:00.221Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.034","productionDataNokId":"114997605"}}
+{"LocalId":872,"UtcTime":"2026-09-03T03:14:07.226Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":873,"UtcTime":"2026-09-03T03:14:07.52Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.034"}}
+{"LocalId":874,"UtcTime":"2026-09-03T03:14:50.157Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050"}}
+{"LocalId":875,"UtcTime":"2026-09-03T03:14:50.659Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050"}}
+{"LocalId":876,"UtcTime":"2026-09-03T03:14:51.972Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050","productionDataNokId":"115017784"}}
+{"LocalId":877,"UtcTime":"2026-09-03T03:15:01.297Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":878,"UtcTime":"2026-09-03T03:15:01.52Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050"}}
+{"LocalId":879,"UtcTime":"2026-09-03T03:15:15.766Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":880,"UtcTime":"2026-09-03T03:15:16.337Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":881,"UtcTime":"2026-09-03T03:15:17.463Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033","productionDataNokId":"115019172"}}
+{"LocalId":882,"UtcTime":"2026-09-03T03:15:23.579Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":883,"UtcTime":"2026-09-03T03:15:23.807Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":884,"UtcTime":"2026-09-03T03:15:53.743Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078"}}
+{"LocalId":885,"UtcTime":"2026-09-03T03:15:54.162Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078"}}
+{"LocalId":886,"UtcTime":"2026-09-03T03:15:56.853Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078","productionDataNokId":"114993943"}}
+{"LocalId":887,"UtcTime":"2026-09-03T03:16:05.793Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":888,"UtcTime":"2026-09-03T03:16:06.13Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078"}}
+{"LocalId":3153,"UtcTime":"2026-09-03T03:12:31.679Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.031"}}
+{"LocalId":3154,"UtcTime":"2026-09-03T03:12:33.075Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.031"}}
+{"LocalId":3155,"UtcTime":"2026-09-03T03:13:27.432Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.031","productionDataNokId":"115016107"}}
+{"LocalId":3156,"UtcTime":"2026-09-03T03:13:45.018Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3157,"UtcTime":"2026-09-03T03:13:45.542Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.031"}}
+{"LocalId":3158,"UtcTime":"2026-09-03T03:14:05.177Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":3159,"UtcTime":"2026-09-03T03:14:05.545Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.033"}}
+{"LocalId":3160,"UtcTime":"2026-09-03T03:14:08.228Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":3161,"UtcTime":"2026-09-03T03:14:08.48Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":3162,"UtcTime":"2026-09-03T03:14:18.446Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032","productionDataNokId":"114991765"}}
+{"LocalId":3163,"UtcTime":"2026-09-03T03:14:41.521Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"23"}}
+{"LocalId":3164,"UtcTime":"2026-09-03T03:14:42.144Z","Level":"Info","Message":"Retest save failed","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":3165,"UtcTime":"2026-09-03T03:14:46.641Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032","productionDataNokId":"114991765"}}
+{"LocalId":3166,"UtcTime":"2026-09-03T03:14:49.896Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"23"}}
+{"LocalId":3167,"UtcTime":"2026-09-03T03:14:50.544Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":889,"UtcTime":"2026-09-03T03:19:41.613Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":890,"UtcTime":"2026-09-03T03:19:48.79Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":891,"UtcTime":"2026-09-03T03:19:55.759Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079","productionDataNokId":"115010323"}}
+{"LocalId":892,"UtcTime":"2026-09-03T03:23:14.956Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079","productionDataNokId":"115017298"}}
+{"LocalId":3168,"UtcTime":"2026-09-03T04:48:42.882Z","Level":"Info","Message":"RetestPage hall selected","Exception":null,"Page":null,"Tags":{"hall":"3"}}
+{"LocalId":3169,"UtcTime":"2026-09-03T04:48:43.675Z","Level":"Info","Message":"Hall selected: 3","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3170,"UtcTime":"2026-09-03T04:48:43.724Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":""}}
+{"LocalId":3171,"UtcTime":"2026-09-03T04:48:43.783Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3172,"UtcTime":"2026-09-03T04:48:43.891Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"","bilboxesCount":"0"}}
+{"LocalId":3173,"UtcTime":"2026-09-03T04:48:44.196Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3174,"UtcTime":"2026-09-03T04:49:16.417Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D40"}}
+{"LocalId":3175,"UtcTime":"2026-09-03T04:49:16.58Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D40","bilboxesCount":"8"}}
+{"LocalId":3176,"UtcTime":"2026-09-03T04:49:19.012Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.136"}}
+{"LocalId":3177,"UtcTime":"2026-09-03T04:49:19.499Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.136"}}
+{"LocalId":3178,"UtcTime":"2026-09-03T04:49:22.717Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.136","productionDataNokId":"115021988"}}
+{"LocalId":3179,"UtcTime":"2026-09-03T04:49:28.795Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.136","productionDataNokId":"115021988"}}
+{"LocalId":3180,"UtcTime":"2026-09-03T04:49:30.923Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3181,"UtcTime":"2026-09-03T04:49:31.165Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.136"}}
+{"LocalId":3182,"UtcTime":"2026-09-03T04:53:57.714Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D41"}}
+{"LocalId":3183,"UtcTime":"2026-09-03T04:53:57.892Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D41","bilboxesCount":"8"}}
+{"LocalId":3184,"UtcTime":"2026-09-03T04:53:57.935Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3185,"UtcTime":"2026-09-03T04:53:58.084Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3186,"UtcTime":"2026-09-03T04:54:00.08Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.141"}}
+{"LocalId":3187,"UtcTime":"2026-09-03T04:54:00.301Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.141"}}
+{"LocalId":3188,"UtcTime":"2026-09-03T04:54:01.372Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.141","productionDataNokId":"115022669"}}
+{"LocalId":3189,"UtcTime":"2026-09-03T04:54:06.391Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.141","productionDataNokId":"115022669"}}
+{"LocalId":3190,"UtcTime":"2026-09-03T04:54:07.978Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3191,"UtcTime":"2026-09-03T04:54:08.193Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.141"}}
+{"LocalId":3192,"UtcTime":"2026-09-03T04:55:28.943Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D43"}}
+{"LocalId":3193,"UtcTime":"2026-09-03T04:55:29.079Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D43","bilboxesCount":"8"}}
+{"LocalId":3194,"UtcTime":"2026-09-03T04:55:29.12Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3195,"UtcTime":"2026-09-03T04:55:29.249Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3196,"UtcTime":"2026-09-03T04:55:30.777Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":3197,"UtcTime":"2026-09-03T04:55:31.011Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":3198,"UtcTime":"2026-09-03T04:55:32.461Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079","productionDataNokId":"115021794"}}
+{"LocalId":3199,"UtcTime":"2026-09-03T04:55:40.291Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3200,"UtcTime":"2026-09-03T04:55:40.552Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.079"}}
+{"LocalId":3201,"UtcTime":"2026-09-03T04:57:44.203Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.155"}}
+{"LocalId":3202,"UtcTime":"2026-09-03T04:57:45.333Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.155"}}
+{"LocalId":3203,"UtcTime":"2026-09-03T04:57:46.811Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.155","productionDataNokId":"115021385"}}
+{"LocalId":3204,"UtcTime":"2026-09-03T04:58:01.711Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"6"}}
+{"LocalId":3205,"UtcTime":"2026-09-03T04:58:02.03Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.155"}}
+{"LocalId":3206,"UtcTime":"2026-09-03T04:59:40.066Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D44"}}
+{"LocalId":3207,"UtcTime":"2026-09-03T04:59:40.228Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D44","bilboxesCount":"9"}}
+{"LocalId":3208,"UtcTime":"2026-09-03T04:59:40.266Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3209,"UtcTime":"2026-09-03T04:59:40.396Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3210,"UtcTime":"2026-09-03T04:59:42.79Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.163"}}
+{"LocalId":3211,"UtcTime":"2026-09-03T04:59:43.012Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.163"}}
+{"LocalId":3212,"UtcTime":"2026-09-03T04:59:43.792Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.163","productionDataNokId":"115023392"}}
+{"LocalId":3213,"UtcTime":"2026-09-03T04:59:51.268Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3214,"UtcTime":"2026-09-03T04:59:51.484Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.163"}}
+{"LocalId":3215,"UtcTime":"2026-09-03T05:01:03.782Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D45"}}
+{"LocalId":3216,"UtcTime":"2026-09-03T05:01:03.921Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D45","bilboxesCount":"8"}}
+{"LocalId":3217,"UtcTime":"2026-09-03T05:01:03.958Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3218,"UtcTime":"2026-09-03T05:01:04.5Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3219,"UtcTime":"2026-09-03T05:01:07.05Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.167"}}
+{"LocalId":3220,"UtcTime":"2026-09-03T05:01:07.816Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.167"}}
+{"LocalId":3221,"UtcTime":"2026-09-03T05:01:08.727Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3222,"UtcTime":"2026-09-03T05:01:09.267Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3223,"UtcTime":"2026-09-03T05:01:09.897Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.167"}}
+{"LocalId":3224,"UtcTime":"2026-09-03T05:01:10.051Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"8"}}
+{"LocalId":3225,"UtcTime":"2026-09-03T05:01:21.429Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3226,"UtcTime":"2026-09-03T05:01:21.54Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3227,"UtcTime":"2026-09-03T05:01:22.701Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3228,"UtcTime":"2026-09-03T05:01:23.288Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3229,"UtcTime":"2026-09-03T05:01:23.582Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"8"}}
+{"LocalId":3230,"UtcTime":"2026-09-03T05:03:46.794Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D44"}}
+{"LocalId":3231,"UtcTime":"2026-09-03T05:03:46.926Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D44","bilboxesCount":"9"}}
+{"LocalId":3232,"UtcTime":"2026-09-03T05:03:46.969Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3233,"UtcTime":"2026-09-03T05:03:47.1Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3234,"UtcTime":"2026-09-03T05:03:50.014Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3235,"UtcTime":"2026-09-03T05:03:50.261Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3236,"UtcTime":"2026-09-03T05:03:51.12Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248","productionDataNokId":"115022914"}}
+{"LocalId":3237,"UtcTime":"2026-09-03T05:04:02.039Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3238,"UtcTime":"2026-09-03T05:04:02.273Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3239,"UtcTime":"2026-09-03T05:04:04.358Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3240,"UtcTime":"2026-09-03T05:04:04.697Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3241,"UtcTime":"2026-09-03T05:04:04.781Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.248"}}
+{"LocalId":3242,"UtcTime":"2026-09-03T05:04:04.851Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"9"}}
+{"LocalId":3243,"UtcTime":"2026-09-03T05:04:12.159Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3244,"UtcTime":"2026-09-03T05:04:12.258Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3245,"UtcTime":"2026-09-03T05:04:13.103Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3246,"UtcTime":"2026-09-03T05:04:13.588Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3247,"UtcTime":"2026-09-03T05:04:13.809Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"9"}}
+{"LocalId":3248,"UtcTime":"2026-09-03T05:05:26.21Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D46"}}
+{"LocalId":3249,"UtcTime":"2026-09-03T05:05:26.347Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D46","bilboxesCount":"14"}}
+{"LocalId":3250,"UtcTime":"2026-09-03T05:05:26.386Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3251,"UtcTime":"2026-09-03T05:05:26.523Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3252,"UtcTime":"2026-09-03T05:05:32.182Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":3253,"UtcTime":"2026-09-03T05:05:32.428Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":3254,"UtcTime":"2026-09-03T05:05:33.353Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059","productionDataNokId":"115024985"}}
+{"LocalId":3255,"UtcTime":"2026-09-03T05:05:43.751Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3256,"UtcTime":"2026-09-03T05:05:44.016Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.059"}}
+{"LocalId":3257,"UtcTime":"2026-09-03T05:05:59.354Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060"}}
+{"LocalId":3258,"UtcTime":"2026-09-03T05:05:59.594Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060"}}
+{"LocalId":3259,"UtcTime":"2026-09-03T05:06:00.665Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060","productionDataNokId":"115026078"}}
+{"LocalId":3260,"UtcTime":"2026-09-03T05:06:22.903Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3261,"UtcTime":"2026-09-03T05:06:23.137Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.060"}}
+{"LocalId":3262,"UtcTime":"2026-09-03T05:07:31.2Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230"}}
+{"LocalId":3263,"UtcTime":"2026-09-03T05:07:31.459Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230"}}
+{"LocalId":3264,"UtcTime":"2026-09-03T05:07:32.23Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230","productionDataNokId":"115028150"}}
+{"LocalId":3265,"UtcTime":"2026-09-03T05:07:44.888Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3266,"UtcTime":"2026-09-03T05:07:45.111Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.230"}}
+{"LocalId":3267,"UtcTime":"2026-09-03T05:08:10.519Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":3268,"UtcTime":"2026-09-03T05:08:10.793Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":3269,"UtcTime":"2026-09-03T05:08:11.577Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171","productionDataNokId":"115022872"}}
+{"LocalId":3270,"UtcTime":"2026-09-03T05:08:16.896Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3271,"UtcTime":"2026-09-03T05:08:17.108Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.171"}}
+{"LocalId":3272,"UtcTime":"2026-09-03T05:14:35.759Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D48"}}
+{"LocalId":3273,"UtcTime":"2026-09-03T05:14:35.946Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D48","bilboxesCount":"8"}}
+{"LocalId":3274,"UtcTime":"2026-09-03T05:14:35.978Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3275,"UtcTime":"2026-09-03T05:14:36.471Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3276,"UtcTime":"2026-09-03T05:14:37.234Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D49"}}
+{"LocalId":3277,"UtcTime":"2026-09-03T05:14:37.347Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"3","row":"D49","bilboxesCount":"8"}}
+{"LocalId":3278,"UtcTime":"2026-09-03T05:14:40.446Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3279,"UtcTime":"2026-09-03T05:14:41.897Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3280,"UtcTime":"2026-09-03T05:14:43.515Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219","productionDataNokId":"115021454"}}
+{"LocalId":3281,"UtcTime":"2026-09-03T05:14:54.614Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3282,"UtcTime":"2026-09-03T05:14:54.848Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3283,"UtcTime":"2026-09-03T05:14:54.925Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3284,"UtcTime":"2026-09-03T05:14:55.033Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3285,"UtcTime":"2026-09-03T05:14:55.092Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3286,"UtcTime":"2026-09-03T05:14:55.253Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3287,"UtcTime":"2026-09-03T05:14:55.881Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3288,"UtcTime":"2026-09-03T05:14:56.322Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3289,"UtcTime":"2026-09-03T05:14:56.448Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3290,"UtcTime":"2026-09-03T05:14:56.531Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"8"}}
+{"LocalId":3291,"UtcTime":"2026-09-03T05:15:16.645Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3292,"UtcTime":"2026-09-03T05:15:16.74Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3293,"UtcTime":"2026-09-03T05:15:17.624Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3294,"UtcTime":"2026-09-03T05:15:18.106Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3295,"UtcTime":"2026-09-03T05:15:18.254Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"8"}}
+{"LocalId":3296,"UtcTime":"2026-09-03T05:15:35.022Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3297,"UtcTime":"2026-09-03T05:15:35.36Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3298,"UtcTime":"2026-09-03T05:15:35.438Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.219"}}
+{"LocalId":3299,"UtcTime":"2026-09-03T05:15:35.502Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"8"}}
+{"LocalId":3300,"UtcTime":"2026-09-03T05:15:45.049Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3301,"UtcTime":"2026-09-03T05:15:45.161Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3302,"UtcTime":"2026-09-03T05:15:46.07Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3303,"UtcTime":"2026-09-03T05:15:46.63Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3304,"UtcTime":"2026-09-03T05:15:46.868Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"20","bilboxesCount":"8"}}
+{"LocalId":3305,"UtcTime":"2026-09-03T05:25:50.232Z","Level":"Info","Message":"RetestPage hall selected","Exception":null,"Page":null,"Tags":{"hall":"2"}}
+{"LocalId":3306,"UtcTime":"2026-09-03T05:25:50.447Z","Level":"Info","Message":"Hall selected: 2","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3307,"UtcTime":"2026-09-03T05:25:50.483Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":""}}
+{"LocalId":3308,"UtcTime":"2026-09-03T05:25:50.523Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3309,"UtcTime":"2026-09-03T05:25:50.617Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"","bilboxesCount":"0"}}
+{"LocalId":3310,"UtcTime":"2026-09-03T05:25:50.691Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3311,"UtcTime":"2026-09-03T05:25:53.936Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D31"}}
+{"LocalId":3312,"UtcTime":"2026-09-03T05:25:54.044Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D31","bilboxesCount":"5"}}
+{"LocalId":3313,"UtcTime":"2026-09-03T05:25:57.714Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.132"}}
+{"LocalId":3314,"UtcTime":"2026-09-03T05:25:59.381Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":3315,"UtcTime":"2026-09-03T05:25:59.835Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":3316,"UtcTime":"2026-09-03T05:26:00.851Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032","productionDataNokId":"115026900"}}
+{"LocalId":3317,"UtcTime":"2026-09-03T05:26:14.66Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3318,"UtcTime":"2026-09-03T05:26:14.959Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.032"}}
+{"LocalId":3319,"UtcTime":"2026-09-03T05:26:28.4Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.132"}}
+{"LocalId":3320,"UtcTime":"2026-09-03T05:27:16.67Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D29"}}
+{"LocalId":3321,"UtcTime":"2026-09-03T05:27:16.79Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D29","bilboxesCount":"3"}}
+{"LocalId":3322,"UtcTime":"2026-09-03T05:27:16.831Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3323,"UtcTime":"2026-09-03T05:27:16.999Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3324,"UtcTime":"2026-09-03T05:27:19.386Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D28"}}
+{"LocalId":3325,"UtcTime":"2026-09-03T05:27:19.526Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D28","bilboxesCount":"7"}}
+{"LocalId":3326,"UtcTime":"2026-09-03T05:27:23.071Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078"}}
+{"LocalId":3327,"UtcTime":"2026-09-03T05:27:23.495Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078"}}
+{"LocalId":3328,"UtcTime":"2026-09-03T05:27:24.579Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078","productionDataNokId":"115019588"}}
+{"LocalId":3329,"UtcTime":"2026-09-03T05:27:47.156Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"5"}}
+{"LocalId":3330,"UtcTime":"2026-09-03T05:27:47.521Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.078"}}
+{"LocalId":3331,"UtcTime":"2026-09-03T05:27:58.224Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.073"}}
+{"LocalId":3332,"UtcTime":"2026-09-03T05:27:58.576Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.073"}}
+{"LocalId":3333,"UtcTime":"2026-09-03T05:27:59.24Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.073","productionDataNokId":"115024004"}}
+{"LocalId":3334,"UtcTime":"2026-09-03T05:28:07.98Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":3335,"UtcTime":"2026-09-03T05:28:08.245Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.073"}}
+{"LocalId":3336,"UtcTime":"2026-09-03T05:28:14.687Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D27"}}
+{"LocalId":3337,"UtcTime":"2026-09-03T05:28:14.807Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D27","bilboxesCount":"6"}}
+{"LocalId":3338,"UtcTime":"2026-09-03T05:28:14.857Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3339,"UtcTime":"2026-09-03T05:28:14.987Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3340,"UtcTime":"2026-09-03T05:28:27.336Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D28"}}
+{"LocalId":3341,"UtcTime":"2026-09-03T05:28:27.455Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D28","bilboxesCount":"7"}}
+{"LocalId":3342,"UtcTime":"2026-09-03T05:28:28.657Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050"}}
+{"LocalId":3343,"UtcTime":"2026-09-03T05:28:29.958Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050"}}
+{"LocalId":3344,"UtcTime":"2026-09-03T05:28:31.05Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050","productionDataNokId":"115027841"}}
+{"LocalId":3345,"UtcTime":"2026-09-03T05:28:43.509Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3346,"UtcTime":"2026-09-03T05:28:43.751Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.050"}}
+{"LocalId":3347,"UtcTime":"2026-09-03T05:30:58.5Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D25"}}
+{"LocalId":3348,"UtcTime":"2026-09-03T05:30:58.626Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D25","bilboxesCount":"1"}}
+{"LocalId":3349,"UtcTime":"2026-09-03T05:30:58.67Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3350,"UtcTime":"2026-09-03T05:30:58.83Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3351,"UtcTime":"2026-09-03T05:30:59.881Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.076"}}
+{"LocalId":3352,"UtcTime":"2026-09-03T05:31:06.878Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D26"}}
+{"LocalId":3353,"UtcTime":"2026-09-03T05:31:07.005Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"D26","bilboxesCount":"1"}}
+{"LocalId":3354,"UtcTime":"2026-09-03T05:31:07.049Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3355,"UtcTime":"2026-09-03T05:31:07.212Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3356,"UtcTime":"2026-09-03T05:31:08.124Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":3357,"UtcTime":"2026-09-03T05:31:08.508Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":3358,"UtcTime":"2026-09-03T05:31:09.551Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075","productionDataNokId":"115022971"}}
+{"LocalId":3359,"UtcTime":"2026-09-03T05:31:13.462Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075","productionDataNokId":"115022971"}}
+{"LocalId":3360,"UtcTime":"2026-09-03T05:31:18.234Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3361,"UtcTime":"2026-09-03T05:31:18.453Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":3362,"UtcTime":"2026-09-03T05:31:18.742Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3363,"UtcTime":"2026-09-03T05:31:18.842Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.075"}}
+{"LocalId":3364,"UtcTime":"2026-09-03T05:31:30.508Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.076"}}
+{"LocalId":3365,"UtcTime":"2026-09-03T05:37:21.555Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"2","row":"nastenky"}}
+{"LocalId":3366,"UtcTime":"2026-09-03T05:37:21.818Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"2","row":"nastenky","bilboxesCount":"15"}}
+{"LocalId":3367,"UtcTime":"2026-09-03T05:37:21.85Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3368,"UtcTime":"2026-09-03T05:37:21.981Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3369,"UtcTime":"2026-09-03T05:37:25.671Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146"}}
+{"LocalId":3370,"UtcTime":"2026-09-03T05:37:25.889Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146"}}
+{"LocalId":3371,"UtcTime":"2026-09-03T05:37:26.797Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146","productionDataNokId":"115027760"}}
+{"LocalId":3372,"UtcTime":"2026-09-03T05:37:35.231Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146","productionDataNokId":"115027760"}}
+{"LocalId":3373,"UtcTime":"2026-09-03T05:37:37.239Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3374,"UtcTime":"2026-09-03T05:37:37.49Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146"}}
+{"LocalId":3375,"UtcTime":"2026-09-03T05:37:37.574Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"0"}}
+{"LocalId":3376,"UtcTime":"2026-09-03T05:37:37.708Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146"}}
+{"LocalId":3377,"UtcTime":"2026-09-03T05:38:04.235Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.147"}}
+{"LocalId":3378,"UtcTime":"2026-09-03T05:38:06.185Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146"}}
+{"LocalId":3379,"UtcTime":"2026-09-03T05:38:06.528Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.146"}}
+{"LocalId":3380,"UtcTime":"2026-09-03T05:38:30.233Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.024"}}
+{"LocalId":3381,"UtcTime":"2026-09-03T05:38:31.464Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.024"}}
+{"LocalId":3382,"UtcTime":"2026-09-03T05:38:34.852Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.147"}}
+{"LocalId":3383,"UtcTime":"2026-09-03T05:39:15.113Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.052"}}
+{"LocalId":3384,"UtcTime":"2026-09-03T05:39:17.384Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.024"}}
+{"LocalId":3385,"UtcTime":"2026-09-03T05:39:17.956Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.024"}}
+{"LocalId":3386,"UtcTime":"2026-09-03T05:39:18.973Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.024","productionDataNokId":"115021883"}}
+{"LocalId":3387,"UtcTime":"2026-09-03T05:39:26.251Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3388,"UtcTime":"2026-09-03T05:39:26.474Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.024"}}
+{"LocalId":3389,"UtcTime":"2026-09-03T05:39:41.322Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.055"}}
+{"LocalId":3390,"UtcTime":"2026-09-03T05:39:41.743Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.055"}}
+{"LocalId":3391,"UtcTime":"2026-09-03T05:39:45.751Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.052"}}
+{"LocalId":3392,"UtcTime":"2026-09-03T05:40:33.549Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.053"}}
+{"LocalId":3393,"UtcTime":"2026-09-03T05:40:34.343Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.053"}}
+{"LocalId":3394,"UtcTime":"2026-09-03T05:40:35.293Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.053","productionDataNokId":"115024664"}}
+{"LocalId":3395,"UtcTime":"2026-09-03T05:40:48.665Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3396,"UtcTime":"2026-09-03T05:40:48.905Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.053"}}
+{"LocalId":3397,"UtcTime":"2026-09-03T05:44:52.305Z","Level":"Info","Message":"RetestPage hall selected","Exception":null,"Page":null,"Tags":{"hall":"1"}}
+{"LocalId":3398,"UtcTime":"2026-09-03T05:44:52.461Z","Level":"Info","Message":"Hall selected: 1","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3399,"UtcTime":"2026-09-03T05:44:52.497Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":""}}
+{"LocalId":3400,"UtcTime":"2026-09-03T05:44:52.546Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3401,"UtcTime":"2026-09-03T05:44:52.605Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"","bilboxesCount":"0"}}
+{"LocalId":3402,"UtcTime":"2026-09-03T05:44:52.681Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3403,"UtcTime":"2026-09-03T05:44:54.054Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D01"}}
+{"LocalId":3404,"UtcTime":"2026-09-03T05:44:54.181Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D01","bilboxesCount":"112"}}
+{"LocalId":3405,"UtcTime":"2026-09-03T05:44:55.801Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":3406,"UtcTime":"2026-09-03T05:44:56.048Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":3407,"UtcTime":"2026-09-03T05:44:56.854Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001","productionDataNokId":"115026196"}}
+{"LocalId":3408,"UtcTime":"2026-09-03T05:45:04.317Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3409,"UtcTime":"2026-09-03T05:45:04.549Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":3410,"UtcTime":"2026-09-03T05:45:05.647Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3411,"UtcTime":"2026-09-03T05:45:06.018Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3412,"UtcTime":"2026-09-03T05:45:06.087Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.001"}}
+{"LocalId":3413,"UtcTime":"2026-09-03T05:45:06.162Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"112"}}
+{"LocalId":3414,"UtcTime":"2026-09-03T05:45:22.505Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3415,"UtcTime":"2026-09-03T05:45:22.592Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3416,"UtcTime":"2026-09-03T05:45:24.678Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3417,"UtcTime":"2026-09-03T05:45:25.3Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3418,"UtcTime":"2026-09-03T05:45:25.499Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"112"}}
+{"LocalId":3419,"UtcTime":"2026-09-03T05:47:58.03Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002"}}
+{"LocalId":3420,"UtcTime":"2026-09-03T05:47:58.432Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002"}}
+{"LocalId":3421,"UtcTime":"2026-09-03T05:47:59.323Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"115021380"}}
+{"LocalId":3422,"UtcTime":"2026-09-03T05:48:04.925Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002","productionDataNokId":"115021851"}}
+{"LocalId":3423,"UtcTime":"2026-09-03T05:48:33.496Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"6"}}
+{"LocalId":3424,"UtcTime":"2026-09-03T05:48:33.816Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.002"}}
+{"LocalId":3425,"UtcTime":"2026-09-03T05:49:42.051Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.003"}}
+{"LocalId":3426,"UtcTime":"2026-09-03T05:49:42.338Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.003"}}
+{"LocalId":3427,"UtcTime":"2026-09-03T05:49:43.256Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.003","productionDataNokId":"115031612"}}
+{"LocalId":3428,"UtcTime":"2026-09-03T05:49:56.788Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3429,"UtcTime":"2026-09-03T05:49:57.022Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.003"}}
+{"LocalId":3430,"UtcTime":"2026-09-03T05:50:37.435Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.004"}}
+{"LocalId":3431,"UtcTime":"2026-09-03T05:50:38.568Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.004"}}
+{"LocalId":3432,"UtcTime":"2026-09-03T05:50:39.474Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.004","productionDataNokId":"115032886"}}
+{"LocalId":3433,"UtcTime":"2026-09-03T05:50:45.486Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3434,"UtcTime":"2026-09-03T05:50:45.703Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.004"}}
+{"LocalId":3435,"UtcTime":"2026-09-03T05:52:52.801Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":3436,"UtcTime":"2026-09-03T05:52:53.971Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":3437,"UtcTime":"2026-09-03T05:52:54.793Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007","productionDataNokId":"115024032"}}
+{"LocalId":3438,"UtcTime":"2026-09-03T05:52:59.872Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"2"}}
+{"LocalId":3439,"UtcTime":"2026-09-03T05:53:00.101Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":3440,"UtcTime":"2026-09-03T05:53:01.137Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3441,"UtcTime":"2026-09-03T05:53:01.463Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3442,"UtcTime":"2026-09-03T05:53:01.555Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.007"}}
+{"LocalId":3443,"UtcTime":"2026-09-03T05:53:01.623Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"112"}}
+{"LocalId":3444,"UtcTime":"2026-09-03T05:53:12.84Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3445,"UtcTime":"2026-09-03T05:53:12.937Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3446,"UtcTime":"2026-09-03T05:53:13.766Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3447,"UtcTime":"2026-09-03T05:53:14.27Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3448,"UtcTime":"2026-09-03T05:53:14.492Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"112"}}
+{"LocalId":3449,"UtcTime":"2026-09-03T05:53:52.038Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D03"}}
+{"LocalId":3450,"UtcTime":"2026-09-03T05:53:52.147Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D03","bilboxesCount":"9"}}
+{"LocalId":3451,"UtcTime":"2026-09-03T05:53:52.185Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3452,"UtcTime":"2026-09-03T05:53:52.318Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3453,"UtcTime":"2026-09-03T05:53:55.213Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.026"}}
+{"LocalId":3454,"UtcTime":"2026-09-03T05:53:55.452Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.026"}}
+{"LocalId":3455,"UtcTime":"2026-09-03T05:54:03.718Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.026","productionDataNokId":"115021611"}}
+{"LocalId":3456,"UtcTime":"2026-09-03T05:54:28.478Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"9"}}
+{"LocalId":3457,"UtcTime":"2026-09-03T05:54:29.385Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.026"}}
+{"LocalId":3458,"UtcTime":"2026-09-03T06:00:17.192Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.018"}}
+{"LocalId":3459,"UtcTime":"2026-09-03T06:00:17.463Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.018"}}
+{"LocalId":3460,"UtcTime":"2026-09-03T06:00:18.335Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.018","productionDataNokId":"115022895"}}
+{"LocalId":3461,"UtcTime":"2026-09-03T06:00:24.416Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"4"}}
+{"LocalId":3462,"UtcTime":"2026-09-03T06:00:24.7Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.018"}}
+{"LocalId":3463,"UtcTime":"2026-09-03T06:01:55.631Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D04"}}
+{"LocalId":3464,"UtcTime":"2026-09-03T06:01:55.805Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D04","bilboxesCount":"9"}}
+{"LocalId":3465,"UtcTime":"2026-09-03T06:01:55.837Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3466,"UtcTime":"2026-09-03T06:01:55.972Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3467,"UtcTime":"2026-09-03T06:01:59.265Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.027"}}
+{"LocalId":3468,"UtcTime":"2026-09-03T06:01:59.464Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.027"}}
+{"LocalId":3469,"UtcTime":"2026-09-03T06:02:01.94Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3470,"UtcTime":"2026-09-03T06:02:02.329Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3471,"UtcTime":"2026-09-03T06:02:02.407Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.027"}}
+{"LocalId":3472,"UtcTime":"2026-09-03T06:02:02.462Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"9"}}
+{"LocalId":3473,"UtcTime":"2026-09-03T06:02:11.41Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3474,"UtcTime":"2026-09-03T06:02:11.508Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3475,"UtcTime":"2026-09-03T06:02:12.355Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3476,"UtcTime":"2026-09-03T06:02:12.891Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3477,"UtcTime":"2026-09-03T06:02:13.042Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"9"}}
+{"LocalId":3478,"UtcTime":"2026-09-03T06:04:22.829Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.028"}}
+{"LocalId":3479,"UtcTime":"2026-09-03T06:04:23.14Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.028"}}
+{"LocalId":3480,"UtcTime":"2026-09-03T06:04:25.02Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3481,"UtcTime":"2026-09-03T06:04:25.421Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3482,"UtcTime":"2026-09-03T06:04:25.504Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.028"}}
+{"LocalId":3483,"UtcTime":"2026-09-03T06:04:25.56Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"9"}}
+{"LocalId":3484,"UtcTime":"2026-09-03T06:04:38.754Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3485,"UtcTime":"2026-09-03T06:04:38.859Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3486,"UtcTime":"2026-09-03T06:04:40.65Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3487,"UtcTime":"2026-09-03T06:04:41.25Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3488,"UtcTime":"2026-09-03T06:04:41.653Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"9"}}
+{"LocalId":3489,"UtcTime":"2026-09-03T06:04:50.447Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029"}}
+{"LocalId":3490,"UtcTime":"2026-09-03T06:04:50.925Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029"}}
+{"LocalId":3491,"UtcTime":"2026-09-03T06:04:51.728Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029","productionDataNokId":"115030084"}}
+{"LocalId":3492,"UtcTime":"2026-09-03T06:05:44.3Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3493,"UtcTime":"2026-09-03T06:05:44.549Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.029"}}
+{"LocalId":3494,"UtcTime":"2026-09-03T06:06:16.723Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":3495,"UtcTime":"2026-09-03T06:06:16.952Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":3496,"UtcTime":"2026-09-03T06:06:18.332Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.030"}}
+{"LocalId":3497,"UtcTime":"2026-09-03T06:06:18.543Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.030"}}
+{"LocalId":3498,"UtcTime":"2026-09-03T06:06:19.2Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.030","productionDataNokId":"115021632"}}
+{"LocalId":3499,"UtcTime":"2026-09-03T06:06:30.968Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3500,"UtcTime":"2026-09-03T06:06:31.237Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.030"}}
+{"LocalId":3501,"UtcTime":"2026-09-03T06:06:40.688Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":3502,"UtcTime":"2026-09-03T06:06:41.16Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":3503,"UtcTime":"2026-09-03T06:06:42.645Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031","productionDataNokId":"115021334"}}
+{"LocalId":3504,"UtcTime":"2026-09-03T06:06:50.338Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3505,"UtcTime":"2026-09-03T06:06:50.619Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.031"}}
+{"LocalId":3506,"UtcTime":"2026-09-03T06:08:39.137Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D05"}}
+{"LocalId":3507,"UtcTime":"2026-09-03T06:08:39.27Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D05","bilboxesCount":"9"}}
+{"LocalId":3508,"UtcTime":"2026-09-03T06:08:39.314Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3509,"UtcTime":"2026-09-03T06:08:39.711Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3510,"UtcTime":"2026-09-03T06:08:41.45Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.039"}}
+{"LocalId":3511,"UtcTime":"2026-09-03T06:08:42.612Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.039"}}
+{"LocalId":3512,"UtcTime":"2026-09-03T06:08:43.67Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.039","productionDataNokId":"115022391"}}
+{"LocalId":3513,"UtcTime":"2026-09-03T06:08:52.127Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3514,"UtcTime":"2026-09-03T06:08:52.371Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.039"}}
+{"LocalId":3515,"UtcTime":"2026-09-03T06:11:42.018Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037"}}
+{"LocalId":3516,"UtcTime":"2026-09-03T06:11:42.649Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037"}}
+{"LocalId":3517,"UtcTime":"2026-09-03T06:11:43.728Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037","productionDataNokId":"115033250"}}
+{"LocalId":3518,"UtcTime":"2026-09-03T06:11:48.029Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037","productionDataNokId":"115033250"}}
+{"LocalId":3519,"UtcTime":"2026-09-03T06:11:51.221Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3520,"UtcTime":"2026-09-03T06:11:51.433Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.037"}}
+{"LocalId":3521,"UtcTime":"2026-09-03T06:13:30.828Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D06"}}
+{"LocalId":3522,"UtcTime":"2026-09-03T06:13:30.96Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D06","bilboxesCount":"11"}}
+{"LocalId":3523,"UtcTime":"2026-09-03T06:13:31.006Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3524,"UtcTime":"2026-09-03T06:13:31.779Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3525,"UtcTime":"2026-09-03T06:13:35.726Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.046"}}
+{"LocalId":3526,"UtcTime":"2026-09-03T06:13:36.739Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.046"}}
+{"LocalId":3527,"UtcTime":"2026-09-03T06:13:39.581Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":3528,"UtcTime":"2026-09-03T06:13:40.261Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":3529,"UtcTime":"2026-09-03T06:13:41.687Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045","productionDataNokId":"115029250"}}
+{"LocalId":3530,"UtcTime":"2026-09-03T06:13:58.95Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3531,"UtcTime":"2026-09-03T06:13:59.173Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.045"}}
+{"LocalId":3532,"UtcTime":"2026-09-03T06:14:03.934Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.046"}}
+{"LocalId":3533,"UtcTime":"2026-09-03T06:14:04.149Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.046"}}
+{"LocalId":3534,"UtcTime":"2026-09-03T06:14:09.892Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.046","productionDataNokId":"115023788"}}
+{"LocalId":3535,"UtcTime":"2026-09-03T06:14:20.948Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3536,"UtcTime":"2026-09-03T06:14:21.199Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.046"}}
+{"LocalId":3537,"UtcTime":"2026-09-03T06:14:40.363Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049"}}
+{"LocalId":3538,"UtcTime":"2026-09-03T06:14:41.361Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049"}}
+{"LocalId":3539,"UtcTime":"2026-09-03T06:14:42.241Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049","productionDataNokId":"115025064"}}
+{"LocalId":3540,"UtcTime":"2026-09-03T06:14:49.324Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3541,"UtcTime":"2026-09-03T06:14:49.66Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST2.049"}}
+{"LocalId":3542,"UtcTime":"2026-09-03T06:15:02.048Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D07"}}
+{"LocalId":3543,"UtcTime":"2026-09-03T06:15:02.207Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D07","bilboxesCount":"12"}}
+{"LocalId":3544,"UtcTime":"2026-09-03T06:15:02.255Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3545,"UtcTime":"2026-09-03T06:15:02.536Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3546,"UtcTime":"2026-09-03T06:15:05.883Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.012"}}
+{"LocalId":3547,"UtcTime":"2026-09-03T06:15:06.121Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.012"}}
+{"LocalId":3548,"UtcTime":"2026-09-03T06:15:06.974Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.012","productionDataNokId":"115021275"}}
+{"LocalId":3549,"UtcTime":"2026-09-03T06:15:14.104Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"3"}}
+{"LocalId":3550,"UtcTime":"2026-09-03T06:15:14.347Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.012"}}
+{"LocalId":3551,"UtcTime":"2026-09-03T06:16:49.149Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007"}}
+{"LocalId":3552,"UtcTime":"2026-09-03T06:16:50.304Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007"}}
+{"LocalId":3553,"UtcTime":"2026-09-03T06:16:51.378Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007","productionDataNokId":"115022111"}}
+{"LocalId":3554,"UtcTime":"2026-09-03T06:17:05.854Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"14"}}
+{"LocalId":3555,"UtcTime":"2026-09-03T06:17:06.304Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.007"}}
+{"LocalId":3556,"UtcTime":"2026-09-03T06:17:29.216Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005"}}
+{"LocalId":3557,"UtcTime":"2026-09-03T06:17:29.532Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005"}}
+{"LocalId":3558,"UtcTime":"2026-09-03T06:17:31.856Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005","productionDataNokId":"115036519"}}
+{"LocalId":3559,"UtcTime":"2026-09-03T06:17:59.251Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3560,"UtcTime":"2026-09-03T06:17:59.525Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.005"}}
+{"LocalId":3561,"UtcTime":"2026-09-03T06:20:27.945Z","Level":"Info","Message":"RetestPage row selected","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D08"}}
+{"LocalId":3562,"UtcTime":"2026-09-03T06:20:28.126Z","Level":"Info","Message":"RetestPage bilboxes loaded","Exception":null,"Page":null,"Tags":{"hall":"1","row":"D08","bilboxesCount":"12"}}
+{"LocalId":3563,"UtcTime":"2026-09-03T06:20:28.159Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3564,"UtcTime":"2026-09-03T06:20:28.529Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":""}}
+{"LocalId":3565,"UtcTime":"2026-09-03T06:20:30.075Z","Level":"Info","Message":"RetestPage Bilbox loading started","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":3566,"UtcTime":"2026-09-03T06:20:31.184Z","Level":"Info","Message":"RetestPage Bilbox loading finished","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":3567,"UtcTime":"2026-09-03T06:20:32.69Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"115036895"}}
+{"LocalId":3568,"UtcTime":"2026-09-03T06:20:37.915Z","Level":"Info","Message":"Index row edit opened","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018","productionDataNokId":"115036895"}}
+{"LocalId":3569,"UtcTime":"2026-09-03T06:20:38.843Z","Level":"Info","Message":"Retest save started","Exception":null,"Page":null,"Tags":{"selectedCount":"1"}}
+{"LocalId":3570,"UtcTime":"2026-09-03T06:20:39.097Z","Level":"Info","Message":"Retest save success","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":3571,"UtcTime":"2026-09-03T06:22:11.209Z","Level":"Info","Message":"ManualAdd initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3572,"UtcTime":"2026-09-03T06:22:11.553Z","Level":"Info","Message":"ManualAdd lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3573,"UtcTime":"2026-09-03T06:22:11.639Z","Level":"Info","Message":"ManualAdd restored selected bilbox","Exception":null,"Page":null,"Tags":{"bilbox":"ST1.018"}}
+{"LocalId":3574,"UtcTime":"2026-09-03T06:22:11.705Z","Level":"Info","Message":"ManualAdd initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"12"}}
+{"LocalId":3575,"UtcTime":"2026-09-03T06:22:20.482Z","Level":"Info","Message":"ManualAdd inserting new row","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3576,"UtcTime":"2026-09-03T06:22:20.644Z","Level":"Info","Message":"ManualAdd insert finished","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3577,"UtcTime":"2026-09-03T06:22:21.543Z","Level":"Info","Message":"RetestPage initialization started","Exception":null,"Page":null,"Tags":null}
+{"LocalId":3578,"UtcTime":"2026-09-03T06:22:22.082Z","Level":"Info","Message":"RetestPage lookup data loaded","Exception":null,"Page":null,"Tags":{"hallsCount":"7","komponentCount":"10"}}
+{"LocalId":3579,"UtcTime":"2026-09-03T06:22:22.222Z","Level":"Info","Message":"RetestPage initialization finished","Exception":null,"Page":null,"Tags":{"rowsCount":"14","bilboxesCount":"12"}}

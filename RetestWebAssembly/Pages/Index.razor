@@ -194,7 +194,7 @@
                 <DxMemo CssClass="cw-480"
                         Rows="5"
                         NullText="Popis vady..."
-                                @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, qualityCardBilbox))" />
+                        @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, qualityCardBilbox))" />
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
