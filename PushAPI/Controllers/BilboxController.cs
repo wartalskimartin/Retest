@@ -88,7 +88,7 @@ namespace PushAPI.Controllers
             return Ok(rows);
         }
 
-        [HttpGet("getRows")]
+        [HttpGet("getRowsByHall")]
         public async Task<IActionResult> GetRows(int hallNumber)
         {
             List<string> rows = await _bilboxService.GetRows(hallNumber);
@@ -126,7 +126,7 @@ namespace PushAPI.Controllers
             return result;
         }
 
-        public QualityCardBilbox PopulateModelItem(ProductionData productionData, bool isFromPreviousShift)
+        private QualityCardBilbox PopulateModelItem(ProductionData productionData, bool isFromPreviousShift)
         {
             return new QualityCardBilbox
             {
@@ -186,6 +186,20 @@ namespace PushAPI.Controllers
         {
             DateTime startShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
             var result = await _bilboxService.GetStandsHistory(startShift, stand);
+            return Ok(result);
+        }
+
+        [HttpGet("getOperatorNumbersByOrderOperation")]
+        public async Task<IActionResult> GetOperatorNumbersByOrderOperation(int orderNumber, int operationNumber)
+        {
+            var result = await _bilboxService.GetOperatorNumbersByOrderOperation(orderNumber, operationNumber);
+            return Ok(result);
+        }
+
+        [HttpGet("getOperationPredecessors")]
+        public async Task<IActionResult> GetOperationPredecessors(int orderNumber, int operationNumber)
+        {
+            var result = await _bilboxService.GetOperationPredecessors(orderNumber, operationNumber);
             return Ok(result);
         }
     }

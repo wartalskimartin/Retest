@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SharedLib.DataAccess;
 using SharedLib.DTO;
 using SharedLib.Models;
-using System;
 using System.Data;
 
 namespace PushAPI.Services
@@ -15,6 +14,59 @@ namespace PushAPI.Services
         public BilboxService(cockpitContext dbContext) 
         {
             _dbcontext = dbContext;
+        }
+
+        private async Task<List<string>> ExecuteSingleColumnProcedureAsync(string procedureName, params SqlParameter[] parameters)
+        {
+            await using var connection = _dbcontext.Database.GetDbConnection();
+
+            if (connection.State != ConnectionState.Open)
+                await connection.OpenAsync();
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = procedureName;
+            command.CommandType = CommandType.StoredProcedure;
+
+            foreach (var parameter in parameters)
+                command.Parameters.Add(parameter);
+
+            var result = new List<string>();
+
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                if (!reader.IsDBNull(0))
+                {
+                    var value = reader.GetValue(0)?.ToString();
+                    if (!string.IsNullOrWhiteSpace(value))
+                        result.Add(value);
+                }
+            }
+
+            return result.Distinct().ToList();
+        }
+
+        public async Task<List<string>> GetOperatorNumbersByOrderOperation(int orderNumber, int operationNumber)
+        {
+            return await ExecuteSingleColumnProcedureAsync(
+                "dbo.GetOperatorNumbersByOrderOperation",
+                new SqlParameter("@BWAUNR", SqlDbType.Int) { Value = orderNumber },
+                new SqlParameter("@BWAGNR", SqlDbType.Int) { Value = operationNumber });
+        }
+
+        public async Task<List<int>> GetOperationPredecessors(int orderNumber, int operationNumber)
+        {
+            var rawValues = await ExecuteSingleColumnProcedureAsync(
+                "dbo.GetOperationPredecessors",
+                new SqlParameter("@Order", SqlDbType.Int) { Value = orderNumber },
+                new SqlParameter("@Operation", SqlDbType.Int) { Value = operationNumber });
+
+            return rawValues
+                .Select(x => int.TryParse(x, out var value) ? value : (int?)null)
+                .Where(x => x.HasValue)
+                .Select(x => x!.Value)
+                .Distinct()
+                .ToList();
         }
 
         public async Task<List<RetestKomponentVadyDTO>> GetKomponents()

@@ -7,6 +7,9 @@
 - When auto-filling values down grid rows, do not fill records from previous shifts (IsFromPreviousShift == true).
 - Outage detection must not rely on idle time gaps, considering that tablet users do not work continuously and office Wi-Fi is intentionally unavailable/weak.
 
+## Grid Editing Instructions
+- Use inline edit mode (GridEditMode.EditRow) for the DxGrid. Inline editing should be preserved as the default workflow, not PopupEditForm. The checkbox selection must work while row editors remain open.
+
 ## PWA Update Limitations
 - In Blazor WebAssembly PWA, there is no way to update a VERY OLD version without user intervention (clearing cache). This is due to:
   1. Service Worker caching files using a cache-first strategy.

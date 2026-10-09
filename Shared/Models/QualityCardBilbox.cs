@@ -45,6 +45,10 @@ public partial class QualityCardBilbox
 
     public string Vada { get; set; }
 
+    public int? PreviousOperation { get; set; }
+
+    public string OperatorNumbers { get; set; }
+
     [NotMapped]
     public string? BilboxNumber { get; set; }
 

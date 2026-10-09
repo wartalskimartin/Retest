@@ -118,6 +118,34 @@
                         @bind-Text=@qualityCardBilbox.DefectDescription />
             </CellEditTemplate>
         </DxGridDataColumn>
+        <DxGridDataColumn FieldName="PreviousOperation" Caption="Předch. operace" MinWidth="160" ShowInColumnChooser="false">
+    <CellEditTemplate>
+        @{
+            var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+            var previousOperations = GetPreviousOperations(qualityCardBilbox);
+        }
+        <DxComboBox TData="int?" TValue="int?"
+                    Data="@previousOperations"
+                    NullText="Vyberte operaci..."
+                    DropDownVisible="true"
+                    @bind-Value="@qualityCardBilbox.PreviousOperation" />
+    </CellEditTemplate>
+</DxGridDataColumn>
+
+<DxGridDataColumn FieldName="OperatorNumbers" Caption="Operátoři" MinWidth="180" ShowInColumnChooser="false">
+    <CellEditTemplate>
+        @{
+            var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+            var operatorNumbers = GetOperatorNumbers(qualityCardBilbox);
+        }
+        <DxComboBox TData="string" TValue="string"
+                    Data="@operatorNumbers"
+                    NullText="Všichni operátoři"
+                    ClearButtonDisplayMode="DataEditorClearButtonDisplayMode.Auto"
+                    DropDownVisible="true"
+                    @bind-Value="@qualityCardBilbox.OperatorNumbers" />
+    </CellEditTemplate>
+</DxGridDataColumn>
     </Columns>
 </DxGrid>
 
@@ -130,6 +158,9 @@
     List<string> rows = new List<string>();
 
     List<string> avaibleBilboxes = new List<string>();
+
+    Dictionary<(int? OrderNumber, int? OperationNumber), List<int?>> previousOperationsLookup = new();
+    Dictionary<(int? OrderNumber, int? OperationNumber), List<string>> operatorNumbersLookup = new();
 
     private async Task OnHallSelectInputChanged(string selectedHall)
     {
@@ -206,6 +237,14 @@
 
             DataSource = await BilboxService.GetQualityCardBilboxData(selectedBilbox);
             LastProductionData = await BilboxService.GetLastProductionData(selectedBilbox);
+
+            previousOperationsLookup.Clear();
+            operatorNumbersLookup.Clear();
+
+            await WarmUpLookupCachesAsync(DataSource);
+
+            if (LastProductionData is not null)
+                await EnsureLookupDataAsync(LastProductionData);
         }
         catch (Exception ex)
         {
@@ -323,8 +362,13 @@
         {
             if (e.IsNew)
             {
+                var editModel = (QualityCardBilbox)e.EditModel;
+
+                await EnsureLookupDataAsync(editModel);
+                ApplyDefaultOperatorNumbers(editModel);
+
                 await AppLog.InfoAsync("ManualAdd inserting new row");
-                await BilboxService.InsertQualityCardBilbox((QualityCardBilbox)e.EditModel);
+                await BilboxService.InsertQualityCardBilbox(editModel);
                 await AppLog.InfoAsync("ManualAdd insert finished");
             }
 
@@ -356,6 +400,14 @@
     async Task UpdateDataAsync()
     {
         DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
+
+        previousOperationsLookup.Clear();
+        operatorNumbersLookup.Clear();
+
+        await WarmUpLookupCachesAsync(DataSource);
+
+        if (LastProductionData is not null)
+            await EnsureLookupDataAsync(LastProductionData);
     }
 
     private List<RetestVadaDTO> GetVadyForKomponent(string? komponentName)
@@ -419,6 +471,61 @@
         {
             await AppLog.ErrorAsync("ManualAdd delete button failed", ex);
         }
+    }
+
+    private static (int? OrderNumber, int? OperationNumber) GetLookupKey(QualityCardBilbox row)
+        => (row.OrderNumber, row.OperationNumber);
+
+    private async Task EnsureLookupDataAsync(QualityCardBilbox row)
+    {
+        if (!row.OrderNumber.HasValue || !row.OperationNumber.HasValue)
+            return;
+
+        var key = GetLookupKey(row);
+
+        if (!previousOperationsLookup.ContainsKey(key))
+        {
+            previousOperationsLookup[key] = await BilboxService.GetOperationPredecessors(
+                row.OrderNumber.Value,
+                row.OperationNumber.Value);
+        }
+
+        if (!operatorNumbersLookup.ContainsKey(key))
+        {
+            operatorNumbersLookup[key] = await BilboxService.GetOperatorNumbersByOrderOperation(
+                row.OrderNumber.Value,
+                row.OperationNumber.Value);
+        }
+    }
+
+    private async Task WarmUpLookupCachesAsync(IEnumerable<QualityCardBilbox> rows)
+    {
+        foreach (var row in rows)
+            await EnsureLookupDataAsync(row);
+    }
+
+    private List<int?> GetPreviousOperations(QualityCardBilbox row)
+    {
+        return previousOperationsLookup.TryGetValue(GetLookupKey(row), out var values)
+            ? values
+            : new List<int?>();
+    }
+
+    private List<string> GetOperatorNumbers(QualityCardBilbox row)
+    {
+        return operatorNumbersLookup.TryGetValue(GetLookupKey(row), out var values)
+            ? values
+            : new List<string>();
+    }
+
+    private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
+    {
+        if (!string.IsNullOrWhiteSpace(row.OperatorNumbers))
+            return;
+
+        var operators = GetOperatorNumbers(row);
+        if (operators.Count > 0)
+            row.OperatorNumbers = string.Join(",", operators);
     }
 }
 

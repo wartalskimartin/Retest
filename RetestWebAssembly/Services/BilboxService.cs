@@ -10,7 +10,7 @@ namespace RetestWebAssembly.Services
     {
         private readonly HttpClient HttpClient;
         //private readonly string ApiAddress = "http://localhost:5047/";
-        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8965/";//93 65
+        private readonly string ApiAddress = "https://czvrsrvweb01.intranet.zkw.at:8993/";//93 65
         //private readonly string ApiAddressNoSsl = "http://10.13.0.19:8964/";
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private readonly TimeSpan _requestTimeout = TimeSpan.FromSeconds(15);
@@ -155,7 +155,7 @@ namespace RetestWebAssembly.Services
 
         public async Task<List<string>> GetRows(string hall)
         {
-            return await GetStringListAsync($"{ApiAddress}api/bilbox/getRows?hallNumber={hall}", nameof(GetRows));
+            return await GetStringListAsync($"{ApiAddress}api/bilbox/getRowsByHall?hallNumber={hall}", nameof(GetRows));
         }
 
         public async Task<List<string>> GetAvaibleBilboxes(string hall, string row)
@@ -304,6 +304,28 @@ namespace RetestWebAssembly.Services
                 return await response.Content.ReadFromJsonAsync<List<RetestKomponentVadyDTO>>(_jsonSerializerOptions, token)
                     ?? new List<RetestKomponentVadyDTO>();
             }, new List<RetestKomponentVadyDTO>(), nameof(GetKomponentVady));
+        }
+
+        public async Task<List<string>> GetOperatorNumbersByOrderOperation(int orderNumber, int operationNumber)
+        {
+            return await GetStringListAsync(
+                $"{ApiAddress}api/Bilbox/getOperatorNumbersByOrderOperation?orderNumber={orderNumber}&operationNumber={operationNumber}",
+                nameof(GetOperatorNumbersByOrderOperation));
+        }
+
+        public async Task<List<int?>> GetOperationPredecessors(int orderNumber, int operationNumber)
+        {
+            return await ExecuteGetWithTimeoutRetryAsync(async token =>
+            {
+                var response = await HttpClient.GetAsync(
+                    $"{ApiAddress}api/Bilbox/getOperationPredecessors?orderNumber={orderNumber}&operationNumber={operationNumber}",
+                    token);
+
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadFromJsonAsync<List<int?>>(_jsonSerializerOptions, token)
+                       ?? new List<int?>();
+            }, new List<int?>(), nameof(GetOperationPredecessors));
         }
     }
 }

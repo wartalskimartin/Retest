@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("CockpitDatabase");
+var connectionString = builder.Configuration.GetConnectionString("CockpitDatabaseTest");
 builder.Services.AddDbContextFactory<cockpitContext>(
                 options =>
                     options.UseSqlServer(

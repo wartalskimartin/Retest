@@ -209,6 +209,10 @@ public partial class cockpitContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("vada");
+            entity.Property(e => e.OperatorNumbers)
+                .IsUnicode(false)
+                .HasColumnName("operatorNumbers");
+            entity.Property(e => e.PreviousOperation).HasColumnName("previousOperation");
         });
 
         modelBuilder.Entity<QualityDefectDescriptionBilbox>(entity =>

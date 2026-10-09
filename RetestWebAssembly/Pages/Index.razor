@@ -121,21 +121,25 @@
     </ToolbarTemplate>
     <Columns>
         <DxGridSelectionColumn Width="100px" ShowInColumnChooser="false">
-            <HeaderTemplate>
-                <DxCheckBox @bind-Checked="@AllSelected"></DxCheckBox>
-            </HeaderTemplate>
-            <CellDisplayTemplate>
-                @{
-                    var qualityCardBilbox = context.DataItem as QualityCardBilbox;
-                    if(qualityCardBilbox is null)
-                    {
-                        qualityCardBilbox = new QualityCardBilbox(){ IsFromPreviousShift = true };
-                    }
-                }
-                <DxCheckBox Enabled=@(!(qualityCardBilbox.IsFromPreviousShift || qualityCardBilbox.IsInserted)) ReadOnly=@(qualityCardBilbox.IsFromPreviousShift || qualityCardBilbox.IsInserted) CheckedExpression="@(() => context.Selected)"
-                        Checked="@(SelectedNok == null ? false : SelectedNok.Contains(context.DataItem))" CheckedChanged="@((bool value) => OnCheckedChanged(value, qualityCardBilbox))" />
-            </CellDisplayTemplate>
-        </DxGridSelectionColumn>
+    <HeaderTemplate>
+        <DxCheckBox @bind-Checked="@AllSelected"></DxCheckBox>
+    </HeaderTemplate>
+    <CellDisplayTemplate>
+        @{
+            var qualityCardBilbox = context.DataItem as QualityCardBilbox;
+            if(qualityCardBilbox is null)
+            {
+                qualityCardBilbox = new QualityCardBilbox(){ IsFromPreviousShift = true };
+            }
+        }
+        <DxCheckBox Enabled=@(!(qualityCardBilbox.IsFromPreviousShift || qualityCardBilbox.IsInserted)) 
+                    ReadOnly=@(qualityCardBilbox.IsFromPreviousShift || qualityCardBilbox.IsInserted) 
+                    CheckedExpression="@(() => context.Selected)"
+                    Checked="@(SelectedNok == null ? false : SelectedNok.Contains(context.DataItem))" 
+                    CheckedChanged="@((bool value) => OnCheckedChanged(value, qualityCardBilbox))"
+                    @onclick:stopPropagation="true" />
+    </CellDisplayTemplate>
+</DxGridSelectionColumn>
         <DxGridDataColumn FieldName="ProductNumber" Caption="Svazek" DataRowEditorVisible=false Width="130" />
         <DxGridDataColumn FieldName="OperationNumber" Caption="Operace" DataRowEditorVisible=false Width="90" />
         <DxGridDataColumn FieldName="OrderNumber" Caption="Zakazka" DataRowEditorVisible=false DisplayFormat="######" Width="100" />
@@ -198,7 +202,52 @@
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
-        
+
+<DxGridDataColumn FieldName="PreviousOperation" Caption="Předch. operace" MinWidth="160" ShowInColumnChooser="false">
+    <CellDisplayTemplate>
+        @{
+            var qcb = (QualityCardBilbox)context.DataItem;
+            var displayText = qcb.PreviousOperation == -10 ? "Neznámá" : qcb.PreviousOperation?.ToString() ?? "";
+        }
+        @displayText
+    </CellDisplayTemplate>
+    
+    <CellEditTemplate>
+        @{
+            var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+            var previousOperationsDisplay = GetPreviousOperationsDisplay(qualityCardBilbox);
+        }
+        @if (!qualityCardBilbox.IsFromPreviousShift)
+        {
+            <DxComboBox TData="OperationItem" TValue="int?"
+                        Data="@previousOperationsDisplay"
+                        TextFieldName="@nameof(OperationItem.Name)"
+                        ValueFieldName="@nameof(OperationItem.Id)"
+                        NullText="Vyberte operaci..."
+                        DropDownVisible="true"
+                        @bind-Value="@qualityCardBilbox.PreviousOperation">
+            </DxComboBox>
+        }
+    </CellEditTemplate>
+</DxGridDataColumn>
+
+<DxGridDataColumn FieldName="OperatorNumbers" Caption="Operátoři" MinWidth="180" ShowInColumnChooser="false">
+    <CellEditTemplate>
+        @{
+            var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+            var operatorNumbers = GetOperatorNumbers(qualityCardBilbox);
+        }
+        @if (!qualityCardBilbox.IsFromPreviousShift)
+        {
+            <DxComboBox TData="string" TValue="string"
+                        Data="@operatorNumbers"
+                        NullText="Všichni operátoři"
+                        ClearButtonDisplayMode="DataEditorClearButtonDisplayMode.Auto"
+                        DropDownVisible="true"
+                        @bind-Value="@qualityCardBilbox.OperatorNumbers" />
+        }
+    </CellEditTemplate>
+</DxGridDataColumn>
 
     </Columns>
 </DxGrid>
@@ -626,6 +675,7 @@
         foreach (var nk in nokList)
         {
             nk.DateTimeRecord = DateTime.Now;
+            ApplyDefaultOperatorNumbers(nk);
 
             if (nk.IsFromPreviousShift)
             {
@@ -703,6 +753,12 @@
     {
         var data = await BilboxService.GetNokList(FilterService.SelectedBilbox);
         nokList = new List<QualityCardBilbox>(data ?? new List<QualityCardBilbox>());
+
+        previousOperationsLookup.Clear();
+        operatorNumbersLookup.Clear();
+        operationItemsCache.Clear();  // ← Přidejte toto
+
+        await WarmUpLookupCachesAsync(nokList);
     }
 
     record DataChange(DataChangeType Type, HashSet<string> ChangedFields);
@@ -725,6 +781,88 @@
             .Vady ?? new List<RetestVadaDTO>();
     }
 
+    Dictionary<(int? OrderNumber, int? OperationNumber), List<int?>> previousOperationsLookup = new();
+Dictionary<(int? OrderNumber, int? OperationNumber), List<string>> operatorNumbersLookup = new();
+private Dictionary<(int?, int?), List<OperationItem>> operationItemsCache = new();
+
+private static (int? OrderNumber, int? OperationNumber) GetLookupKey(QualityCardBilbox row)
+    => (row.OrderNumber, row.OperationNumber);
+
+private async Task EnsureLookupDataAsync(QualityCardBilbox row)
+{
+    if (!row.OrderNumber.HasValue || !row.OperationNumber.HasValue)
+        return;
+
+    var key = GetLookupKey(row);
+
+    if (!previousOperationsLookup.ContainsKey(key))
+    {
+        previousOperationsLookup[key] = await BilboxService.GetOperationPredecessors(
+            row.OrderNumber.Value,
+            row.OperationNumber.Value);
+    }
+
+    if (!operatorNumbersLookup.ContainsKey(key))
+    {
+        operatorNumbersLookup[key] = await BilboxService.GetOperatorNumbersByOrderOperation(
+            row.OrderNumber.Value,
+            row.OperationNumber.Value);
+    }
+}
+
+private async Task WarmUpLookupCachesAsync(IEnumerable<QualityCardBilbox> rows)
+{
+    foreach (var row in rows)
+        await EnsureLookupDataAsync(row);
+}
+
+private List<OperationItem> GetPreviousOperationsDisplay(QualityCardBilbox row)
+{
+    var key = GetLookupKey(row);
+    
+    // Pokud už máme cache, vrať ji
+    if (operationItemsCache.ContainsKey(key))
+    {
+        return operationItemsCache[key];
+    }
+    
+    var values = previousOperationsLookup.TryGetValue(key, out var result)
+        ? result
+        : new List<int?>();
+    
+    // Odstraň -10, pokud už existuje
+    values = values.Where(v => v != -10).ToList();
+    
+    // Vytvořit seznam s "Neznámá" na začátku
+    var items = new List<OperationItem> 
+    { 
+        new OperationItem { Id = -10, Name = "Neznámá" } 
+    }
+    .Concat(values.Select(v => new OperationItem { Id = v, Name = v?.ToString() ?? "" }))
+    .ToList();
+    
+    // Cachovat
+    operationItemsCache[key] = items;
+    
+    return items;
+}
+
+private List<string> GetOperatorNumbers(QualityCardBilbox row)
+{
+    return operatorNumbersLookup.TryGetValue(GetLookupKey(row), out var values)
+        ? values
+        : new List<string>();
+}
+
+private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
+{
+    if (!string.IsNullOrWhiteSpace(row.OperatorNumbers))
+        return;
+
+    var operators = GetOperatorNumbers(row);
+    if (operators.Count > 0)
+        row.OperatorNumbers = string.Join(",", operators);
+}
     void SelectedKomponentItemChanged(RetestKomponentVadyDTO? komponent, QualityCardBilbox qualityCardBilbox)
     {
         qualityCardBilbox.Komponent = komponent?.KomponentName ?? string.Empty;
@@ -754,15 +892,36 @@
 
     async Task Grid_RowClick(GridRowClickEventArgs e)
     {
+        // Determine if the click is from the selection checkbox column
+        // If e.Column is the DxGridSelectionColumn (or we detect the selection cell), skip edit logic
+        var clickedColumn = e.Column;
+        if (clickedColumn != null && clickedColumn.GetType().Name == "DxGridSelectionColumn")
+        {
+            // Checkbox click detected: just let the checkbox handle it, don't modify edit state
+            return;
+        }
+
+        // Only start or switch row edit if clicking outside the selection column
         var item = (QualityCardBilbox?)e.Grid.GetDataItem(e.VisibleIndex);
         if (item is null || item.IsFromPreviousShift)
             return;
+
+        // Ensure lookup data is loaded for this row
+        await EnsureLookupDataAsync(item);
 
         await AppLog.InfoAsync("Index row edit opened", new()
         {
             ["bilbox"] = FilterService.SelectedBilbox ?? string.Empty,
             ["productionDataNokId"] = item.ProductionDataNokId?.ToString() ?? string.Empty
         });
+
+        // If this row is not already being edited, start editing it
+        // If another row was already being edited, SaveChangesAsync will commit that row first
+        if (Grid.IsEditing() && !e.Grid.IsEditingRow(e.VisibleIndex))
+        {
+            // A different row is currently being edited; save it first
+            await Grid.SaveChangesAsync();
+        }
 
         if (!e.Grid.IsEditingRow(e.VisibleIndex))
             await e.Grid.StartEditRowAsync(e.VisibleIndex);
