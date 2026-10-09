@@ -225,7 +225,8 @@
                         ValueFieldName="@nameof(OperationItem.Id)"
                         NullText="Vyberte operaci..."
                         DropDownVisible="true"
-                        @bind-Value="@qualityCardBilbox.PreviousOperation">
+                        Value="@qualityCardBilbox.PreviousOperation"
+                        ValueChanged="@((int? value) => OnPreviousOperationChanged(value, qualityCardBilbox))">
             </DxComboBox>
         }
     </CellEditTemplate>
@@ -235,7 +236,7 @@
     <CellEditTemplate>
         @{
             var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
-            var operatorNumbers = GetOperatorNumbers(qualityCardBilbox);
+            var operatorNumbers = GetOperatorNumbersForPreviousOperation(qualityCardBilbox);
         }
         @if (!qualityCardBilbox.IsFromPreviousShift)
         {
@@ -964,5 +965,68 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
         }
 
         StateHasChanged();
+    }
+
+    // Zavolej se když se změní PreviousOperation
+    private async Task OnPreviousOperationChanged(int? previousOperationId, QualityCardBilbox qualityCardBilbox)
+    {
+        // Aktualizuj hodnotu
+        qualityCardBilbox.PreviousOperation = previousOperationId;
+
+        // Pokud je vybrana nějaká operace (a není -10 "Neznámá")
+        if (previousOperationId.HasValue && previousOperationId != -10)
+        {
+            // Načíst operátory pro vybranou předchozí operaci
+            await EnsureLookupDataForPreviousOperationAsync(
+                qualityCardBilbox.OrderNumber.Value,
+                previousOperationId.Value);
+        }
+
+        // Vynutit re-render ComboBoxu s operátory
+        await InvokeAsync(StateHasChanged);
+    }
+
+    // Nový helper: Načíst operátory pro konkrétní operaci
+    private async Task EnsureLookupDataForPreviousOperationAsync(int orderNumber, int operationNumber)
+    {
+        var key = (orderNumber, operationNumber);
+
+        // Pokud už máme data v cache, nemusíme volat API
+        if (operatorNumbersLookup.ContainsKey(key))
+            return;
+
+        try
+        {
+            // Zavolej API pro operátory
+            operatorNumbersLookup[key] = await BilboxService.GetOperatorNumbersByOrderOperation(
+                orderNumber,
+                operationNumber);
+        }
+        catch (Exception ex)
+        {
+            await AppLog.ErrorAsync("Loadling operators for previous operation failed", ex, new()
+            {
+                ["orderNumber"] = orderNumber.ToString(),
+                ["operationNumber"] = operationNumber.ToString()
+            });
+        }
+    }
+
+    // Vrátí operátory pro vybranou předchozí operaci
+    private List<string> GetOperatorNumbersForPreviousOperation(QualityCardBilbox row)
+    {
+        // Pokud je vybrana předchozí operace (a není -10 "Neznámá")
+        if (row.PreviousOperation.HasValue && row.PreviousOperation != -10)
+        {
+            var key = (row.OrderNumber, row.PreviousOperation);
+            if (operatorNumbersLookup.TryGetValue(key, out var values))
+                return values;
+
+            // Pokud nejsou v cache, vrátit prázdný seznam
+            return new List<string>();
+        }
+
+        // Pokud je "Neznámá" (-10) nebo nic není vybráno, vrátit prázdný seznam
+        return new List<string>();
     }
 }
