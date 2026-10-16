@@ -4,7 +4,7 @@
 - User's project uses DevExpress.Blazor version 23.2.3 and solutions should be compatible with this older version.
 
 ## Data Handling Instructions
-- When auto-filling values down grid rows, do not fill records from previous shifts (IsFromPreviousShift == true).
+- When auto-filling values down grid rows, do not fill records from previous shifts (IsFromPreviousShift == true). Rows with IsFromPreviousShift == true on the Retest page must be highlighted, must not be selectable or editable, and should automatically get prev_shift marker values during save.
 - Outage detection must not rely on idle time gaps, considering that tablet users do not work continuously and office Wi-Fi is intentionally unavailable/weak.
 
 ## Grid Editing Instructions

@@ -109,12 +109,18 @@ namespace PushAPI.Controllers
             List<QualityCardBilbox> result = new();
             DateTime startOfActualShift = ProductionDataShiftRecognizer.GetActualShiftStartHour();
 
+            bool hasCurrentShiftNok = productionDatas.Any(x => x.ProductionDateTime >= startOfActualShift);
+
             foreach (var productionData in productionDatas)
             {
                 bool isFromPreviousShift = startOfActualShift > productionData.ProductionDateTime;
 
-                // If the OperatorNumber from the previous shift matches the current shift, set the flag to false
-                if (isFromPreviousShift && productionData.OperatorNumber == currentShiftOperatorNumber)
+                // Pokud jsou v seznamu i kusy z aktuální směny,
+                // pak kus z předchozí směny stejné pracovnice neoznačujeme jako previous shift.
+                if (isFromPreviousShift &&
+                    hasCurrentShiftNok &&
+                    currentShiftOperatorNumber.HasValue &&
+                    productionData.OperatorNumber == currentShiftOperatorNumber.Value)
                 {
                     isFromPreviousShift = false;
                 }

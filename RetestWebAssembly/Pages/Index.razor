@@ -203,7 +203,7 @@
             </CellEditTemplate>
         </DxGridDataColumn>
 
-<DxGridDataColumn FieldName="PreviousOperation" Caption="Předch. operace" MinWidth="160" ShowInColumnChooser="false">
+<DxGridDataColumn FieldName="PreviousOperation" Caption="Vznik vady operace" MinWidth="160" ShowInColumnChooser="false">
     <CellDisplayTemplate>
         @{
             var qcb = (QualityCardBilbox)context.DataItem;
@@ -656,14 +656,14 @@
         // 2) validace: vybrané řádky (mimo previous shift) musí mít Komponent + Vada
         var invalidSelected = selectedRows
             .Where(x => !x.IsFromPreviousShift &&
-                        (string.IsNullOrWhiteSpace(x.Komponent) || string.IsNullOrWhiteSpace(x.Vada)))
+                        (string.IsNullOrWhiteSpace(x.Komponent) || string.IsNullOrWhiteSpace(x.Vada) || !x.PreviousOperation.HasValue))
             .ToList();
 
         if (invalidSelected.Any())
         {
             await AppLog.InfoAsync("Retest validation failed", new() { ["invalidCount"] = invalidSelected.Count.ToString() });
 
-            ErrorPopupText = "Vyplňte u všech vybraných kusů Komponent a Vadu.";
+            ErrorPopupText = "Vyplňte u všech vybraných kusů Komponent, Vadu a Vznik vady operace.";
             ErrorPopupVisible = true;
             StateHasChanged();
             return;

@@ -118,7 +118,7 @@ tr{
     height: 60px;
 }
 
-.dxbl-listbox-item {
+.dxbl-scroll-viewer-content > ul > li {
     min-height: 50px;
     display: flex;
     align-items: center;
