@@ -1,4 +1,5 @@
 ﻿@inject NavigationManager NavigationManager
+
 <style>
     .highlight dxbl-menu-item {
         background-color: #5f368d;
@@ -6,43 +7,35 @@
         border-radius: 3px;
     }
 </style>
+
 <nav class="navbar header-navbar p-0">
     <DxMenu Title=""
             CollapseItemsToHamburgerMenu="false"
             CollapseItemToIconMode="MenuCollapseItemToIconMode.None"
-            DisplayMode="MenuDisplayMode.Desktop">
+            DisplayMode="MenuDisplayMode.Desktop"
+            ItemClick="OnMenuItemClick">
         <Items>
-            <DxMenuItem Text="Retesty" IconCssClass="menu-icon-home menu-icon" CssClass="@GetClass("index")" NavigateUrl="index" />
-            <DxMenuItem Text="Zápis" IconCssClass="menu-icon-contacts menu-icon" CssClass="@GetClass("manualAdd")" NavigateUrl="manualAdd" />
+            <DxMenuItem Name="index" Text="Retesty" IconCssClass="menu-icon-home menu-icon" CssClass="@GetClass("index")" />
+            <DxMenuItem Name="manualAdd" Text="Zápis" IconCssClass="menu-icon-contacts menu-icon" CssClass="@GetClass("manualAdd")" />
         </Items>
     </DxMenu>
 </nav>
 
 @code {
     [Parameter] public bool ToggleOn { get; set; }
-    [Parameter] public EventCallback<bool> ToggleOnChanged { get; set; } 
-    private string currentItem { get; set; }
+    [Parameter] public EventCallback<bool> ToggleOnChanged { get; set; }
 
-    public string GetClass(string url)
-    {
-        string className = String.Empty;
-        string Uri = NavigationManager.Uri;
-        if (Uri.Contains(url))
-            className = "highlight";
-        return className;
-    }
-    public void ItemClick(MenuItemClickEventArgs e)
-    {
-        currentItem = e.ItemInfo.NavigateUrl;
+    public string GetClass(string url) {
+        var uri = NavigationManager.Uri;
+        return uri.Contains(url, StringComparison.OrdinalIgnoreCase) ? "highlight" : string.Empty;
     }
 
-    async Task OnToggleClick() => await Toggle();
+    void OnMenuItemClick(MenuItemClickEventArgs e) {
+        var target = e.ItemInfo?.Name;
+        if (string.IsNullOrWhiteSpace(target))
+            return;
 
-    async Task Toggle(bool? value = null) {
-        var newValue = value ?? !ToggleOn;
-        if(ToggleOn != newValue) {
-            ToggleOn = newValue;
-            await ToggleOnChanged.InvokeAsync(ToggleOn);
-        }
+        // keep navigation inside current Blazor base path
+        NavigationManager.NavigateTo(target, forceLoad: false);
     }
 }

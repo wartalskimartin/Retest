@@ -152,6 +152,7 @@
 @code {
 
     const string SelectedAllBoxes = "VŠE";
+    bool RestoringFilters { get; set; } = true;
 
     List<string> halls = new List<string>();
 
@@ -168,8 +169,11 @@
         {
             await AppLog.InfoAsync("ManualAdd hall selected", new() { ["hall"] = selectedHall });
 
-            FilterService.SelectedRow = String.Empty;
-            FilterService.SelectedBilbox = String.Empty;
+            if (!RestoringFilters)
+            {
+                FilterService.SelectedRow = String.Empty;
+                FilterService.SelectedBilbox = String.Empty;
+            }
             if (selectedHall == SelectedAllBoxes)
             {
                 rows = await BilboxService.GetRows();
@@ -198,7 +202,10 @@
         {
             await AppLog.InfoAsync("ManualAdd row selected", new() { ["row"] = selectedRow });
 
-            FilterService.SelectedBilbox = String.Empty;
+            if (!RestoringFilters)
+            {
+                FilterService.SelectedBilbox = String.Empty;
+            }
             if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
             {
                 avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
@@ -277,7 +284,7 @@
                 ["komponentCount"] = komponentVady.Count.ToString()
             });
 
-            if (FilterService.SelectedBilbox != null)
+            if (!string.IsNullOrWhiteSpace(FilterService.SelectedBilbox))
             {
                 DataSource = await BilboxService.GetQualityCardBilboxData(FilterService.SelectedBilbox);
                 LastProductionData = await BilboxService.GetLastProductionData(FilterService.SelectedBilbox);
@@ -331,6 +338,10 @@
         catch (Exception ex)
         {
             await AppLog.ErrorAsync("ManualAdd initialization failed", ex);
+        }
+        finally
+        {
+            RestoringFilters = false;
         }
     }
 

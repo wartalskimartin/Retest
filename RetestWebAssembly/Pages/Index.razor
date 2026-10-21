@@ -188,21 +188,6 @@
             </CellEditTemplate>
         </DxGridDataColumn>
 
-
-        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200"  ShowInColumnChooser=false >
-            <CellEditTemplate>
-                @{
-                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
-                }
-                @if (!qualityCardBilbox.IsFromPreviousShift){
-                <DxMemo CssClass="cw-480"
-                        Rows="5"
-                        NullText="Popis vady..."
-                        @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, qualityCardBilbox))" />
-                }
-            </CellEditTemplate>
-        </DxGridDataColumn>
-
 <DxGridDataColumn FieldName="PreviousOperation" Caption="Vznik vady operace" MinWidth="160" ShowInColumnChooser="false">
     <CellDisplayTemplate>
         @{
@@ -250,6 +235,20 @@
     </CellEditTemplate>
 </DxGridDataColumn>
 
+        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200"  ShowInColumnChooser=false >
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                @if (!qualityCardBilbox.IsFromPreviousShift){
+                <DxMemo CssClass="cw-480"
+                        Rows="5"
+                        NullText="Popis vady..."
+                        @bind-Text=@qualityCardBilbox.DefectDescription oninput="@((ChangeEventArgs e) => HandleMemoInputChange(e, qualityCardBilbox))" />
+                }
+            </CellEditTemplate>
+        </DxGridDataColumn>
+
     </Columns>
 </DxGrid>
 </div>
@@ -260,6 +259,7 @@
     const string SelectedAllBoxes = "VŠE";
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
+    bool RestoringFilters { get; set; } = true;
 
     bool ErrorPopupVisible { get; set; } = false;
     string ErrorPopupText { get; set; } = String.Empty;
@@ -270,8 +270,11 @@
 
         try
         {
-            FilterService.SelectedRow = String.Empty;
-            FilterService.SelectedBilbox = String.Empty;
+            if (!RestoringFilters)
+            {
+                FilterService.SelectedRow = String.Empty;
+                FilterService.SelectedBilbox = String.Empty;
+            }
 
             if (selectedHall == SelectedAllBoxes)
             {
@@ -305,7 +308,10 @@
 
         try
         {
-            FilterService.SelectedBilbox = String.Empty;
+            if (!RestoringFilters)
+            {
+                FilterService.SelectedBilbox = String.Empty;
+            }
             if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
             {
                 avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
@@ -430,7 +436,7 @@
 
             await base.OnInitializedAsync();
 
-            if (FilterService.SelectedBilbox != null)
+            if (!string.IsNullOrWhiteSpace(FilterService.SelectedBilbox))
             {
                 bilboxInformation = await BilboxService.GetBilboxDetail(FilterService.SelectedBilbox);
                 await ClearUnsavedChangesAsync();
@@ -479,6 +485,10 @@
         catch (Exception ex)
         {
             await AppLog.ErrorAsync("ManualAdd initialization failed", ex);
+        }
+        finally
+        {
+            RestoringFilters = false;
         }
     }
 
