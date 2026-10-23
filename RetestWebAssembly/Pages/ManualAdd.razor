@@ -107,17 +107,6 @@
             </CellEditTemplate>
         </DxGridDataColumn>
 
-        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200" ShowInColumnChooser=false>
-            <CellEditTemplate>
-                @{
-                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
-                }
-                <DxMemo CssClass="cw-480"
-                        Rows="5"
-                        NullText="Popis vady..."
-                        @bind-Text=@qualityCardBilbox.DefectDescription />
-            </CellEditTemplate>
-        </DxGridDataColumn>
         <DxGridDataColumn FieldName="PreviousOperation" Caption="Předch. operace" MinWidth="160" ShowInColumnChooser="false">
     <CellEditTemplate>
         @{
@@ -146,6 +135,18 @@
                     @bind-Value="@qualityCardBilbox.OperatorNumbers" />
     </CellEditTemplate>
 </DxGridDataColumn>
+
+        <DxGridDataColumn FieldName="DefectDescription" Caption="Podrobný popis vady" MinWidth="200" ShowInColumnChooser=false>
+            <CellEditTemplate>
+                @{
+                    var qualityCardBilbox = (QualityCardBilbox)context.EditModel;
+                }
+                <DxMemo CssClass="cw-480"
+                        Rows="5"
+                        NullText="Popis vady..."
+                        @bind-Text=@qualityCardBilbox.DefectDescription />
+            </CellEditTemplate>
+        </DxGridDataColumn>
     </Columns>
 </DxGrid>
 
@@ -507,6 +508,17 @@
                 row.OrderNumber.Value,
                 row.OperationNumber.Value);
         }
+
+        if (row.PreviousOperation.HasValue)
+        {
+            var previousKey = (row.OrderNumber, row.PreviousOperation);
+            if (!operatorNumbersLookup.ContainsKey(previousKey))
+            {
+                operatorNumbersLookup[previousKey] = await BilboxService.GetOperatorNumbersByOrderOperation(
+                    row.OrderNumber.Value,
+                    row.PreviousOperation.Value);
+            }
+        }
     }
 
     private async Task WarmUpLookupCachesAsync(IEnumerable<QualityCardBilbox> rows)
@@ -524,7 +536,20 @@
 
     private List<string> GetOperatorNumbers(QualityCardBilbox row)
     {
-        return operatorNumbersLookup.TryGetValue(GetLookupKey(row), out var values)
+        return GetOperatorNumbersForDefault(row);
+    }
+
+    private List<string> GetOperatorNumbersForDefault(QualityCardBilbox row)
+    {
+        if (!row.OrderNumber.HasValue)
+            return new List<string>();
+
+        var operationForOperators = row.PreviousOperation ?? row.OperationNumber;
+        if (!operationForOperators.HasValue)
+            return new List<string>();
+
+        var key = (row.OrderNumber, operationForOperators);
+        return operatorNumbersLookup.TryGetValue(key, out var values)
             ? values
             : new List<string>();
     }
@@ -534,7 +559,7 @@
         if (!string.IsNullOrWhiteSpace(row.OperatorNumbers))
             return;
 
-        var operators = GetOperatorNumbers(row);
+        var operators = GetOperatorNumbersForDefault(row);
         if (operators.Count > 0)
             row.OperatorNumbers = string.Join(",", operators);
     }

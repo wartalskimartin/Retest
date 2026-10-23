@@ -156,14 +156,15 @@
                 }
                 @if (!qualityCardBilbox.IsFromPreviousShift)
                 {
-                    <DxComboBox Data="@komponentVady"
-                                NullText="Vyberte komponent..."
-                                DropDownVisible="true"
-                                TextFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
-                                ValueFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
-                                SelectedItemChanged="@((RetestKomponentVadyDTO? komponent) => SelectedKomponentItemChanged(komponent, qualityCardBilbox))"
-                                @bind-Value="@qualityCardBilbox.Komponent">
-                    </DxComboBox>
+                            <DxComboBox TData="RetestKomponentVadyDTO" TValue="string"
+                                        Data="@komponentVady"
+                                        NullText="Vyberte komponent..."
+                                        DropDownVisible="true"
+                                        TextFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
+                                        ValueFieldName="@nameof(RetestKomponentVadyDTO.KomponentName)"
+                                        Value="@qualityCardBilbox.Komponent"
+                                        ValueChanged="@((string value) => OnKomponentValueChanged(value, qualityCardBilbox))">
+                            </DxComboBox>
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
@@ -176,14 +177,15 @@
                 }
                 @if (!qualityCardBilbox.IsFromPreviousShift)
                 {
-                    <DxComboBox Data="@vadyProKomponent"
-                                NullText="Vyberte vadu..."
-                                DropDownVisible="true"
-                                TextFieldName="@nameof(RetestVadaDTO.VadaName)"
-                                ValueFieldName="@nameof(RetestVadaDTO.VadaName)"
-                                @bind-Value="@qualityCardBilbox.Vada"
-                                Enabled="@(!string.IsNullOrEmpty(qualityCardBilbox.Komponent))"
-                                SelectedItemChanged="@((RetestVadaDTO? vada) => SelectedVadaItemChanged(vada, qualityCardBilbox))" />
+                            <DxComboBox TData="RetestVadaDTO" TValue="string"
+                                        Data="@vadyProKomponent"
+                                        NullText="Vyberte vadu..."
+                                        DropDownVisible="true"
+                                        TextFieldName="@nameof(RetestVadaDTO.VadaName)"
+                                        ValueFieldName="@nameof(RetestVadaDTO.VadaName)"
+                                        Value="@qualityCardBilbox.Vada"
+                                        ValueChanged="@((string value) => OnVadaValueChanged(value, qualityCardBilbox))"
+                                        Enabled="@(!string.IsNullOrEmpty(qualityCardBilbox.Komponent))" />
                 }
             </CellEditTemplate>
         </DxGridDataColumn>
@@ -209,7 +211,8 @@
                         TextFieldName="@nameof(OperationItem.Name)"
                         ValueFieldName="@nameof(OperationItem.Id)"
                         NullText="Vyberte operaci..."
-                        DropDownVisible="true"
+                        DropDownVisible="@PreviousOperationDropDownVisible"
+                        DropDownVisibleChanged="@((bool v) => PreviousOperationDropDownVisible = v)"
                         Value="@qualityCardBilbox.PreviousOperation"
                         ValueChanged="@((int? value) => OnPreviousOperationChanged(value, qualityCardBilbox))">
             </DxComboBox>
@@ -230,7 +233,8 @@
                         NullText="Všichni operátoři"
                         ClearButtonDisplayMode="DataEditorClearButtonDisplayMode.Auto"
                         DropDownVisible="true"
-                        @bind-Value="@qualityCardBilbox.OperatorNumbers" />
+                        Value="@qualityCardBilbox.OperatorNumbers"
+                        ValueChanged="@((string value) => OnOperatorNumbersChanged(value, qualityCardBilbox))" />
         }
     </CellEditTemplate>
 </DxGridDataColumn>
@@ -259,7 +263,6 @@
     const string SelectedAllBoxes = "VŠE";
     const string LocalStorageKey = "Grid-LayoutPersistence-Data";
     bool PreRendered { get; set; }
-    bool RestoringFilters { get; set; } = true;
 
     bool ErrorPopupVisible { get; set; } = false;
     string ErrorPopupText { get; set; } = String.Empty;
@@ -270,11 +273,8 @@
 
         try
         {
-            if (!RestoringFilters)
-            {
-                FilterService.SelectedRow = String.Empty;
-                FilterService.SelectedBilbox = String.Empty;
-            }
+            FilterService.SelectedRow = String.Empty;
+            FilterService.SelectedBilbox = String.Empty;
 
             if (selectedHall == SelectedAllBoxes)
             {
@@ -308,10 +308,7 @@
 
         try
         {
-            if (!RestoringFilters)
-            {
-                FilterService.SelectedBilbox = String.Empty;
-            }
+            FilterService.SelectedBilbox = String.Empty;
             if (selectedRow == SelectedAllBoxes && FilterService.SelectedHall == SelectedAllBoxes)
             {
                 avaibleBilboxes = await BilboxService.GetAvaibleBilboxes();
@@ -486,10 +483,6 @@
         {
             await AppLog.ErrorAsync("ManualAdd initialization failed", ex);
         }
-        finally
-        {
-            RestoringFilters = false;
-        }
     }
 
 
@@ -569,7 +562,7 @@
         FillDown(qualityCardBilbox, row =>
         {
             row.DefectDescription = text;
-        }, nameof(QualityCardBilbox.DefectDescription));
+        }, new[] { nameof(QualityCardBilbox.DefectDescription) });
     }
 
     void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
@@ -686,6 +679,12 @@
         foreach (var nk in nokList)
         {
             nk.DateTimeRecord = DateTime.Now;
+
+            if (!nk.IsFromPreviousShift)
+            {
+                await EnsureLookupDataAsync(nk);
+            }
+
             ApplyDefaultOperatorNumbers(nk);
 
             if (nk.IsFromPreviousShift)
@@ -743,6 +742,9 @@
         loadText = text;
         loadVisible = true;
 
+        await InvokeAsync(StateHasChanged); // okamžitě překreslit spinner
+        await Task.Yield();                 // pustit render pipeline
+
         try
         {
             await action();
@@ -750,6 +752,7 @@
         finally
         {
             loadVisible = false;
+            await InvokeAsync(StateHasChanged);
         }
     }
 
@@ -819,6 +822,17 @@ private async Task EnsureLookupDataAsync(QualityCardBilbox row)
             row.OrderNumber.Value,
             row.OperationNumber.Value);
     }
+
+    if (row.PreviousOperation.HasValue && row.PreviousOperation != -10)
+    {
+        var previousKey = (row.OrderNumber, row.PreviousOperation);
+        if (!operatorNumbersLookup.ContainsKey(previousKey))
+        {
+            operatorNumbersLookup[previousKey] = await BilboxService.GetOperatorNumbersByOrderOperation(
+                row.OrderNumber.Value,
+                row.PreviousOperation.Value);
+        }
+    }
 }
 
 private async Task WarmUpLookupCachesAsync(IEnumerable<QualityCardBilbox> rows)
@@ -860,9 +874,7 @@ private List<OperationItem> GetPreviousOperationsDisplay(QualityCardBilbox row)
 
 private List<string> GetOperatorNumbers(QualityCardBilbox row)
 {
-    return operatorNumbersLookup.TryGetValue(GetLookupKey(row), out var values)
-        ? values
-        : new List<string>();
+    return GetOperatorNumbersForPreviousOperation(row);
 }
 
 private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
@@ -888,7 +900,7 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
             var rowVady = GetVadyForKomponent(row.Komponent);
             if (!rowVady.Any(v => v.VadaName == row.Vada))
                 row.Vada = string.Empty;
-        }, nameof(QualityCardBilbox.Komponent), nameof(QualityCardBilbox.Vada));
+        }, new[] { nameof(QualityCardBilbox.Komponent), nameof(QualityCardBilbox.Vada) });
     }
 
     void SelectedVadaItemChanged(RetestVadaDTO? vada, QualityCardBilbox qualityCardBilbox)
@@ -898,7 +910,7 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
         FillDown(qualityCardBilbox, row =>
         {
             row.Vada = qualityCardBilbox.Vada;
-        }, nameof(QualityCardBilbox.Vada));
+        }, new[] { nameof(QualityCardBilbox.Vada) });
     }
 
     async Task Grid_RowClick(GridRowClickEventArgs e)
@@ -936,6 +948,8 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
 
         if (!e.Grid.IsEditingRow(e.VisibleIndex))
             await e.Grid.StartEditRowAsync(e.VisibleIndex);
+
+        PreviousOperationDropDownVisible = true;
     }
 
     private int FindStartIndex(QualityCardBilbox source)
@@ -954,16 +968,58 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
             x.WorkingPlaceNumber == source.WorkingPlaceNumber);
     }
 
-    private void FillDown(QualityCardBilbox source, Action<QualityCardBilbox> apply, params string[] changedFields)
+    bool PreviousOperationDropDownVisible { get; set; } = true;
+
+    void OnKomponentValueChanged(string? komponentName, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.Komponent = komponentName ?? string.Empty;
+
+        var vady = GetVadyForKomponent(qualityCardBilbox.Komponent);
+        if (!vady.Any(v => v.VadaName == qualityCardBilbox.Vada))
+            qualityCardBilbox.Vada = string.Empty;
+
+        FillDown(qualityCardBilbox, row =>
+        {
+            row.Komponent = qualityCardBilbox.Komponent;
+            var rowVady = GetVadyForKomponent(row.Komponent);
+            if (!rowVady.Any(v => v.VadaName == row.Vada))
+                row.Vada = string.Empty;
+        }, new[] { nameof(QualityCardBilbox.Komponent), nameof(QualityCardBilbox.Vada) });
+
+        PreviousOperationDropDownVisible = true;
+    }
+
+    void OnVadaValueChanged(string? vadaName, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.Vada = vadaName ?? string.Empty;
+
+        FillDown(qualityCardBilbox, row =>
+        {
+            row.Vada = qualityCardBilbox.Vada;
+        }, new[] { nameof(QualityCardBilbox.Vada) });
+
+        PreviousOperationDropDownVisible = true;
+    }
+
+    private void FillDown(
+        QualityCardBilbox source,
+        Action<QualityCardBilbox> apply,
+        string[] changedFields,
+        Func<QualityCardBilbox, bool>? stopWhen = null)
     {
         if (nokList is null) return;
 
         int start = FindStartIndex(source);
         if (start < 0) return;
 
-        for (int i = start; i < nokList.Count; i++)
+        // source row already has new value from editor, apply only to rows below
+        for (int i = start + 1; i < nokList.Count; i++)
         {
             var row = nokList[i];
+
+            if (stopWhen is not null && stopWhen(row))
+                break;
+
             if (row.IsFromPreviousShift) continue;
 
             apply(row);
@@ -973,27 +1029,57 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
             else
                 UnsavedChanges[row] = new(DataChangeType.Modification, changedFields.ToHashSet());
         }
-
-        StateHasChanged();
     }
 
     // Zavolej se když se změní PreviousOperation
-    private async Task OnPreviousOperationChanged(int? previousOperationId, QualityCardBilbox qualityCardBilbox)
+    private Task OnPreviousOperationChanged(int? previousOperationId, QualityCardBilbox qualityCardBilbox)
     {
-        // Aktualizuj hodnotu
+        // 1) hned zapsat do aktuálního řádku
         qualityCardBilbox.PreviousOperation = previousOperationId;
 
-        // Pokud je vybrana nějaká operace (a není -10 "Neznámá")
-        if (previousOperationId.HasValue && previousOperationId != -10)
+        // 2) hned provést fill-down (bez čekání na API)
+        FillDown(qualityCardBilbox, row =>
         {
-            // Načíst operátory pro vybranou předchozí operaci
-            await EnsureLookupDataForPreviousOperationAsync(
+            row.PreviousOperation = previousOperationId;
+        },
+        new[] { nameof(QualityCardBilbox.PreviousOperation) },
+        row => qualityCardBilbox.OrderNumber.HasValue && row.OrderNumber != qualityCardBilbox.OrderNumber);
+
+        // 3) držet dropdown otevřený
+        PreviousOperationDropDownVisible = true;
+        _ = InvokeAsync(StateHasChanged);
+
+        // 4) načtení operátorů spustit na pozadí, neblokovat UI
+        if (previousOperationId.HasValue &&
+            previousOperationId != -10 &&
+            qualityCardBilbox.OrderNumber.HasValue)
+        {
+            _ = PreloadOperatorsForPreviousOperationAsync(
                 qualityCardBilbox.OrderNumber.Value,
                 previousOperationId.Value);
         }
 
-        // Vynutit re-render ComboBoxu s operátory
+        return Task.CompletedTask;
+    }
+
+    private async Task PreloadOperatorsForPreviousOperationAsync(int orderNumber, int operationNumber)
+    {
+        await EnsureLookupDataForPreviousOperationAsync(orderNumber, operationNumber);
+
+        // refresh po načtení operátorů (bez čekání v hlavním eventu)
         await InvokeAsync(StateHasChanged);
+    }
+
+    void OnOperatorNumbersChanged(string? operatorNumbers, QualityCardBilbox qualityCardBilbox)
+    {
+        qualityCardBilbox.OperatorNumbers = operatorNumbers ?? string.Empty;
+
+        FillDown(qualityCardBilbox, row =>
+        {
+            row.OperatorNumbers = qualityCardBilbox.OperatorNumbers;
+        }, new[] { nameof(QualityCardBilbox.OperatorNumbers) });
+
+        PreviousOperationDropDownVisible = true;
     }
 
     // Nový helper: Načíst operátory pro konkrétní operaci
@@ -1039,4 +1125,6 @@ private void ApplyDefaultOperatorNumbers(QualityCardBilbox row)
         // Pokud je "Neznámá" (-10) nebo nic není vybráno, vrátit prázdný seznam
         return new List<string>();
     }
+
+
 }
